@@ -1,13 +1,11 @@
 package org.zzzcompanion
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import org.zzzcompanion.characters.ui.CharactersScreen
-import org.zzzcompanion.characters.viewmodel.CharacterViewModel
+import org.zzzcompanion.characters.viewmodel.CharactersListComponent
+
 
 @Composable
-fun App() {
-    val viewModel = remember { CharacterViewModel() }
-
-    CharactersScreen(viewModel)
+fun App(component : CharactersListComponent) {
+    CharactersScreen(component)
 }

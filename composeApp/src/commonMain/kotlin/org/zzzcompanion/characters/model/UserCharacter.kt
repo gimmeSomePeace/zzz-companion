@@ -1,12 +1,9 @@
 package org.zzzcompanion.characters.model
 
-import org.zzzcompanion.disks.model.UserDisk
-
 
 class UserCharacter (
-    val character: Character,
-    disks: List<UserDisk> = List(6) { UserDisk.placeholder() }
+    val id: Long,
+    val characterId: Long,
+    val disks: List<Long> = List(6) { -1 }
 ) {
-    var disks: List<UserDisk> = disks
-        private set
 }

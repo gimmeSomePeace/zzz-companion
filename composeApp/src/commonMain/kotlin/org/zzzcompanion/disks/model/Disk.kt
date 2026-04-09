@@ -2,7 +2,7 @@ package org.zzzcompanion.disks.model
 
 
 data class Disk (
-    val id: Int,
+    val id: Long,
     val name: String,
     val imageUrl: String
 ) {

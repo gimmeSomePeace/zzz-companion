@@ -6,19 +6,19 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.zzzcompanion.characters.model.UserCharacter
+import org.zzzcompanion.characters.model.Character
 
 
 @Composable
-fun CharactersList(characters: List<UserCharacter>) {
+fun CharactersList(owned: List<UserCharacterDetails>, missing: List<CharacterDetails>) {
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize()
     ) {
-        items(characters) {item ->
-
-            ThumbCharacter(item.character)
+        items(owned) {item ->
+            if (item.character != null) ThumbCharacter(item.character)
         }
+        // TODO: missing characters ui
     }
 }

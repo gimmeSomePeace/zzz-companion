@@ -3,30 +3,58 @@ package org.zzzcompanion.characters.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.zzzcompanion.characters.viewmodel.CharacterViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.zzzcompanion.characters.repository.AttributeRepository
+import org.zzzcompanion.characters.repository.FactionRepository
+import org.zzzcompanion.characters.repository.RarityRepository
+import org.zzzcompanion.characters.repository.SpecialityRepository
+import org.zzzcompanion.characters.viewmodel.CharactersListComponent
 
 
 @Composable
-fun CharactersScreen(viewModel: CharacterViewModel) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        TextField(
-            value = viewModel.searchQuery,
-            onValueChange = viewModel::onSearchQueryChanged,
-            placeholder = { Text("Search...") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            singleLine = true
+fun CharactersScreen(component: CharactersListComponent) {
+    val state by component.uiState.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        CharactersFilterBar(
+            state.filters.query,
+            state.filters.faction,
+            state.filters.rarity,
+            state.filters.attribute,
+            state.filters.speciality,
+
+            component::onSearchQueryChanged,
+            component::onFactionChanged,
+            component::onAttributeChanged,
+            component::onSpecialityChanged,
+            component::onRarityChanged,
+
+            state.factionOptions,
+            state.attributeOptions,
+            state.specialityOptions,
+            state.rarityOptions,
         )
         Spacer(modifier = Modifier.height(8.dp))
-        CharactersList(viewModel.filteredCharacters)
+
+        when (val s = state) {
+            is CharactersScreenState.Content -> {
+                CharactersList(s.owned, s.missing)
+            }
+            is CharactersScreenState.Loading -> {
+                CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
+            }
+        }
     }
 }

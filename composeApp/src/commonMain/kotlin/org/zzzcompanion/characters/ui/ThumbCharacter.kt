@@ -12,11 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.zzzcompanion.characters.model.Character
 
 
 @Composable
-fun ThumbCharacter(character: Character) {
+fun ThumbCharacter(character: CharacterDetails) {
     Column {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(
@@ -26,7 +25,7 @@ fun ThumbCharacter(character: Character) {
             )
 
             KamelImage(
-                resource = asyncPainterResource(data = character.speciality.imageUrl),
+                resource = asyncPainterResource(data = character.speciality?.imageUrl ?: ""),
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp)
@@ -35,7 +34,7 @@ fun ThumbCharacter(character: Character) {
             )
 
             KamelImage(
-                resource = asyncPainterResource(data = character.attribute.imageUrl),
+                resource = asyncPainterResource(data = character.attribute?.imageUrl ?: ""),
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp)

@@ -2,13 +2,13 @@ package org.zzzcompanion.characters.model
 
 
 data class Character (
-    val id: Int,
+    val id: Long,
     val name: String,
 
-    val faction: Faction,
-    val attribute: Attribute,
-    val speciality: Speciality,
-    val rarity: Rarity,
+    val factionId: Long,
+    val attributeId: Long,
+    val specialityId: Long,
+    val rarityId: Long,
 
     val imageUrl: String,
 )

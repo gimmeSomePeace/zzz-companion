@@ -23,7 +23,11 @@ kotlin {
             // async image
             implementation("media.kamel:kamel-image:1.0.8")
             implementation("media.kamel:kamel-image-default:1.0.8")
-
+            // Decompose
+            implementation("com.arkivanov.decompose:decompose:3.5.0")
+            implementation("com.arkivanov.essenty:lifecycle-coroutines:2.5.0")
+            // Icons
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

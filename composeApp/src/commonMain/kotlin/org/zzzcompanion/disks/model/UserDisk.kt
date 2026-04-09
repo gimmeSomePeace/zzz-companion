@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 
 
 class UserDisk (
-    val id: Int,
-    val diskType: Disk,
+    val id: Long,
+    val diskTypeId: Long,
 
     mainStat: Stat,
     additionalStates: List<Stat>
@@ -16,7 +16,7 @@ class UserDisk (
         fun placeholder(): UserDisk {
             return UserDisk(
                 id = -1,
-                diskType = Disk.placeholder(),
+                diskTypeId = -1,
                 mainStat = Stat.placeholder(),
                 additionalStates = List(4) { Stat.placeholder() }
             )
