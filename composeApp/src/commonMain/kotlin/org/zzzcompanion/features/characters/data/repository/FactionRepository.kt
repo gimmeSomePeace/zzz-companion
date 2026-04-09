@@ -11,7 +11,7 @@ class FactionRepository {
     val factions: StateFlow<List<Faction>> = _factions.asStateFlow()
 
     init {
-        listOf(
+        _factions.value = listOf(
             Faction(
                 1,
                 "Victoria Housekeeping Co.",

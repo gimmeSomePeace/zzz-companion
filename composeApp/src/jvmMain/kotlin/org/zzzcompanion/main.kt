@@ -13,6 +13,7 @@ import org.zzzcompanion.features.characters.data.repository.AttributeRepository
 import org.zzzcompanion.features.characters.data.repository.CharacterRepository
 import org.zzzcompanion.features.characters.data.repository.FactionRepository
 import org.zzzcompanion.features.characters.data.repository.RarityRepository
+import org.zzzcompanion.features.characters.data.repository.ReferenceRepository
 import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
 import org.zzzcompanion.features.characters.domain.CharactersListComponent
@@ -32,6 +33,14 @@ fun main() {
     val specialityRepository = SpecialityRepository()
     val rarityRepository = RarityRepository()
 
+    val referenceRepository = ReferenceRepository(
+        characterRepository = characterRepository,
+        factionRepository = factionRepository,
+        attributeRepository = attributeRepository,
+        specialityRepository = specialityRepository,
+        rarityRepository = rarityRepository
+    )
+
     val mapper = CharacterUiMapper(
         factionRepository = factionRepository,
         specialityRepository = specialityRepository,
@@ -42,12 +51,7 @@ fun main() {
 
     val component = CharactersListComponent(
         userCharacterRepository = userCharacterRepository,
-        characterRepository = characterRepository,
-        factionRepository = factionRepository,
-        attributeRepository = attributeRepository,
-        specialityRepository = specialityRepository,
-        rarityRepository = rarityRepository,
-
+        referenceRepository.referenceData,
         mapper = mapper,
         componentContext = context
     )

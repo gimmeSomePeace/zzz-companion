@@ -14,6 +14,7 @@ import org.zzzcompanion.features.characters.data.repository.AttributeRepository
 import org.zzzcompanion.features.characters.data.repository.CharacterRepository
 import org.zzzcompanion.features.characters.data.repository.FactionRepository
 import org.zzzcompanion.features.characters.data.repository.RarityRepository
+import org.zzzcompanion.features.characters.data.repository.ReferenceData
 import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
 import org.zzzcompanion.features.characters.data.uiModels.CharactersScreenState
@@ -21,11 +22,7 @@ import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 
 class CharactersListComponent (
     private val userCharacterRepository: UserCharacterRepository,
-    private val characterRepository: CharacterRepository,
-    private val factionRepository: FactionRepository,
-    private val attributeRepository: AttributeRepository,
-    private val specialityRepository: SpecialityRepository,
-    private val rarityRepository: RarityRepository,
+    private val referenceData: StateFlow<ReferenceData>,
 
     private val mapper: CharacterUiMapper,
     private val componentContext: ComponentContext,
@@ -37,13 +34,13 @@ class CharactersListComponent (
 
     val uiState: StateFlow<CharactersScreenState> = combine(
         userCharacterRepository.userCharacters,
+        referenceData,
         snapshotFlow { filters }
-    ) { userCharsList, f ->
+    ) { userCharsList, refs, f ->
         val userCharsIds = userCharsList.map { it.id }.toSet()
-        val allCharacters = characterRepository.getAll()
 
         val owned = userCharsList.map { mapper.mapToUserCharacterDetails(it) }
-        val missing = allCharacters.filter { it.id !in userCharsIds }.map { mapper.mapToCharacterDetails(it) }
+        val missing = refs.characters.filter { it.id !in userCharsIds }.map { mapper.mapToCharacterDetails(it) }
 
         val ownedFiltered = owned.filter { filters.isOk(it) }
         val missingFiltered = missing.filter { filters.isOk(it) }
@@ -52,13 +49,13 @@ class CharactersListComponent (
             owned = ownedFiltered,
             missing = missingFiltered,
 
-            factionOptions = listOf(null) + factionRepository.getAll(),
-            attributeOptions = listOf(null) + attributeRepository.getAll(),
-            specialityOptions = listOf(null) + specialityRepository.getAll(),
-            rarityOptions = listOf(null) + rarityRepository.getAll(),
+            factionOptions = listOf(null) + refs.factions,
+            attributeOptions = listOf(null) + refs.attributes,
+            specialityOptions = listOf(null) + refs.specialities,
+            rarityOptions = listOf(null) + refs.rarities,
             filters = mapper.mapToFilterDetails(f)
         )
-    }.stateIn(scope, SharingStarted.Companion.Lazily, CharactersScreenState.Loading(mapper.mapToFilterDetails(filters), emptyList(), emptyList(), emptyList(), emptyList()))
+    }.stateIn(scope, SharingStarted.Lazily, CharactersScreenState.Loading(mapper.mapToFilterDetails(filters), emptyList(), emptyList(), emptyList(), emptyList()))
 
     fun onSearchQueryChanged(newQuery: String) { filters = filters.copy(query = newQuery) }
     fun onFactionChanged(newFactionId: Long?) { filters = filters.copy(factionId = newFactionId) }
