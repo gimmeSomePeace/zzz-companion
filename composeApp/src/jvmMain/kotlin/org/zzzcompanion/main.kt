@@ -9,18 +9,16 @@ import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.jetbrains.compose.resources.painterResource
-import org.zzzcompanion.characters.domain.usecase.GetCharactersStateUseCase
-import org.zzzcompanion.characters.repository.AttributeRepository
-import org.zzzcompanion.characters.repository.CharacterRepository
-import org.zzzcompanion.characters.repository.FactionRepository
-import org.zzzcompanion.characters.repository.RarityRepository
-import org.zzzcompanion.characters.repository.SpecialityRepository
-import org.zzzcompanion.characters.repository.UserCharacterRepository
-import org.zzzcompanion.characters.ui.CharacterUiMapper
-import org.zzzcompanion.characters.viewmodel.CharactersListComponent
+import org.zzzcompanion.features.characters.data.repository.AttributeRepository
+import org.zzzcompanion.features.characters.data.repository.CharacterRepository
+import org.zzzcompanion.features.characters.data.repository.FactionRepository
+import org.zzzcompanion.features.characters.data.repository.RarityRepository
+import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
+import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
+import org.zzzcompanion.features.characters.domain.CharactersListComponent
+import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 import zzz_companion.composeapp.generated.resources.Res
 import zzz_companion.composeapp.generated.resources.icon
-
 
 
 fun main() {
@@ -42,8 +40,7 @@ fun main() {
         characterRepository = characterRepository
     )
 
-    val getCharactersStateUseCase = GetCharactersStateUseCase(characterRepository, userCharacterRepository)
-    val component =  CharactersListComponent(
+    val component = CharactersListComponent(
         userCharacterRepository = userCharacterRepository,
         characterRepository = characterRepository,
         factionRepository = factionRepository,
