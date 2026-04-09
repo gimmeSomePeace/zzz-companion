@@ -36,18 +36,26 @@ class CharactersListComponent (
         userCharacterRepository.userCharacters,
         referenceData,
         snapshotFlow { filters }
-    ) { userCharsList, refs, f ->
-        val userCharsIds = userCharsList.map { it.id }.toSet()
+    ) { userCharacters, refs, f ->
 
-        val owned = userCharsList.map { mapper.mapToUserCharacterDetails(it) }
-        val missing = refs.characters.filter { it.id !in userCharsIds }.map { mapper.mapToCharacterDetails(it) }
+        val userCharsIds = userCharacters.map { it.characterId }.toSet()
 
-        val ownedFiltered = owned.filter { filters.isOk(it) }
-        val missingFiltered = missing.filter { filters.isOk(it) }
+        val ownedUi = userCharacters.asSequence()
+            .filter { uc ->
+                val char = refs.characters.find { it.id == uc.characterId } ?: return@filter false
+                filters.isOk(char)
+            }
+            .map { mapper.mapToUserCharacterDetails(it) }
+            .toList()
+
+        val missingUi = refs.characters.asSequence()
+            .filter { it.id !in userCharsIds && filters.isOk(it) }
+            .map { mapper.mapToCharacterDetails(it) }
+            .toList()
 
         CharactersScreenState.Content(
-            owned = ownedFiltered,
-            missing = missingFiltered,
+            owned = ownedUi,
+            missing = missingUi,
 
             factionOptions = listOf(null) + refs.factions,
             attributeOptions = listOf(null) + refs.attributes,
