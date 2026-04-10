@@ -1,5 +1,6 @@
 package org.zzzcompanion.features.characters.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,14 +16,18 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.zzzcompanion.core.ui.grayscale
+import org.zzzcompanion.features.characters.data.entities.CharacterId
 
 
 import org.zzzcompanion.features.characters.data.uiModels.CharacterDetails
 
 
 @Composable
-fun MissingThumbCharacter(character: CharacterDetails) {
-    Column {
+fun MissingThumbCharacter(
+    character: CharacterDetails,
+    onClick: (CharacterId) -> Unit
+) {
+    Column(modifier = Modifier.clickable { onClick(character.id) }) {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(
                 resource = asyncPainterResource(data = character.imageUrl),

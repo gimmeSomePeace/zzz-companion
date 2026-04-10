@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.zzzcompanion.features.characters.data.entities.Speciality
+import org.zzzcompanion.features.characters.data.entities.SpecialityId
 
 class SpecialityRepository {
     private val _specialities = MutableStateFlow<List<Speciality>>(emptyList())
@@ -12,12 +13,12 @@ class SpecialityRepository {
     init {
         _specialities.value = listOf(
             Speciality(
-                1,
+                SpecialityId("1"),
                 "Anomaly",
                 "https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d2/Icon_Anomaly.png/revision/latest/scale-to-width-down/32?cb=20240704113735"
             ),
             Speciality(
-                2,
+                SpecialityId("2"),
                 "Support",
                 "https://static.wikia.nocookie.net/zenless-zone-zero/images/2/2f/Icon_Support.png/revision/latest/scale-to-width-down/32?cb=20240704113754"
             )
@@ -25,5 +26,5 @@ class SpecialityRepository {
     }
 
     fun getAll(): List<Speciality> = _specialities.value
-    fun getById(id: Long): Speciality? = _specialities.value.firstOrNull { it.id == id }
+    fun getById(id: SpecialityId): Speciality? = _specialities.value.firstOrNull { it.id == id }
 }

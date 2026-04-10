@@ -1,8 +1,11 @@
 package org.zzzcompanion.features.characters.data.entities
 
 
+@JvmInline
+value class FactionId(val value: String)
+
 data class Faction (
-    val id: Long,
+    val id: FactionId,
     val name: String,
     val imageUrl: String
 )

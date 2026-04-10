@@ -10,16 +10,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import org.zzzcompanion.core.utils.componentCoroutineScope
-import org.zzzcompanion.features.characters.data.repository.AttributeRepository
-import org.zzzcompanion.features.characters.data.repository.CharacterRepository
-import org.zzzcompanion.features.characters.data.repository.FactionRepository
-import org.zzzcompanion.features.characters.data.repository.RarityRepository
+import org.zzzcompanion.features.characters.data.entities.AttributeId
+import org.zzzcompanion.features.characters.data.entities.CharacterId
+import org.zzzcompanion.features.characters.data.entities.FactionId
+import org.zzzcompanion.features.characters.data.entities.RarityId
+import org.zzzcompanion.features.characters.data.entities.SpecialityId
 import org.zzzcompanion.features.characters.data.repository.ReferenceData
-import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
 import org.zzzcompanion.features.characters.data.uiModels.CharactersScreenState
 import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 import org.zzzcompanion.features.characters.ui.CharacterUi
+
 
 class CharactersListComponent (
     private val userCharacterRepository: UserCharacterRepository,
@@ -71,8 +72,12 @@ class CharactersListComponent (
     }.stateIn(scope, SharingStarted.Lazily, CharactersScreenState.Loading(mapper.mapToFilterDetails(filters), emptyList(), emptyList(), emptyList(), emptyList()))
 
     fun onSearchQueryChanged(newQuery: String) { filters = filters.copy(query = newQuery) }
-    fun onFactionChanged(newFactionId: Long?) { filters = filters.copy(factionId = newFactionId) }
-    fun onAttributeChanged(newAttributeId: Long?) { filters = filters.copy(attributeId = newAttributeId) }
-    fun onRarityChanged(newRarityId: Long?) { filters = filters.copy(rarityId = newRarityId) }
-    fun onSpecialityChanged(newSpecialityId: Long?) { filters = filters.copy(specialityId = newSpecialityId) }
+    fun onFactionChanged(newFactionId: FactionId?) { filters = filters.copy(factionId = newFactionId) }
+    fun onAttributeChanged(newAttributeId: AttributeId?) { filters = filters.copy(attributeId = newAttributeId) }
+    fun onRarityChanged(newRarityId: RarityId?) { filters = filters.copy(rarityId = newRarityId) }
+    fun onSpecialityChanged(newSpecialityId: SpecialityId?) { filters = filters.copy(specialityId = newSpecialityId) }
+
+    fun onAddCharacter(characterId: CharacterId) {
+        userCharacterRepository.add(characterId)
+    }
 }

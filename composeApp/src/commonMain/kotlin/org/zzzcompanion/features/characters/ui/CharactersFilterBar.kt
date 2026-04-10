@@ -12,9 +12,13 @@ import org.zzzcompanion.core.ui.EmptyItem
 import org.zzzcompanion.core.ui.FilterItem
 import org.zzzcompanion.core.ui.LabeledSelect
 import org.zzzcompanion.features.characters.data.entities.Attribute
+import org.zzzcompanion.features.characters.data.entities.AttributeId
 import org.zzzcompanion.features.characters.data.entities.Faction
+import org.zzzcompanion.features.characters.data.entities.FactionId
 import org.zzzcompanion.features.characters.data.entities.Rarity
+import org.zzzcompanion.features.characters.data.entities.RarityId
 import org.zzzcompanion.features.characters.data.entities.Speciality
+import org.zzzcompanion.features.characters.data.entities.SpecialityId
 
 
 @Composable
@@ -26,10 +30,10 @@ fun CharactersFilterBar(
     selectedSpeciality: Speciality?,
 
     onSearchQueryChanged: (String) -> Unit,
-    onFactionChanged: (factionId: Long?) -> Unit,
-    onAttributeChanged: (attributeId: Long?) -> Unit,
-    onSpecialityChanged: (specialityId: Long?) -> Unit,
-    onRarityChanged: (rarityId: Long?) -> Unit,
+    onFactionChanged: (factionId: FactionId?) -> Unit,
+    onAttributeChanged: (attributeId: AttributeId?) -> Unit,
+    onSpecialityChanged: (specialityId: SpecialityId?) -> Unit,
+    onRarityChanged: (rarityId: RarityId?) -> Unit,
 
     factions: List<Faction?>,
     attributes: List<Attribute?>,

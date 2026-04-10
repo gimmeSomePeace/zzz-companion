@@ -47,7 +47,7 @@ fun CharactersScreen(component: CharactersListComponent) {
 
         when (val s = state) {
             is CharactersScreenState.Content -> {
-                CharactersList(s.characterItems)
+                CharactersList(s.characterItems, component::onAddCharacter)
             }
             is CharactersScreenState.Loading -> {
                 CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
