@@ -20,6 +20,8 @@ fun CharactersList(owned: List<UserCharacterDetails>, missing: List<CharacterDet
         items(owned) {item ->
             if (item.character != null) ThumbCharacter(item.character)
         }
-        // TODO: missing characters ui
+        items(missing) {item ->
+            MissingThumbCharacter(item)
+        }
     }
 }
