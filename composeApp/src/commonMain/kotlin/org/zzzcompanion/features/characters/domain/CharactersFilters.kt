@@ -14,12 +14,4 @@ data class CharactersFilters(
     val attributeId: AttributeId? = null,
     val specialityId: SpecialityId? = null,
     val rarityId: RarityId? = null
-) {
-    fun isOk(c: Character): Boolean {
-        return (query.isBlank() || c.name.contains(query, ignoreCase = true)) &&
-        (factionId == null || c.factionId == factionId) &&
-        (attributeId == null || c.attributeId == attributeId) &&
-        (specialityId == null || c.specialityId == specialityId) &&
-        (rarityId == null || c.rarityId == rarityId)
-    }
-}
+)

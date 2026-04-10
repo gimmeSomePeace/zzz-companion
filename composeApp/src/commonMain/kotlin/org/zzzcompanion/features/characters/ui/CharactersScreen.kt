@@ -32,11 +32,11 @@ fun CharactersScreen(component: CharactersListComponent) {
             state.filters.attribute,
             state.filters.speciality,
 
-            component::onSearchQueryChanged,
-            component::onFactionChanged,
-            component::onAttributeChanged,
-            component::onSpecialityChanged,
-            component::onRarityChanged,
+            component::onSearchQueryChange,
+            component::onFactionChange,
+            component::onAttributeChange,
+            component::onSpecialityChange,
+            component::onRarityChange,
 
             state.factionOptions,
             state.attributeOptions,

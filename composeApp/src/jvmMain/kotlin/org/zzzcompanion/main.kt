@@ -16,8 +16,11 @@ import org.zzzcompanion.features.characters.data.repository.RarityRepository
 import org.zzzcompanion.features.characters.data.repository.ReferenceRepository
 import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
-import org.zzzcompanion.features.characters.domain.CharactersActionHandler
+import org.zzzcompanion.features.characters.presentation.CharactersActionHandler
+import org.zzzcompanion.features.characters.presentation.CharactersFilterController
+import org.zzzcompanion.features.characters.domain.CharactersFilterMatcher
 import org.zzzcompanion.features.characters.domain.CharactersListComponent
+import org.zzzcompanion.features.characters.presentation.CharactersPresenter
 import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 import zzz_companion.composeapp.generated.resources.Res
 import zzz_companion.composeapp.generated.resources.icon
@@ -51,13 +54,21 @@ fun main() {
     )
 
     val charactersActionHandler = CharactersActionHandler(userCharacterRepository)
+    val filterController = CharactersFilterController()
+    val matcher = CharactersFilterMatcher()
+    val charactersPresenter = CharactersPresenter(
+        mapper = mapper,
+        matcher = matcher,
+    )
 
     val component = CharactersListComponent(
         userCharacterRepository = userCharacterRepository,
-        referenceRepository.referenceData,
+        referenceData = referenceRepository.referenceData,
         mapper = mapper,
         actionHandler = charactersActionHandler,
-        componentContext = context
+        componentContext = context,
+        charactersPresenter = charactersPresenter,
+        filterController = filterController,
     )
 
     application {

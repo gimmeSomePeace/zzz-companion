@@ -1,9 +1,8 @@
-package org.zzzcompanion.features.characters.domain
+package org.zzzcompanion.features.characters.presentation
 
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
 import org.zzzcompanion.features.characters.ui.CharactersAction
 import org.zzzcompanion.features.characters.ui.CharactersUndoAction
-
 
 class CharactersActionHandler(
     private val repository: UserCharacterRepository
