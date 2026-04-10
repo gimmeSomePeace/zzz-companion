@@ -25,14 +25,24 @@ class UserCharacterRepository {
     fun getAll(): List<UserCharacter> { return _userCharacters.value }
     fun getById(id: UserCharacterId): UserCharacter? = _userCharacters.value.firstOrNull { it.id == id }
 
-    fun add(characterId: CharacterId) {
+    fun add(characterId: CharacterId): Boolean {
         if (_userCharacters.value.any { it.characterId == characterId }) {
-            return
+            return false
         }
 
         _userCharacters.value += UserCharacter(
             id = generateId(),
             characterId = characterId
         )
+        return true
+    }
+
+    fun remove(characterId: CharacterId): Boolean {
+        val updated = _userCharacters.value.filterNot { it.characterId == characterId }
+
+        return if (updated.size != _userCharacters.value.size) {
+            _userCharacters.value = updated
+            true
+        } else false
     }
 }

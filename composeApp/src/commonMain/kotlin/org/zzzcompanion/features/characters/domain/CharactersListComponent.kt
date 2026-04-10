@@ -20,14 +20,16 @@ import org.zzzcompanion.features.characters.data.repository.UserCharacterReposit
 import org.zzzcompanion.features.characters.data.uiModels.CharactersScreenState
 import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 import org.zzzcompanion.features.characters.ui.CharacterUi
+import org.zzzcompanion.features.characters.ui.CharactersAction
 
 
 class CharactersListComponent (
     private val userCharacterRepository: UserCharacterRepository,
     private val referenceData: StateFlow<ReferenceData>,
-
     private val mapper: CharacterUiMapper,
     private val componentContext: ComponentContext,
+    private val actionHandler: CharactersActionHandler
+
 ) : ComponentContext by componentContext {
 
     private val scope = componentContext.componentCoroutineScope()
@@ -71,13 +73,13 @@ class CharactersListComponent (
         )
     }.stateIn(scope, SharingStarted.Lazily, CharactersScreenState.Loading(mapper.mapToFilterDetails(filters), emptyList(), emptyList(), emptyList(), emptyList()))
 
+    fun onAction(action: CharactersAction) {
+        actionHandler.handle(action)
+    }
+
     fun onSearchQueryChanged(newQuery: String) { filters = filters.copy(query = newQuery) }
     fun onFactionChanged(newFactionId: FactionId?) { filters = filters.copy(factionId = newFactionId) }
     fun onAttributeChanged(newAttributeId: AttributeId?) { filters = filters.copy(attributeId = newAttributeId) }
     fun onRarityChanged(newRarityId: RarityId?) { filters = filters.copy(rarityId = newRarityId) }
     fun onSpecialityChanged(newSpecialityId: SpecialityId?) { filters = filters.copy(specialityId = newSpecialityId) }
-
-    fun onAddCharacter(characterId: CharacterId) {
-        userCharacterRepository.add(characterId)
-    }
 }

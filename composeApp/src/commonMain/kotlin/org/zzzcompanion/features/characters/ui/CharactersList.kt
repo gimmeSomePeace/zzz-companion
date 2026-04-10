@@ -12,7 +12,7 @@ import org.zzzcompanion.features.characters.data.entities.CharacterId
 
 
 @Composable
-fun CharactersList(characters: List<CharacterUi>, onAddCharacter: (CharacterId) -> Unit) {
+fun CharactersList(characters: List<CharacterUi>, onMissingCharacterClick: (CharacterId) -> Unit) {
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
@@ -34,7 +34,7 @@ fun CharactersList(characters: List<CharacterUi>, onAddCharacter: (CharacterId) 
                     item.data.character?.let { ThumbCharacter(it) }
                 }
                 is CharacterUi.Missing -> {
-                    MissingThumbCharacter(item.data, onAddCharacter)
+                    MissingThumbCharacter(item.data, onMissingCharacterClick)
                 }
             }
         }

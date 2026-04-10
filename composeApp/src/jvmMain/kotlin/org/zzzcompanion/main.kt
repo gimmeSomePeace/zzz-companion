@@ -16,6 +16,7 @@ import org.zzzcompanion.features.characters.data.repository.RarityRepository
 import org.zzzcompanion.features.characters.data.repository.ReferenceRepository
 import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
+import org.zzzcompanion.features.characters.domain.CharactersActionHandler
 import org.zzzcompanion.features.characters.domain.CharactersListComponent
 import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 import zzz_companion.composeapp.generated.resources.Res
@@ -49,10 +50,13 @@ fun main() {
         characterRepository = characterRepository
     )
 
+    val charactersActionHandler = CharactersActionHandler(userCharacterRepository)
+
     val component = CharactersListComponent(
         userCharacterRepository = userCharacterRepository,
         referenceRepository.referenceData,
         mapper = mapper,
+        actionHandler = charactersActionHandler,
         componentContext = context
     )
 
