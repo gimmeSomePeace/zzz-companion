@@ -21,7 +21,6 @@ import org.zzzcompanion.features.characters.presentation.CharactersFilterControl
 import org.zzzcompanion.features.characters.domain.CharactersFilterMatcher
 import org.zzzcompanion.features.characters.domain.CharactersListComponent
 import org.zzzcompanion.features.characters.presentation.CharactersPresenter
-import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
 import zzz_companion.composeapp.generated.resources.Res
 import zzz_companion.composeapp.generated.resources.icon
 
@@ -45,26 +44,16 @@ fun main() {
         rarityRepository = rarityRepository
     )
 
-    val mapper = CharacterUiMapper(
-        factionRepository = factionRepository,
-        specialityRepository = specialityRepository,
-        attributeRepository = attributeRepository,
-        rarityRepository = rarityRepository,
-        characterRepository = characterRepository
-    )
-
     val charactersActionHandler = CharactersActionHandler(userCharacterRepository)
     val filterController = CharactersFilterController()
     val matcher = CharactersFilterMatcher()
     val charactersPresenter = CharactersPresenter(
-        mapper = mapper,
         matcher = matcher,
     )
 
     val component = CharactersListComponent(
         userCharacterRepository = userCharacterRepository,
         referenceData = referenceRepository.referenceData,
-        mapper = mapper,
         actionHandler = charactersActionHandler,
         componentContext = context,
         charactersPresenter = charactersPresenter,

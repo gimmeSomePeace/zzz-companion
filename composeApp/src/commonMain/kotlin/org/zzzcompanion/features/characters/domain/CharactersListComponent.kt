@@ -13,7 +13,7 @@ import org.zzzcompanion.features.characters.data.entities.SpecialityId
 import org.zzzcompanion.features.characters.data.repository.ReferenceData
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
 import org.zzzcompanion.features.characters.data.uiModels.CharactersScreenState
-import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
+import org.zzzcompanion.features.characters.mappers.toUi
 import org.zzzcompanion.features.characters.presentation.CharactersActionHandler
 import org.zzzcompanion.features.characters.presentation.CharactersFilterController
 import org.zzzcompanion.features.characters.presentation.CharactersPresenter
@@ -23,7 +23,6 @@ import org.zzzcompanion.features.characters.ui.CharactersAction
 class CharactersListComponent (
     private val userCharacterRepository: UserCharacterRepository,
     private val referenceData: StateFlow<ReferenceData>,
-    private val mapper: CharacterUiMapper,
     private val componentContext: ComponentContext,
     private val actionHandler: CharactersActionHandler,
     private val filterController: CharactersFilterController,
@@ -49,9 +48,9 @@ class CharactersListComponent (
             attributeOptions = listOf(null) + refs.attributes,
             specialityOptions = listOf(null) + refs.specialities,
             rarityOptions = listOf(null) + refs.rarities,
-            filters = mapper.mapToFilterDetails(filters),
+            filters = filters.toUi(refs)
         )
-    }.stateIn(scope, SharingStarted.Lazily, CharactersScreenState.Loading(mapper.mapToFilterDetails(filterController.filters.value), emptyList(), emptyList(), emptyList(), emptyList()))
+    }.stateIn(scope, SharingStarted.Lazily, CharactersScreenState.Loading(filterController.filters.value.toUi(referenceData.value), emptyList(), emptyList(), emptyList(), emptyList()))
 
     fun onAction(action: CharactersAction) {
         actionHandler.handle(action)
