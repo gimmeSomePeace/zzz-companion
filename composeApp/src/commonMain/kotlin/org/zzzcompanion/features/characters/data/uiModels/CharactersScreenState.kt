@@ -4,6 +4,7 @@ import org.zzzcompanion.features.characters.data.entities.Attribute
 import org.zzzcompanion.features.characters.data.entities.Faction
 import org.zzzcompanion.features.characters.data.entities.Rarity
 import org.zzzcompanion.features.characters.data.entities.Speciality
+import org.zzzcompanion.features.characters.ui.CharacterUi
 
 
 sealed interface CharactersScreenState {
@@ -22,8 +23,7 @@ sealed interface CharactersScreenState {
     ): CharactersScreenState
 
     data class Content(
-        val owned: List<UserCharacterDetails>,
-        val missing: List<CharacterDetails>,
+        val characterItems: List<CharacterUi>,
 
         override val factionOptions: List<Faction?>,
         override val attributeOptions: List<Attribute?>,

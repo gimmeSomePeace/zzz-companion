@@ -19,6 +19,7 @@ import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
 import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
 import org.zzzcompanion.features.characters.data.uiModels.CharactersScreenState
 import org.zzzcompanion.features.characters.mappers.CharacterUiMapper
+import org.zzzcompanion.features.characters.ui.CharacterUi
 
 class CharactersListComponent (
     private val userCharacterRepository: UserCharacterRepository,
@@ -53,9 +54,13 @@ class CharactersListComponent (
             .map { mapper.mapToCharacterDetails(it) }
             .toList()
 
+        val characterItems = buildList {
+            addAll(ownedUi.map { CharacterUi.Owned(it) })
+            addAll(missingUi.map { CharacterUi.Missing(it) })
+        }
+
         CharactersScreenState.Content(
-            owned = ownedUi,
-            missing = missingUi,
+            characterItems = characterItems,
 
             factionOptions = listOf(null) + refs.factions,
             attributeOptions = listOf(null) + refs.attributes,

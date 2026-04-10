@@ -47,7 +47,7 @@ fun CharactersScreen(component: CharactersListComponent) {
 
         when (val s = state) {
             is CharactersScreenState.Content -> {
-                CharactersList(s.owned, s.missing)
+                CharactersList(s.characterItems)
             }
             is CharactersScreenState.Loading -> {
                 CircularProgressIndicator(Modifier.align(Alignment.CenterHorizontally))
