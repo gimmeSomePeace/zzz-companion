@@ -8,19 +8,20 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import org.gimmesomepeace.zzzcompanion.App
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.AttributeRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.CharacterRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.FactionRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.RarityRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.ReferenceRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.SpecialityRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.data.repository.UserCharacterRepository
+import org.gimmesomepeace.zzzcompanion.features.characters.domain.CharactersFilterMatcher
+import org.gimmesomepeace.zzzcompanion.features.characters.domain.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.characters.presentation.CharactersActionHandler
+import org.gimmesomepeace.zzzcompanion.features.characters.presentation.CharactersFilterController
+import org.gimmesomepeace.zzzcompanion.features.characters.presentation.CharactersPresenter
 import org.jetbrains.compose.resources.painterResource
-import org.zzzcompanion.features.characters.data.repository.AttributeRepository
-import org.zzzcompanion.features.characters.data.repository.CharacterRepository
-import org.zzzcompanion.features.characters.data.repository.FactionRepository
-import org.zzzcompanion.features.characters.data.repository.RarityRepository
-import org.zzzcompanion.features.characters.data.repository.ReferenceRepository
-import org.zzzcompanion.features.characters.data.repository.SpecialityRepository
-import org.zzzcompanion.features.characters.data.repository.UserCharacterRepository
-import org.zzzcompanion.features.characters.presentation.CharactersActionHandler
-import org.zzzcompanion.features.characters.presentation.CharactersFilterController
-import org.zzzcompanion.features.characters.domain.CharactersFilterMatcher
-import org.zzzcompanion.features.characters.domain.CharactersListComponent
-import org.zzzcompanion.features.characters.presentation.CharactersPresenter
 import zzz_companion.composeapp.generated.resources.Res
 import zzz_companion.composeapp.generated.resources.icon
 
@@ -57,7 +58,7 @@ fun main() {
         actionHandler = charactersActionHandler,
         componentContext = context,
         charactersPresenter = charactersPresenter,
-        filterController = filterController,
+        filterController = filterController
     )
 
     application {
