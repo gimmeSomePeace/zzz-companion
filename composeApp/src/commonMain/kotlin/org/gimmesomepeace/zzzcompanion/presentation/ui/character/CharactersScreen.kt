@@ -46,7 +46,7 @@ fun CharactersScreen(component: CharactersListComponent) {
         CharactersList(
             characters = state.characters,
             onMissingCharacterClick = { characterId ->
-                component.onAction(CharactersAction.Add(characterId))
+                component.onIntent(CharactersIntent.AddCharacter(characterId))
             }
         )
     }

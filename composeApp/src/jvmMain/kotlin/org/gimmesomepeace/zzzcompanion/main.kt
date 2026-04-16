@@ -25,7 +25,6 @@ import org.gimmesomepeace.zzzcompanion.data.util.UuidIdGenerator
 import org.gimmesomepeace.zzzcompanion.domain.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.domain.usecase.GetCharacterContextsUseCase
 import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersActionHandler
 import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersStore
 import org.gimmesomepeace.zzzcompanion.presentation.filter.CharactersFilterController
 import org.jetbrains.compose.resources.painterResource
@@ -68,7 +67,6 @@ fun main() {
     val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(ownedCharacterRepository, idGenerator)
     val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository, ownedCharacterRepository)
 
-    val charactersActionHandler = CharactersActionHandler(addCharacterToOwnedUseCase)
     val filterController = CharactersFilterController()
 
     val charactersStore = CharactersStore(
@@ -79,7 +77,6 @@ fun main() {
     )
 
     val component = CharactersListComponent(
-        actionHandler = charactersActionHandler,
         componentContext = context,
         charactersStore = charactersStore,
     )
