@@ -1,0 +1,13 @@
+package org.gimmesomepeace.zzzcompanion.data.storage.local.rarity
+
+import org.gimmesomepeace.zzzcompanion.domain.model.character.Rarity
+import org.gimmesomepeace.zzzcompanion.domain.model.character.RarityId
+
+
+fun RarityLocalEntity.toDomain(): Rarity = Rarity(
+    id = RarityId(id),
+    name = name,
+    imageUrl = imageUrl
+)
+
+fun List<RarityLocalEntity>.toDomain(): List<Rarity> = this.map { it.toDomain() }
