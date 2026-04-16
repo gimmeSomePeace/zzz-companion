@@ -1,11 +1,10 @@
-package org.gimmesomepeace.zzzcompanion.presentation.component
+package org.gimmesomepeace.zzzcompanion.presentation.model.character
 
 import org.gimmesomepeace.zzzcompanion.domain.model.character.Attribute
 import org.gimmesomepeace.zzzcompanion.domain.model.character.Faction
 import org.gimmesomepeace.zzzcompanion.domain.model.character.Rarity
 import org.gimmesomepeace.zzzcompanion.domain.model.character.Speciality
 import org.gimmesomepeace.zzzcompanion.presentation.filter.FiltersStateUi
-import org.gimmesomepeace.zzzcompanion.presentation.model.character.CharacterUi
 
 
 data class CharactersScreenState (

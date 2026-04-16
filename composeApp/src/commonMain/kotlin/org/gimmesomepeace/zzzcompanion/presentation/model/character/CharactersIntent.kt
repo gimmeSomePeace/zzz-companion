@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.presentation.component
+package org.gimmesomepeace.zzzcompanion.presentation.model.character
 
 import org.gimmesomepeace.zzzcompanion.domain.model.character.AttributeId
 import org.gimmesomepeace.zzzcompanion.domain.model.character.CharacterId

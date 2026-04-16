@@ -2,6 +2,9 @@ package org.gimmesomepeace.zzzcompanion.presentation.component
 
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.StateFlow
+import org.gimmesomepeace.zzzcompanion.presentation.CharactersStore
+import org.gimmesomepeace.zzzcompanion.presentation.model.character.CharactersIntent
+import org.gimmesomepeace.zzzcompanion.presentation.model.character.CharactersScreenState
 
 
 class CharactersListComponent (
