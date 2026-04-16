@@ -26,6 +26,7 @@ import org.gimmesomepeace.zzzcompanion.domain.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.domain.usecase.GetCharacterContextsUseCase
 import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersListComponent
 import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersActionHandler
+import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersStore
 import org.gimmesomepeace.zzzcompanion.presentation.filter.CharactersFilterController
 import org.jetbrains.compose.resources.painterResource
 import zzz_companion.composeapp.generated.resources.Res
@@ -70,12 +71,17 @@ fun main() {
     val charactersActionHandler = CharactersActionHandler(addCharacterToOwnedUseCase)
     val filterController = CharactersFilterController()
 
-    val component = CharactersListComponent(
+    val charactersStore = CharactersStore(
+        getCharacterContextsUseCase = getCharacterContextsUseCase,
         referenceAggregator = referenceAggregator,
+        filterController = filterController,
+        addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
+    )
+
+    val component = CharactersListComponent(
         actionHandler = charactersActionHandler,
         componentContext = context,
-        filterController = filterController,
-        getCharacterContextsUseCase = getCharacterContextsUseCase,
+        charactersStore = charactersStore,
     )
 
     application {
