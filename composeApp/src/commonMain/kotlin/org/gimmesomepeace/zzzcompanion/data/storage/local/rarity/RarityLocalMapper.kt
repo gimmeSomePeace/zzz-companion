@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.storage.local.rarity
 
-import org.gimmesomepeace.zzzcompanion.domain.model.character.Rarity
-import org.gimmesomepeace.zzzcompanion.domain.model.character.RarityId
+import org.gimmesomepeace.zzzcompanion.core.model.Rarity
+import org.gimmesomepeace.zzzcompanion.core.model.id.RarityId
 
 
 fun RarityLocalEntity.toDomain(): Rarity = Rarity(

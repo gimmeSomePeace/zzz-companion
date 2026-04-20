@@ -1,8 +1,8 @@
 package org.gimmesomepeace.zzzcompanion.data.storage.local.ownedcharacter
 
-import org.gimmesomepeace.zzzcompanion.domain.model.character.CharacterId
-import org.gimmesomepeace.zzzcompanion.domain.model.character.OwnedCharacter
-import org.gimmesomepeace.zzzcompanion.domain.model.character.OwnedCharacterId
+import org.gimmesomepeace.zzzcompanion.core.model.OwnedCharacter
+import org.gimmesomepeace.zzzcompanion.core.model.OwnedCharacterId
+import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
 
 
 fun OwnedCharacterLocalEntity.toDomain() : OwnedCharacter = OwnedCharacter(

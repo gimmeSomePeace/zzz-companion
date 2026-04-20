@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.gimmesomepeace.zzzcompanion.data.storage.local.attribute.AttributeLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.attribute.toDomain
-import org.gimmesomepeace.zzzcompanion.domain.model.character.Attribute
-import org.gimmesomepeace.zzzcompanion.domain.repository.AttributeRepository
+import org.gimmesomepeace.zzzcompanion.core.model.Attribute
+import org.gimmesomepeace.zzzcompanion.core.repository.AttributeRepository
 
 
 class DefaultAttributeRepository(

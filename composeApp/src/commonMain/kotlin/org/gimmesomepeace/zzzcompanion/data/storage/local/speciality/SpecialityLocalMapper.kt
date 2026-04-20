@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.storage.local.speciality
 
-import org.gimmesomepeace.zzzcompanion.domain.model.character.Speciality
-import org.gimmesomepeace.zzzcompanion.domain.model.character.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.model.Speciality
+import org.gimmesomepeace.zzzcompanion.core.model.id.SpecialityId
 
 
 fun SpecialityLocalEntity.toDomain() : Speciality = Speciality(
