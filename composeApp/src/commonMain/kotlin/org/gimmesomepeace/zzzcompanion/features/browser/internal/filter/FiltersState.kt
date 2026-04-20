@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.filter
+package org.gimmesomepeace.zzzcompanion.features.browser.internal.filter
 
 import org.gimmesomepeace.zzzcompanion.core.model.id.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.model.id.FactionId

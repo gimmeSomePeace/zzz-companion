@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.aggregator
+package org.gimmesomepeace.zzzcompanion.features.browser.internal.aggregator
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

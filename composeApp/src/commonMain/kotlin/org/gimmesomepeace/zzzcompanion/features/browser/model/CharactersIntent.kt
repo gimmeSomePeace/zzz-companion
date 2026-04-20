@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.presentation.model
+package org.gimmesomepeace.zzzcompanion.features.browser.model
 
 import org.gimmesomepeace.zzzcompanion.core.model.id.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId

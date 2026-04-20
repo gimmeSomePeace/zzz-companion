@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.presentation
+package org.gimmesomepeace.zzzcompanion.features.browser
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -8,17 +8,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import org.gimmesomepeace.zzzcompanion.features.browser.aggregator.ReferenceAggregator
-import org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase.AddCharacterToOwnedUseCase
-import org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase.GetCharacterContextsUseCase
-import org.gimmesomepeace.zzzcompanion.features.browser.filter.FiltersState
-import org.gimmesomepeace.zzzcompanion.features.browser.filter.FiltersStateUi
-import org.gimmesomepeace.zzzcompanion.features.browser.filter.filterBy
-import org.gimmesomepeace.zzzcompanion.features.browser.filter.toUi
-import org.gimmesomepeace.zzzcompanion.features.browser.mapper.toUi
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.model.CharacterListItemUi
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.model.CharactersIntent
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.model.CharactersScreenState
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.aggregator.ReferenceAggregator
+import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
+import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharacterContextsUseCase
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.FiltersState
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.FiltersStateUi
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.filterBy
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.toUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersScreenState
 
 class CharactersStore(
     private val getCharacterContextsUseCase: GetCharacterContextsUseCase,

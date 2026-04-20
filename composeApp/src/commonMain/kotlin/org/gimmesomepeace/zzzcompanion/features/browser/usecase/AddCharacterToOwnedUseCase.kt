@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase
+package org.gimmesomepeace.zzzcompanion.features.browser.usecase
 
 import org.gimmesomepeace.zzzcompanion.core.model.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId

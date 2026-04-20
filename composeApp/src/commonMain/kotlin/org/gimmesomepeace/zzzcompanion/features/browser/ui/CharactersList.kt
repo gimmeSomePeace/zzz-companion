@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.presentation.ui
+package org.gimmesomepeace.zzzcompanion.features.browser.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
 
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 
 @Composable

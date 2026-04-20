@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.presentation.ui
+package org.gimmesomepeace.zzzcompanion.features.browser.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,8 +10,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.model.CharactersIntent
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
+import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.CharactersFilterBar
 
 
 @Composable
@@ -31,7 +32,7 @@ fun CharactersScreen(component: CharactersListComponent) {
             state.filters.speciality,
 
             { component.onIntent(CharactersIntent.SetQuery(it)) },
-            {component.onIntent(CharactersIntent.SetFaction(it)) },
+            { component.onIntent(CharactersIntent.SetFaction(it)) },
             { component.onIntent(CharactersIntent.SetAttribute(it)) },
             { component.onIntent(CharactersIntent.SetSpeciality(it)) },
             { component.onIntent(CharactersIntent.SetRarity(it)) },

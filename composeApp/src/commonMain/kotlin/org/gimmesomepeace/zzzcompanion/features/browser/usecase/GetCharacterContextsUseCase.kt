@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase
+package org.gimmesomepeace.zzzcompanion.features.browser.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

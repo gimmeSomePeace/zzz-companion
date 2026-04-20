@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.aggregator
+package org.gimmesomepeace.zzzcompanion.features.browser.internal.aggregator
 
 import org.gimmesomepeace.zzzcompanion.core.model.Attribute
 import org.gimmesomepeace.zzzcompanion.core.model.Faction

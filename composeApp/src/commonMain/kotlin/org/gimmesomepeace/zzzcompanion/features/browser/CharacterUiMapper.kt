@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.mapper
+package org.gimmesomepeace.zzzcompanion.features.browser
 
 import org.gimmesomepeace.zzzcompanion.core.model.Attribute
 import org.gimmesomepeace.zzzcompanion.core.model.Faction
@@ -9,7 +9,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.id.FactionId
 import org.gimmesomepeace.zzzcompanion.core.model.id.RarityId
 import org.gimmesomepeace.zzzcompanion.core.model.id.SpecialityId
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
-import org.gimmesomepeace.zzzcompanion.features.browser.presentation.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 
 fun CharacterListItem.toUi(

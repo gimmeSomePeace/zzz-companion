@@ -1,10 +1,10 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.presentation.model
+package org.gimmesomepeace.zzzcompanion.features.browser.model
 
 import org.gimmesomepeace.zzzcompanion.core.model.Attribute
 import org.gimmesomepeace.zzzcompanion.core.model.Faction
 import org.gimmesomepeace.zzzcompanion.core.model.Rarity
 import org.gimmesomepeace.zzzcompanion.core.model.Speciality
-import org.gimmesomepeace.zzzcompanion.features.browser.filter.FiltersStateUi
+import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.FiltersStateUi
 
 
 data class CharactersScreenState (

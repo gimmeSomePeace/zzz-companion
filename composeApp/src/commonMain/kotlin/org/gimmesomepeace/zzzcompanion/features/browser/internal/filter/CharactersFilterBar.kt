@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.features.browser.presentation.ui
+package org.gimmesomepeace.zzzcompanion.features.browser.internal.filter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
