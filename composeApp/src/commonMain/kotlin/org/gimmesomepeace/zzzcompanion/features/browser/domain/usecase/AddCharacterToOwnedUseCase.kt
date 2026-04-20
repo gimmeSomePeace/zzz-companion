@@ -1,13 +1,21 @@
 package org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase
 
+import org.gimmesomepeace.zzzcompanion.core.model.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
-import org.gimmesomepeace.zzzcompanion.features.browser.repository.CharacterRepository
+import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterUserDataId
+import org.gimmesomepeace.zzzcompanion.core.repository.CharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.core.util.IdGenerator
 
 
 class AddCharacterToOwnedUseCase(
-    private val characterRepository: CharacterRepository
+    private val characterUserDataRepository: CharacterUserDataRepository,
+    private val idGenerator: IdGenerator,
 ) {
     fun execute(characterId: CharacterId) {
-        return characterRepository.setOwned(characterId, true)
+        characterUserDataRepository.addIfNotExistsByCharacterId(CharacterUserData(
+            id = CharacterUserDataId(idGenerator.generateId()),
+            characterId = characterId,
+            disks = emptyList(),
+        ))
     }
 }
