@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.gimmesomepeace.zzzcompanion.data.storage.local.faction.FactionLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.faction.toDomain
-import org.gimmesomepeace.zzzcompanion.domain.model.character.Faction
-import org.gimmesomepeace.zzzcompanion.domain.repository.FactionRepository
+import org.gimmesomepeace.zzzcompanion.core.model.Faction
+import org.gimmesomepeace.zzzcompanion.core.repository.FactionRepository
 
 
 class DefaultFactionRepository(

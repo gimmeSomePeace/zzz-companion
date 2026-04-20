@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.storage.local.attribute
 
-import org.gimmesomepeace.zzzcompanion.domain.model.character.Attribute
-import org.gimmesomepeace.zzzcompanion.domain.model.character.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.model.Attribute
+import org.gimmesomepeace.zzzcompanion.core.model.id.AttributeId
 
 
 fun AttributeLocalEntity.toDomain(): Attribute = Attribute(

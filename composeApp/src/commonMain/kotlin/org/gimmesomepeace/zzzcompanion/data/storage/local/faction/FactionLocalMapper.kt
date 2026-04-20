@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.storage.local.faction
 
-import org.gimmesomepeace.zzzcompanion.domain.model.character.Faction
-import org.gimmesomepeace.zzzcompanion.domain.model.character.FactionId
+import org.gimmesomepeace.zzzcompanion.core.model.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.id.FactionId
 
 
 fun FactionLocalEntity.toDomain(): Faction = Faction(

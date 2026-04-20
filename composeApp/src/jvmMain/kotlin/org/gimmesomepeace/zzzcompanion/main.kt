@@ -8,11 +8,10 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import org.gimmesomepeace.zzzcompanion.aggregator.ReferenceAggregator
+import org.gimmesomepeace.zzzcompanion.features.browser.aggregator.ReferenceAggregator
 import org.gimmesomepeace.zzzcompanion.data.repository.DefaultAttributeRepository
 import org.gimmesomepeace.zzzcompanion.data.repository.DefaultCharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.repository.DefaultFactionRepository
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultOwnedCharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.repository.DefaultRarityRepository
 import org.gimmesomepeace.zzzcompanion.data.repository.DefaultSpecialityRepository
 import org.gimmesomepeace.zzzcompanion.data.storage.local.attribute.FakeAttributeLocalDataSource
@@ -21,11 +20,10 @@ import org.gimmesomepeace.zzzcompanion.data.storage.local.faction.FakeFactionLoc
 import org.gimmesomepeace.zzzcompanion.data.storage.local.ownedcharacter.FakeOwnedCharacterLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.rarity.FakeRarityLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.speciality.FakeSpecialityLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.util.UuidIdGenerator
-import org.gimmesomepeace.zzzcompanion.domain.usecase.AddCharacterToOwnedUseCase
-import org.gimmesomepeace.zzzcompanion.domain.usecase.GetCharacterContextsUseCase
-import org.gimmesomepeace.zzzcompanion.presentation.component.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.presentation.CharactersStore
+import org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase.AddCharacterToOwnedUseCase
+import org.gimmesomepeace.zzzcompanion.features.browser.domain.usecase.GetCharacterContextsUseCase
+import org.gimmesomepeace.zzzcompanion.features.browser.presentation.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.presentation.CharactersStore
 import org.jetbrains.compose.resources.painterResource
 import zzz_companion.composeapp.generated.resources.Res
 import zzz_companion.composeapp.generated.resources.icon
@@ -38,9 +36,6 @@ fun main() {
 
     val fakeCharacterLocalDataSource = FakeCharacterLocalDataSource()
     val characterRepository = DefaultCharacterRepository(fakeCharacterLocalDataSource)
-
-    val fakeOwnedLocalDataSource = FakeOwnedCharacterLocalDataSource()
-    val ownedCharacterRepository = DefaultOwnedCharacterRepository(fakeOwnedLocalDataSource)
 
     val fakeFactionLocalDataSource = FakeFactionLocalDataSource()
     val factionRepository = DefaultFactionRepository(fakeFactionLocalDataSource)
@@ -62,9 +57,8 @@ fun main() {
     )
 
 
-    val idGenerator = UuidIdGenerator()
-    val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(ownedCharacterRepository, idGenerator)
-    val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository, ownedCharacterRepository)
+    val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterRepository)
+    val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository)
 
     val charactersStore = CharactersStore(
         getCharacterContextsUseCase = getCharacterContextsUseCase,
