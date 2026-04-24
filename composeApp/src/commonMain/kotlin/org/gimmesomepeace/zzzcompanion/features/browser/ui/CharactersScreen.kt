@@ -6,10 +6,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.debounce
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.CharactersFilterBar
@@ -18,6 +24,15 @@ import org.gimmesomepeace.zzzcompanion.features.browser.internal.filter.Characte
 @Composable
 fun CharactersScreen(component: CharactersListComponent) {
     val state by component.uiState.collectAsStateWithLifecycle()
+    var localQuery by remember { mutableStateOf("") }
+
+    LaunchedEffect(localQuery) {
+        snapshotFlow { localQuery }
+            .debounce(300)
+            .collect {
+                component.onIntent(CharactersIntent.SetQuery(it))
+            }
+    }
 
     Column(
         modifier = Modifier
@@ -25,13 +40,13 @@ fun CharactersScreen(component: CharactersListComponent) {
             .padding(16.dp)
     ) {
         CharactersFilterBar(
-            state.filters.query,
+            localQuery,
             state.filters.faction,
             state.filters.rarity,
             state.filters.attribute,
             state.filters.speciality,
 
-            { component.onIntent(CharactersIntent.SetQuery(it)) },
+            onSearchQueryChanged = { localQuery = it },
             { component.onIntent(CharactersIntent.SetFaction(it)) },
             { component.onIntent(CharactersIntent.SetAttribute(it)) },
             { component.onIntent(CharactersIntent.SetSpeciality(it)) },

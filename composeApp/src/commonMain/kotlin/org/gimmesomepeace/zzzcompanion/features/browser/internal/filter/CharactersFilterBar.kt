@@ -1,6 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.features.browser.internal.filter
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -98,15 +99,16 @@ fun CharactersFilterBar(
             },
             modifier = Modifier.weight(1f),
         )
-        TextField(
-            value = searchQuery,
-            onValueChange = onSearchQueryChanged,
-            placeholder = { Text("Search...") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .weight(2f),
-            singleLine = true,
-        )
+        Box(Modifier.weight(2f)) {
+            TextField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChanged,
+                placeholder = { Text("Search...") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                singleLine = true,
+            )
+        }
     }
 }
