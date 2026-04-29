@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CharacterUserDataDataSource {
     fun getAll(): Flow<List<CharacterUserDataLocalEntity>>
-    fun getByCharacterId(characterId: String) : CharacterUserDataLocalEntity?
-    fun existsByCharacterId(characterId: String): Boolean
+    fun getById(id: String) : CharacterUserDataLocalEntity?
+    fun existsById(id: String): Boolean
     fun insert(character: CharacterUserDataLocalEntity)
 }

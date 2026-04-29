@@ -21,7 +21,6 @@ import org.gimmesomepeace.zzzcompanion.data.storage.local.characteruserdata.Fake
 import org.gimmesomepeace.zzzcompanion.data.storage.local.faction.FakeFactionLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.rarity.FakeRarityLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.speciality.FakeSpecialityLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.util.UuidIdGenerator
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharacterContextsUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
@@ -58,12 +57,10 @@ fun main() {
         rarityRepository = rarityRepository
     )
 
-    val idGenerator = UuidIdGenerator()
-
     val fakeCharacterUserDataLocalDataSource = FakeCharacterUserDataLocalDataSource()
     val characterUserDataRepository = CharacterUserDataRepositoryImpl(fakeCharacterUserDataLocalDataSource)
 
-    val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository, idGenerator)
+    val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository)
     val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository, characterUserDataRepository)
 
     val charactersStore = CharactersStore(

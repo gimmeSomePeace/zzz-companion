@@ -3,7 +3,6 @@ package org.gimmesomepeace.zzzcompanion.data.storage.local.characteruserdata
 
 data class CharacterUserDataLocalEntity(
     val id: String,
-    val characterId: String,
 
     val disks1Id: String?,
     val disks2Id: String?,

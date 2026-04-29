@@ -10,7 +10,6 @@ class FakeCharacterUserDataLocalDataSource : CharacterUserDataDataSource {
         listOf(
             CharacterUserDataLocalEntity(
                 "1",
-               "1",
                 null,
                 null,
                 null,
@@ -25,12 +24,12 @@ class FakeCharacterUserDataLocalDataSource : CharacterUserDataDataSource {
         return ownedCharacters.asStateFlow()
     }
 
-    override fun getByCharacterId(characterId: String): CharacterUserDataLocalEntity? {
-        return ownedCharacters.value.firstOrNull { it.characterId == characterId}
+    override fun getById(id: String): CharacterUserDataLocalEntity? {
+        return ownedCharacters.value.firstOrNull { it.id == id}
     }
 
-    override fun existsByCharacterId(characterId: String): Boolean {
-        return ownedCharacters.value.any { it.characterId == characterId }
+    override fun existsById(id: String): Boolean {
+        return ownedCharacters.value.any { it.id == id }
     }
 
     override fun insert(character: CharacterUserDataLocalEntity) {

@@ -26,7 +26,7 @@ class GetCharacterContextsUseCase(
                 rarityId = it.rarityId,
                 imageUrl = it.imageUrl,
 
-                isOwned = userData.any { data -> it.id == data.characterId },
+                isOwned = userData.any { data -> it.id == data.id },
             )
         }
     }

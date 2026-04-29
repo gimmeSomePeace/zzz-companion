@@ -3,6 +3,7 @@ package org.gimmesomepeace.zzzcompanion.data.storage.local.speciality
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.net.URI
 
 
 class FakeSpecialityLocalDataSource: SpecialityLocalDataSource {
@@ -11,12 +12,12 @@ class FakeSpecialityLocalDataSource: SpecialityLocalDataSource {
             SpecialityLocalEntity(
                 "1",
                 "Anomaly",
-                "https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d2/Icon_Anomaly.png/revision/latest/scale-to-width-down/32?cb=20240704113735"
+                URI("https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d2/Icon_Anomaly.png/revision/latest/scale-to-width-down/32?cb=20240704113735")
             ),
             SpecialityLocalEntity(
                 "2",
                 "Support",
-                "https://static.wikia.nocookie.net/zenless-zone-zero/images/2/2f/Icon_Support.png/revision/latest/scale-to-width-down/32?cb=20240704113754"
+                URI("https://static.wikia.nocookie.net/zenless-zone-zero/images/2/2f/Icon_Support.png/revision/latest/scale-to-width-down/32?cb=20240704113754")
             )
         )
     )

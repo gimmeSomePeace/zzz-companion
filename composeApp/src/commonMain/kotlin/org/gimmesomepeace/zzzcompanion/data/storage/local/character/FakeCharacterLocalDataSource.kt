@@ -3,6 +3,7 @@ package org.gimmesomepeace.zzzcompanion.data.storage.local.character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.net.URI
 
 
 class FakeCharacterLocalDataSource : CharacterLocalDataSource {
@@ -15,7 +16,7 @@ class FakeCharacterLocalDataSource : CharacterLocalDataSource {
                 "1",
                 "1",
                 "1",
-                "https://sunderarmor.com/ZZZ/Character/thumb_corin.png"
+                URI("https://sunderarmor.com/ZZZ/Character/thumb_corin.png")
             ),
             CharacterLocalEntity(
                 "2",
@@ -24,7 +25,7 @@ class FakeCharacterLocalDataSource : CharacterLocalDataSource {
                 "2",
                 "2",
                 "2",
-                "https://sunderarmor.com/ZZZ/Character/thumb_alice.png"
+                URI("https://sunderarmor.com/ZZZ/Character/thumb_alice.png")
             )
         )
     )
