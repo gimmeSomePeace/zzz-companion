@@ -8,7 +8,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.Speciality
 import org.gimmesomepeace.zzzcompanion.core.repository.SpecialityRepository
 
 
-class DefaultSpecialityRepository(
+class SpecialityRepositoryImpl(
     private val localDataSource: SpecialityLocalDataSource,
 ) : SpecialityRepository {
     override fun getAll(): Flow<List<Speciality>> {

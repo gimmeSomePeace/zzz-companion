@@ -10,7 +10,7 @@ import org.gimmesomepeace.zzzcompanion.data.storage.local.characteruserdata.toDo
 import org.gimmesomepeace.zzzcompanion.data.storage.local.characteruserdata.toLocalEntity
 
 
-class DefaultCharacterUserDataRepository(
+class CharacterUserDataRepositoryImpl(
     private val characterUserDataLocalDataSource: FakeCharacterUserDataLocalDataSource
 ): CharacterUserDataRepository {
     override fun getAll(): Flow<List<CharacterUserData>> {

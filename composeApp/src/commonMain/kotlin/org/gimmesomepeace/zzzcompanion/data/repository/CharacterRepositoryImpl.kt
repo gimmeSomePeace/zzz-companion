@@ -8,7 +8,7 @@ import org.gimmesomepeace.zzzcompanion.core.repository.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.storage.local.character.toDomain
 
 
-class DefaultCharacterRepository(
+class CharacterRepositoryImpl(
     private val characterLocalDataSource: CharacterLocalDataSource,
 ) : CharacterRepository {
 

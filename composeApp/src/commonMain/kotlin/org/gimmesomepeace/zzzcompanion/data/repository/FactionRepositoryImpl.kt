@@ -8,7 +8,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.Faction
 import org.gimmesomepeace.zzzcompanion.core.repository.FactionRepository
 
 
-class DefaultFactionRepository(
+class FactionRepositoryImpl(
     private val factionLocalDataSource: FactionLocalDataSource,
 ) : FactionRepository {
     override fun getAll(): Flow<List<Faction>> {

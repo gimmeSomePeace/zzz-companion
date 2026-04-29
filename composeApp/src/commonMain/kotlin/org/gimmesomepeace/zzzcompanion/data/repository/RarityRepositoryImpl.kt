@@ -8,7 +8,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.Rarity
 import org.gimmesomepeace.zzzcompanion.core.repository.RarityRepository
 
 
-class DefaultRarityRepository(
+class RarityRepositoryImpl(
     private val localDataSource: RarityLocalDataSource,
 ) : RarityRepository {
     override fun getAll(): Flow<List<Rarity>> {

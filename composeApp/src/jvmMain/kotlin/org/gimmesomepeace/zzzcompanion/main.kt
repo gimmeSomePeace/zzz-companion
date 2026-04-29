@@ -9,12 +9,12 @@ import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.gimmesomepeace.zzzcompanion.features.browser.internal.aggregator.ReferenceAggregator
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultAttributeRepository
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultCharacterRepository
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultCharacterUserDataRepository
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultFactionRepository
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultRarityRepository
-import org.gimmesomepeace.zzzcompanion.data.repository.DefaultSpecialityRepository
+import org.gimmesomepeace.zzzcompanion.data.repository.AttributeRepositoryImpl
+import org.gimmesomepeace.zzzcompanion.data.repository.CharacterRepositoryImpl
+import org.gimmesomepeace.zzzcompanion.data.repository.CharacterUserDataRepositoryImpl
+import org.gimmesomepeace.zzzcompanion.data.repository.FactionRepositoryImpl
+import org.gimmesomepeace.zzzcompanion.data.repository.RarityRepositoryImpl
+import org.gimmesomepeace.zzzcompanion.data.repository.SpecialityRepositoryImpl
 import org.gimmesomepeace.zzzcompanion.data.storage.local.attribute.FakeAttributeLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.character.FakeCharacterLocalDataSource
 import org.gimmesomepeace.zzzcompanion.data.storage.local.characteruserdata.FakeCharacterUserDataLocalDataSource
@@ -37,19 +37,19 @@ fun main() {
 
 
     val fakeCharacterLocalDataSource = FakeCharacterLocalDataSource()
-    val characterRepository = DefaultCharacterRepository(fakeCharacterLocalDataSource)
+    val characterRepository = CharacterRepositoryImpl(fakeCharacterLocalDataSource)
 
     val fakeFactionLocalDataSource = FakeFactionLocalDataSource()
-    val factionRepository = DefaultFactionRepository(fakeFactionLocalDataSource)
+    val factionRepository = FactionRepositoryImpl(fakeFactionLocalDataSource)
 
     val fakeAttributeLocalDataSource = FakeAttributeLocalDataSource()
-    val attributeRepository = DefaultAttributeRepository(fakeAttributeLocalDataSource)
+    val attributeRepository = AttributeRepositoryImpl(fakeAttributeLocalDataSource)
 
     val fakeSpecialityLocalDataSource = FakeSpecialityLocalDataSource()
-    val specialityRepository = DefaultSpecialityRepository(fakeSpecialityLocalDataSource)
+    val specialityRepository = SpecialityRepositoryImpl(fakeSpecialityLocalDataSource)
 
     val fakeRarityLocalDataSource = FakeRarityLocalDataSource()
-    val rarityRepository = DefaultRarityRepository(fakeRarityLocalDataSource)
+    val rarityRepository = RarityRepositoryImpl(fakeRarityLocalDataSource)
 
     val referenceAggregator = ReferenceAggregator(
         factionRepository = factionRepository,
@@ -61,7 +61,7 @@ fun main() {
     val idGenerator = UuidIdGenerator()
 
     val fakeCharacterUserDataLocalDataSource = FakeCharacterUserDataLocalDataSource()
-    val characterUserDataRepository = DefaultCharacterUserDataRepository(fakeCharacterUserDataLocalDataSource)
+    val characterUserDataRepository = CharacterUserDataRepositoryImpl(fakeCharacterUserDataLocalDataSource)
 
     val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository, idGenerator)
     val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository, characterUserDataRepository)

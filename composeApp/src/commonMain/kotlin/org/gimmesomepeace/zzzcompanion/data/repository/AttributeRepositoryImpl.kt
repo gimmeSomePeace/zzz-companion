@@ -8,7 +8,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.Attribute
 import org.gimmesomepeace.zzzcompanion.core.repository.AttributeRepository
 
 
-class DefaultAttributeRepository(
+class AttributeRepositoryImpl(
     private val localDataSource: AttributeLocalDataSource
 ) : AttributeRepository {
     override fun getAll(): Flow<List<Attribute>> {
