@@ -11,12 +11,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import java.net.URI
 
 
 @Composable
 fun FilterItem(
     text: String,
-    imageUrl: String,
+    imageUrl: URI,
     modifier: Modifier = Modifier
 ) {
     Row(modifier.fillMaxWidth()) {

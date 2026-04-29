@@ -16,10 +16,10 @@ fun FiltersState.toUi(
     raritiesById: Map<RarityId, Rarity>,
     specialitiesById: Map<SpecialityId, Speciality>,
 ) : FiltersStateUi {
-    val faction = factionsById.getOrDefault(factionId, null)
-    val attribute = attributesById.getOrDefault(attributeId, null)
-    val rarity = raritiesById.getOrDefault(rarityId, null)
-    val speciality = specialitiesById.getOrDefault(specialityId, null)
+    val faction = factionsById[factionId]
+    val attribute = attributesById[attributeId]
+    val rarity = raritiesById[rarityId]
+    val speciality = specialitiesById[specialityId]
 
     return FiltersStateUi(
         query = query,
