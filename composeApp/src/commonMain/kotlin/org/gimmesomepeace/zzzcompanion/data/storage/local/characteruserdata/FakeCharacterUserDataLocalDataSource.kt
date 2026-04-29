@@ -9,7 +9,7 @@ class FakeCharacterUserDataLocalDataSource : CharacterUserDataDataSource {
     private val ownedCharacters = MutableStateFlow(
         listOf(
             CharacterUserDataLocalEntity(
-                "1",
+                "0f902410-e39f-440b-a0ba-4c485d3039cc",
                 null,
                 null,
                 null,

@@ -18,11 +18,11 @@ class CharacterUserDataRepositoryImpl(
     }
 
     override fun getById(id: CharacterId): CharacterUserData? {
-        return characterUserDataLocalDataSource.getById(id.value)?.toDomain()
+        return characterUserDataLocalDataSource.getById(id.value.toString())?.toDomain()
     }
 
     override fun addIfNotExists(characterUserData: CharacterUserData) : Boolean {
-        if (characterUserDataLocalDataSource.getById(characterUserData.id.value) == null) {
+        if (characterUserDataLocalDataSource.getById(characterUserData.id.value.toString()) == null) {
             characterUserDataLocalDataSource.insert(characterUserData.toLocalEntity())
             return true
         }
