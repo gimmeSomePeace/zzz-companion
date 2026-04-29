@@ -5,6 +5,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.model.id.FactionId
 import org.gimmesomepeace.zzzcompanion.core.model.id.RarityId
 import org.gimmesomepeace.zzzcompanion.core.model.id.SpecialityId
+import java.net.URI
 
 data class CharacterListItem(
     val id: CharacterId,
@@ -15,6 +16,6 @@ data class CharacterListItem(
     val specialityId: SpecialityId,
     val rarityId: RarityId,
 
-    val imageUrl: String,
+    val imageUrl: URI,
     val isOwned: Boolean,
 )
