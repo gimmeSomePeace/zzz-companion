@@ -9,7 +9,7 @@ class AddCharacterToOwnedUseCase(
     private val characterUserDataRepository: CharacterUserDataRepository,
 ) {
     fun execute(characterId: CharacterId) {
-        characterUserDataRepository.addIfNotExistsByCharacterId(CharacterUserData(
+        characterUserDataRepository.addIfNotExists(CharacterUserData(
             id = characterId,
             disks = emptyList(),
         ))

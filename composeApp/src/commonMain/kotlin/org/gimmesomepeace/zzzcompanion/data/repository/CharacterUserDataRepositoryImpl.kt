@@ -17,12 +17,12 @@ class CharacterUserDataRepositoryImpl(
         return characterUserDataLocalDataSource.getAll().map { it.toDomain() }
     }
 
-    override fun getByCharacterId(characterId: CharacterId): CharacterUserData? {
-        return characterUserDataLocalDataSource.getByCharacterId(characterId.value)?.toDomain()
+    override fun getById(id: CharacterId): CharacterUserData? {
+        return characterUserDataLocalDataSource.getById(id.value)?.toDomain()
     }
 
-    override fun addIfNotExistsByCharacterId(characterUserData: CharacterUserData) : Boolean {
-        if (characterUserDataLocalDataSource.getByCharacterId(characterUserData.characterId.value) == null) {
+    override fun addIfNotExists(characterUserData: CharacterUserData) : Boolean {
+        if (characterUserDataLocalDataSource.getById(characterUserData.id.value) == null) {
             characterUserDataLocalDataSource.insert(characterUserData.toLocalEntity())
             return true
         }
