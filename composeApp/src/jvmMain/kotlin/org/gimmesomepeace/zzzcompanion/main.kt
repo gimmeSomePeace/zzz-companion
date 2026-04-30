@@ -9,18 +9,12 @@ import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.gimmesomepeace.zzzcompanion.features.browser.internal.aggregator.ReferenceAggregator
-import org.gimmesomepeace.zzzcompanion.data.repository.AttributeRepositoryImpl
-import org.gimmesomepeace.zzzcompanion.data.repository.CharacterRepositoryImpl
-import org.gimmesomepeace.zzzcompanion.data.repository.CharacterUserDataRepositoryImpl
-import org.gimmesomepeace.zzzcompanion.data.repository.FactionRepositoryImpl
-import org.gimmesomepeace.zzzcompanion.data.repository.RarityRepositoryImpl
-import org.gimmesomepeace.zzzcompanion.data.repository.SpecialityRepositoryImpl
-import org.gimmesomepeace.zzzcompanion.data.storage.local.attribute.FakeAttributeLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.storage.local.character.FakeCharacterLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.storage.local.characteruserdata.FakeCharacterUserDataLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.storage.local.faction.FakeFactionLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.storage.local.rarity.FakeRarityLocalDataSource
-import org.gimmesomepeace.zzzcompanion.data.storage.local.speciality.FakeSpecialityLocalDataSource
+import org.gimmesomepeace.zzzcompanion.data.attribute.memory.InMemoryAttributeRepository
+import org.gimmesomepeace.zzzcompanion.data.character.memory.InMemoryCharacterRepository
+import org.gimmesomepeace.zzzcompanion.data.characteruserdata.memory.InMemoryCharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.data.faction.memory.InMemoryFactionRepository
+import org.gimmesomepeace.zzzcompanion.data.rariry.memory.InMemoryRarityRepository
+import org.gimmesomepeace.zzzcompanion.data.speciality.memory.InMemorySpecialityRepository
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharacterContextsUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
@@ -35,20 +29,12 @@ fun main() {
     val context = DefaultComponentContext(lifecycle = lifecycle)
 
 
-    val fakeCharacterLocalDataSource = FakeCharacterLocalDataSource()
-    val characterRepository = CharacterRepositoryImpl(fakeCharacterLocalDataSource)
-
-    val fakeFactionLocalDataSource = FakeFactionLocalDataSource()
-    val factionRepository = FactionRepositoryImpl(fakeFactionLocalDataSource)
-
-    val fakeAttributeLocalDataSource = FakeAttributeLocalDataSource()
-    val attributeRepository = AttributeRepositoryImpl(fakeAttributeLocalDataSource)
-
-    val fakeSpecialityLocalDataSource = FakeSpecialityLocalDataSource()
-    val specialityRepository = SpecialityRepositoryImpl(fakeSpecialityLocalDataSource)
-
-    val fakeRarityLocalDataSource = FakeRarityLocalDataSource()
-    val rarityRepository = RarityRepositoryImpl(fakeRarityLocalDataSource)
+    val characterRepository = InMemoryCharacterRepository()
+    val factionRepository = InMemoryFactionRepository()
+    val attributeRepository = InMemoryAttributeRepository()
+    val specialityRepository = InMemorySpecialityRepository()
+    val rarityRepository = InMemoryRarityRepository()
+    val characterUserDataRepository = InMemoryCharacterUserDataRepository()
 
     val referenceAggregator = ReferenceAggregator(
         factionRepository = factionRepository,
@@ -57,8 +43,6 @@ fun main() {
         rarityRepository = rarityRepository
     )
 
-    val fakeCharacterUserDataLocalDataSource = FakeCharacterUserDataLocalDataSource()
-    val characterUserDataRepository = CharacterUserDataRepositoryImpl(fakeCharacterUserDataLocalDataSource)
 
     val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository)
     val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository, characterUserDataRepository)

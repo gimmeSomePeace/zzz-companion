@@ -34,7 +34,7 @@ class CharactersStore(
         _filters
     ) { characters, refs, filters ->
 
-        // TODO: поменять на норм логику. Пока это просто заглушка
+        // TODO(#16): добавить анимацию загрузки списка персонажей. Сейчас отображается пустой список
         var characterItems: List<CharacterListItemUi> = emptyList()
         if (!refs.factions.isEmpty()) {
             characterItems = characters.filterBy(filters).toUi(
