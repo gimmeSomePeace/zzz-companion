@@ -10,7 +10,6 @@ import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceAggregator
 import org.gimmesomepeace.zzzcompanion.data.attribute.memory.InMemoryAttributeRepository
 import org.gimmesomepeace.zzzcompanion.data.character.memory.InMemoryCharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.characteruserdata.memory.InMemoryCharacterUserDataRepository
@@ -20,6 +19,7 @@ import org.gimmesomepeace.zzzcompanion.data.speciality.memory.InMemorySpeciality
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
+import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
 
 
 fun main() {
@@ -34,11 +34,20 @@ fun main() {
     val rarityRepository = InMemoryRarityRepository()
     val characterUserDataRepository = InMemoryCharacterUserDataRepository()
 
-    val referenceAggregator = ReferenceAggregator(
-        factionRepository = factionRepository,
-        attributeRepository = attributeRepository,
-        specialityRepository = specialityRepository,
-        rarityRepository = rarityRepository
+    val factions = factionRepository.getAll()
+    val attributes = attributeRepository.getAll()
+    val specialities = specialityRepository.getAll()
+    val rarities = rarityRepository.getAll()
+    val refs = ReferenceData(
+        factions = factions,
+        attributes = attributes,
+        specialities = specialities,
+        rarities = rarities,
+
+        factionsById = factions.associateBy { it.id },
+        attributesById = attributes.associateBy { it.id },
+        specialitiesById = specialities.associateBy { it.id },
+        raritiesById = rarities.associateBy { it.id }
     )
 
 
@@ -47,8 +56,8 @@ fun main() {
 
     val charactersStore = CharactersStore(
         getCharactersPageUseCase = getCharactersPageUseCase,
-        referenceAggregator = referenceAggregator,
         addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
+        refs = refs,
     )
 
     val component = CharactersListComponent(

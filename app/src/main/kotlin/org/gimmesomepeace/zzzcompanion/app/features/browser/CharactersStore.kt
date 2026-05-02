@@ -8,12 +8,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceAggregator
+import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersStateUi
 import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.toUi
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
@@ -22,15 +21,14 @@ import kotlin.collections.emptyList
 
 class CharactersStore(
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
-    private val referenceAggregator: ReferenceAggregator,
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
+    private val refs: ReferenceData,
     private val pageSize: Int = 20
 ) {
     private val _filters: MutableStateFlow<CharacterFilters> = MutableStateFlow(
         CharacterFilters()
     )
     private val _characters: MutableStateFlow<List<CharacterListItem>> = MutableStateFlow(emptyList())
-    private val _refs = referenceAggregator.state
     private var cursor: String? = null
 
     init {
@@ -45,20 +43,16 @@ class CharactersStore(
 
     val state: StateFlow<CharactersScreenState> = combine(
         _characters,
-        _refs,
         _filters
-    ) { characters, refs, filters ->
+    ) { characters, filters ->
 
         // TODO(#16): добавить анимацию загрузки списка персонажей. Сейчас отображается пустой список
-        var characterItems: List<CharacterListItemUi> = emptyList()
-        if (!refs.factions.isEmpty()) {
-            characterItems = characters.toUi(
-                factionById = refs.factionsById,
-                specialitiesById = refs.specialitiesById,
-                attributesById = refs.attributesById,
-                raritiesById = refs.raritiesById
-            )
-        }
+        val characterItems = characters.toUi(
+            factionById = refs.factionsById,
+            specialitiesById = refs.specialitiesById,
+            attributesById = refs.attributesById,
+            raritiesById = refs.raritiesById
+        )
 
         CharactersScreenState(
             characters = characterItems,

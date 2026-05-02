@@ -6,8 +6,7 @@ import org.gimmesomepeace.zzzcompanion.core.repository.CharacterUserDataReposito
 import java.util.UUID
 
 
-class InMemoryCharacterUserDataRepository :
-    CharacterUserDataRepository {
+class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
 
     private var userInfo = listOf(
             CharacterUserData(
