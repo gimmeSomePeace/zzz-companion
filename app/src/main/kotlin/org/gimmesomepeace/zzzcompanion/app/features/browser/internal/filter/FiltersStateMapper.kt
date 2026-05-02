@@ -2,6 +2,7 @@ package org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter
 
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
 import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
@@ -11,7 +12,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 import kotlin.collections.get
 
 
-fun FiltersState.toUi(
+fun CharacterFilters.toUi(
     factionsById: Map<FactionId, Faction>,
     attributesById: Map<AttributeId, Attribute>,
     raritiesById: Map<RarityId, Rarity>,

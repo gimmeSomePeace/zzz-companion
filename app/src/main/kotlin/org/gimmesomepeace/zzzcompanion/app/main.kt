@@ -18,7 +18,7 @@ import org.gimmesomepeace.zzzcompanion.data.faction.memory.InMemoryFactionReposi
 import org.gimmesomepeace.zzzcompanion.data.rariry.memory.InMemoryRarityRepository
 import org.gimmesomepeace.zzzcompanion.data.speciality.memory.InMemorySpecialityRepository
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
-import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharacterContextsUseCase
+import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
 
 
@@ -43,10 +43,10 @@ fun main() {
 
 
     val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository)
-    val getCharacterContextsUseCase = GetCharacterContextsUseCase(characterRepository, characterUserDataRepository)
+    val getCharactersPageUseCase = GetCharactersPageUseCase(characterRepository, characterUserDataRepository)
 
     val charactersStore = CharactersStore(
-        getCharacterContextsUseCase = getCharacterContextsUseCase,
+        getCharactersPageUseCase = getCharactersPageUseCase,
         referenceAggregator = referenceAggregator,
         addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
     )

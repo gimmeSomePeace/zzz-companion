@@ -2,18 +2,17 @@ package org.gimmesomepeace.zzzcompanion.app.features.browser
 
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.StateFlow
-import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
 
 class CharactersListComponent (
     private val componentContext: ComponentContext,
-    private val charactersStore: org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
+    private val charactersStore: CharactersStore
 ) : ComponentContext by componentContext {
 
-    val uiState: StateFlow<org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState> = charactersStore.state
+    val uiState: StateFlow<CharactersScreenState> = charactersStore.state
 
-    fun onIntent(intent: org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent) {
+    fun onIntent(intent: CharactersIntent) {
         charactersStore.onIntent(intent)
     }
 }

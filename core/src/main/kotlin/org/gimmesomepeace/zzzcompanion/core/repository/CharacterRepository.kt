@@ -1,8 +1,8 @@
 package org.gimmesomepeace.zzzcompanion.core.repository
 
-import kotlinx.coroutines.flow.Flow
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Character
+import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
 
 interface CharacterRepository {
-    fun getAll() : Flow<List<Character>>
+    fun getPage(cursor: String?, limit: Int, filters: CharacterFilters) : Page<Character>
 }

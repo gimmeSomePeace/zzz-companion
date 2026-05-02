@@ -1,5 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser
 
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
@@ -10,18 +12,18 @@ import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 
 
-fun org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem.toUi(
+fun CharacterListItem.toUi(
     factionById: Map<FactionId, Faction>,
     raritiesById: Map<RarityId, Rarity>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,
-    ) : org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi {
+    ) : CharacterListItemUi {
     val faction = factionById.getValue(factionId)
     val rarity = requireNotNull(raritiesById[rarityId])
     val speciality = requireNotNull(specialitiesById[specialityId])
     val attribute = requireNotNull(attributesById[attributeId])
 
-    return _root_ide_package_.org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi(
+    return CharacterListItemUi(
         id = id,
         name = name,
         imageUrl = imageUrl,
@@ -34,12 +36,12 @@ fun org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
     )
 }
 
-fun List<org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem>.toUi(
+fun List<CharacterListItem>.toUi(
     factionById: Map<FactionId, Faction>,
     raritiesById: Map<RarityId, Rarity>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,
-): List<org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi> = this.map { it.toUi(
+): List<CharacterListItemUi> = this.map { it.toUi(
     factionById = factionById,
     raritiesById = raritiesById,
     specialitiesById = specialitiesById,

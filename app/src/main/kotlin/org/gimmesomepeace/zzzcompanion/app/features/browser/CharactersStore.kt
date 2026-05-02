@@ -9,38 +9,50 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceAggregator
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersState
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersStateUi
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.filterBy
+import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.toUi
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
-import org.gimmesomepeace.zzzcompanion.app.features.browser.toUi
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
-import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharacterContextsUseCase
+import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
+import kotlin.collections.emptyList
 
 class CharactersStore(
-    private val getCharacterContextsUseCase: org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharacterContextsUseCase,
-    private val referenceAggregator: org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceAggregator,
-    private val addCharacterToOwnedUseCase: org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
+    private val getCharactersPageUseCase: GetCharactersPageUseCase,
+    private val referenceAggregator: ReferenceAggregator,
+    private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
+    private val pageSize: Int = 20
 ) {
-    private val _filters: MutableStateFlow<org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersState> = MutableStateFlow(
-        _root_ide_package_.org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersState()
+    private val _filters: MutableStateFlow<CharacterFilters> = MutableStateFlow(
+        CharacterFilters()
     )
-    private val _characters = getCharacterContextsUseCase.execute()
+    private val _characters: MutableStateFlow<List<CharacterListItem>> = MutableStateFlow(emptyList())
     private val _refs = referenceAggregator.state
+    private var cursor: String? = null
 
-    val state: StateFlow<org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState> = combine(
+    init {
+        updatePage()
+    }
+
+    private fun updatePage() {
+        val page = getCharactersPageUseCase.execute(null, pageSize, _filters.value)
+        _characters.value = page.items
+        cursor = page.nextCursor
+    }
+
+    val state: StateFlow<CharactersScreenState> = combine(
         _characters,
         _refs,
         _filters
     ) { characters, refs, filters ->
 
         // TODO(#16): добавить анимацию загрузки списка персонажей. Сейчас отображается пустой список
-        var characterItems: List<org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi> = emptyList()
+        var characterItems: List<CharacterListItemUi> = emptyList()
         if (!refs.factions.isEmpty()) {
-            characterItems = characters.filterBy(filters).toUi(
+            characterItems = characters.toUi(
                 factionById = refs.factionsById,
                 specialitiesById = refs.specialitiesById,
                 attributesById = refs.attributesById,
@@ -48,7 +60,7 @@ class CharactersStore(
             )
         }
 
-        _root_ide_package_.org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState(
+        CharactersScreenState(
             characters = characterItems,
             factionOptions = listOf(null) + refs.factions,
             attributeOptions = listOf(null) + refs.attributes,
@@ -64,8 +76,8 @@ class CharactersStore(
     }.stateIn(
         scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
         SharingStarted.Eagerly,
-        _root_ide_package_.org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState(
-            filters = _root_ide_package_.org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersStateUi(),
+        CharactersScreenState(
+            filters = FiltersStateUi(),
             characters = emptyList(),
             factionOptions = emptyList(),
             attributeOptions = emptyList(),
@@ -74,15 +86,49 @@ class CharactersStore(
         )
     )
 
-    fun onIntent(intent: org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent) {
+    fun onIntent(intent: CharactersIntent) {
         when (intent) {
-            is CharactersIntent.SetQuery -> _filters.value = _filters.value.copy(query = intent.query)
-            is CharactersIntent.SetFaction -> _filters.value = _filters.value.copy(factionId = intent.factionId)
-            is CharactersIntent.SetAttribute -> _filters.value = _filters.value.copy(attributeId = intent.attributeId)
-            is CharactersIntent.SetSpeciality -> _filters.value = _filters.value.copy(specialityId = intent.specialityId)
-            is CharactersIntent.SetRarity -> _filters.value = _filters.value.copy(rarityId = intent.rarityId)
+            is CharactersIntent.SetQuery -> {
+                if (_filters.value.query != intent.query) {
+                    _filters.value = _filters.value.copy(query = intent.query)
+                    cursor = null
+                    updatePage()
+                }
+            }
+            is CharactersIntent.SetFaction -> {
+                if (_filters.value.factionId != intent.factionId) {
+                    _filters.value = _filters.value.copy(factionId = intent.factionId)
+                    cursor = null
+                    updatePage()
+                }
+            }
+            is CharactersIntent.SetAttribute -> {
+                if (_filters.value.attributeId != intent.attributeId) {
+                    _filters.value = _filters.value.copy(attributeId = intent.attributeId)
+                    cursor = null
+                    updatePage()
+                }
+            }
+            is CharactersIntent.SetSpeciality -> {
+                if (_filters.value.specialityId != intent.specialityId) {
+                    _filters.value = _filters.value.copy(specialityId = intent.specialityId)
+                    cursor = null
+                    updatePage()
+                }
+            }
+            is CharactersIntent.SetRarity -> {
+                if (_filters.value.rarityId != intent.rarityId) {
+                    _filters.value = _filters.value.copy(rarityId = intent.rarityId)
+                    cursor = null
+                    updatePage()
+                }
+            }
             is CharactersIntent.AddCharacter -> {
                 addCharacterToOwnedUseCase.execute(intent.characterId)
+                _characters.value = _characters.value.map {
+                    if (it.id == intent.characterId) it.copy(isOwned = true)
+                    else it
+                }
             }
         }
     }

@@ -1,16 +1,18 @@
 package org.gimmesomepeace.zzzcompanion.data.character.memory
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Character
+import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 import org.gimmesomepeace.zzzcompanion.core.repository.CharacterRepository
+import org.gimmesomepeace.zzzcompanion.core.repository.Page
 import java.net.URI
 import java.util.UUID
+import kotlin.collections.filter
 
 
 class InMemoryCharacterRepository : CharacterRepository {
@@ -37,7 +39,28 @@ class InMemoryCharacterRepository : CharacterRepository {
         )
     )
 
-    override fun getAll(): Flow<List<Character>> {
-        return characters
+    override fun getPage(
+        cursor: String?,
+        limit: Int,
+        filters: CharacterFilters
+    ): Page<Character> {
+        val items = applyFilters(characters.value, filters)
+            .sortedBy { it.id.value.toString() }
+            .filter { cursor == null || it.id.value.toString() > cursor }
+            .take(limit)
+        val nextCursor = items.lastOrNull()?.id?.value?.toString()
+
+        return Page(items, nextCursor)
+    }
+
+    private fun applyFilters(
+        characters: List<Character>,
+        filters: CharacterFilters
+    ): List<Character> = characters.filter {
+        (filters.query.isBlank() || it.name.contains(filters.query, ignoreCase = true)) &&
+                (filters.factionId == null || it.factionId == filters.factionId) &&
+                (filters.attributeId == null || it.attributeId == filters.attributeId) &&
+                (filters.specialityId == null || it.specialityId == filters.specialityId) &&
+                (filters.rarityId == null || it.rarityId == filters.rarityId)
     }
 }
