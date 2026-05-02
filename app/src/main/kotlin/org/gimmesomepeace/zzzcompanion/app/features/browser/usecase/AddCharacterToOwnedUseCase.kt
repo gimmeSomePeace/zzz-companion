@@ -11,8 +11,7 @@ class AddCharacterToOwnedUseCase(
     fun execute(characterId: CharacterId) {
         characterUserDataRepository.addIfNotExists(
             CharacterUserData(
-                id = characterId,
-                disks = emptyList(),
+                id = characterId
             )
         )
     }
