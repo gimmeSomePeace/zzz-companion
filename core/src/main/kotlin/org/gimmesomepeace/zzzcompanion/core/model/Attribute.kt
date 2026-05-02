@@ -5,7 +5,7 @@ import java.net.URI
 
 
 data class Attribute(
-    val id: org.gimmesomepeace.zzzcompanion.core.model.id.AttributeId,
+    val id: AttributeId,
     val name: String,
     val imageUrl: URI
 )

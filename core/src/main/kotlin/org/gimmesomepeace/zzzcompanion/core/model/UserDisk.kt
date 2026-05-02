@@ -1,11 +1,13 @@
-package org.zzzcompanion.disks.model
+package org.gimmesomepeace.zzzcompanion.core.model
+
+import org.zzzcompanion.disks.model.Stat
 
 class UserDisk (
     val id: Long,
     val diskTypeId: Long,
 
-    mainStat: org.zzzcompanion.disks.model.Stat,
-    additionalStates: List<org.zzzcompanion.disks.model.Stat>
+    mainStat: Stat,
+    additionalStates: List<Stat>
 ) {
     companion object {
     }

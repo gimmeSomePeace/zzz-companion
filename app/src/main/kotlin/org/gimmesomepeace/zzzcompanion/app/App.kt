@@ -6,6 +6,6 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.ui.CharactersScreen
 
 
 @Composable
-fun App(component : org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent) {
-    _root_ide_package_.org.gimmesomepeace.zzzcompanion.app.features.browser.ui.CharactersScreen(component)
+fun App(component : CharactersListComponent) {
+    CharactersScreen(component)
 }

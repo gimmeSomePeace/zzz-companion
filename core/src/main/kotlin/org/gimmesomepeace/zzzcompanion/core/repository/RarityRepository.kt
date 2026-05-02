@@ -5,5 +5,5 @@ import org.gimmesomepeace.zzzcompanion.core.model.Rarity
 
 
 interface RarityRepository {
-    fun getAll(): Flow<List<org.gimmesomepeace.zzzcompanion.core.model.Rarity>>
+    fun getAll(): Flow<List<Rarity>>
 }

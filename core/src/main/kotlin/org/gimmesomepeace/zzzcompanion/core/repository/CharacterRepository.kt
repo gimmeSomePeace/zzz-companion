@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 import org.gimmesomepeace.zzzcompanion.core.model.Character
 
 interface CharacterRepository {
-    fun getAll() : Flow<List<org.gimmesomepeace.zzzcompanion.core.model.Character>>
+    fun getAll() : Flow<List<Character>>
 }

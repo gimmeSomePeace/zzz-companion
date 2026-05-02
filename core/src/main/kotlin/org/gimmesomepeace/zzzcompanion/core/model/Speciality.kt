@@ -5,7 +5,7 @@ import java.net.URI
 
 
 data class Speciality(
-    val id: org.gimmesomepeace.zzzcompanion.core.model.id.SpecialityId,
+    val id: SpecialityId,
     val name: String,
     val imageUrl: URI
 )

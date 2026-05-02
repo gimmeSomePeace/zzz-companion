@@ -5,5 +5,5 @@ import org.gimmesomepeace.zzzcompanion.core.model.Speciality
 
 
 interface SpecialityRepository {
-    fun getAll() : Flow<List<org.gimmesomepeace.zzzcompanion.core.model.Speciality>>
+    fun getAll() : Flow<List<Speciality>>
 }

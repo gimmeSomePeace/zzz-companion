@@ -5,5 +5,5 @@ import org.gimmesomepeace.zzzcompanion.core.model.Faction
 
 
 interface FactionRepository {
-    fun getAll() : Flow<List<org.gimmesomepeace.zzzcompanion.core.model.Faction>>
+    fun getAll() : Flow<List<Faction>>
 }
