@@ -17,6 +17,7 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersInte
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
+import org.gimmesomepeace.zzzcompanion.core.repository.AddCharacterUserDataResult
 import kotlin.collections.emptyList
 
 class CharactersStore(
@@ -118,10 +119,12 @@ class CharactersStore(
                 }
             }
             is CharactersIntent.AddCharacter -> {
-                addCharacterToOwnedUseCase.execute(intent.characterId)
-                _characters.value = _characters.value.map {
-                    if (it.id == intent.characterId) it.copy(isOwned = true)
-                    else it
+                val result = addCharacterToOwnedUseCase.execute(intent.characterId)
+                if (result == AddCharacterUserDataResult.ADDED) {
+                    _characters.value = _characters.value.map {
+                        if (it.id == intent.characterId) it.copy(isOwned = true)
+                        else it
+                    }
                 }
             }
         }

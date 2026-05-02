@@ -2,6 +2,7 @@ package org.gimmesomepeace.zzzcompanion.data.characteruserdata.memory
 
 import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.repository.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.repository.CharacterUserDataRepository
 import java.util.UUID
 
@@ -17,11 +18,11 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
 
     override fun getById(id: CharacterId): CharacterUserData? = userInfo.find { it.id == id }
 
-    override fun addIfNotExists(characterUserData: CharacterUserData) : Boolean {
+    override fun addIfNotExists(characterUserData: CharacterUserData) : AddCharacterUserDataResult {
         if (userInfo.any { it.id == characterUserData.id }) {
-            return false
+            return AddCharacterUserDataResult.ALREADY_EXISTS
         }
         userInfo = userInfo.plus(characterUserData)
-        return true
+        return AddCharacterUserDataResult.ADDED
     }
 }
