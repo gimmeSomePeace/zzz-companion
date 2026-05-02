@@ -1,6 +1,6 @@
-package org.gimmesomepeace.zzzcompanion.core.model
+package org.gimmesomepeace.zzzcompanion.core.model.characters
 
-import org.gimmesomepeace.zzzcompanion.core.model.id.*
+import org.gimmesomepeace.zzzcompanion.core.model.ids.*
 import java.net.URI
 
 data class Character(

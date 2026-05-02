@@ -2,8 +2,8 @@ package org.gimmesomepeace.zzzcompanion.data.attribute.memory
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.gimmesomepeace.zzzcompanion.core.model.Attribute
-import org.gimmesomepeace.zzzcompanion.core.model.id.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
+import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.repository.AttributeRepository
 import java.net.URI
 import java.util.UUID

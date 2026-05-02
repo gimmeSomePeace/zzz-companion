@@ -1,10 +1,10 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser.model
 
-import org.gimmesomepeace.zzzcompanion.core.model.Attribute
-import org.gimmesomepeace.zzzcompanion.core.model.Faction
-import org.gimmesomepeace.zzzcompanion.core.model.Rarity
-import org.gimmesomepeace.zzzcompanion.core.model.Speciality
-import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
+import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
 import java.net.URI
 
 data class CharacterListItemUi(

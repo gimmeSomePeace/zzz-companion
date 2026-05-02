@@ -16,7 +16,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.gimmesomepeace.uikit.grayscale
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
-import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
 
 
 @Composable

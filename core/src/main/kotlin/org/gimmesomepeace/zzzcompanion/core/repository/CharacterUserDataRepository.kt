@@ -1,8 +1,8 @@
 package org.gimmesomepeace.zzzcompanion.core.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.gimmesomepeace.zzzcompanion.core.model.CharacterUserData
-import org.gimmesomepeace.zzzcompanion.core.model.id.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterUserData
+import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
 
 
 interface CharacterUserDataRepository {

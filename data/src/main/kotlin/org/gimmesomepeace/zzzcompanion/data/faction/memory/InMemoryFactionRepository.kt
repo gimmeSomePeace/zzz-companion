@@ -2,8 +2,8 @@ package org.gimmesomepeace.zzzcompanion.data.faction.memory
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.gimmesomepeace.zzzcompanion.core.model.Faction
-import org.gimmesomepeace.zzzcompanion.core.model.id.FactionId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
 import org.gimmesomepeace.zzzcompanion.core.repository.FactionRepository
 import java.net.URI
 import java.util.UUID

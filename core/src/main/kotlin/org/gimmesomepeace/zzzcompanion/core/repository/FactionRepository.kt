@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.core.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.gimmesomepeace.zzzcompanion.core.model.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
 
 
 interface FactionRepository {

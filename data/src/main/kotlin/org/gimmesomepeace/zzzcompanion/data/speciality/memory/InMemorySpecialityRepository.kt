@@ -2,8 +2,8 @@ package org.gimmesomepeace.zzzcompanion.data.speciality.memory
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.gimmesomepeace.zzzcompanion.core.model.Speciality
-import org.gimmesomepeace.zzzcompanion.core.model.id.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
+import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 import org.gimmesomepeace.zzzcompanion.core.repository.SpecialityRepository
 import java.net.URI
 import java.util.UUID

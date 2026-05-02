@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.core.model.id
+package org.gimmesomepeace.zzzcompanion.core.model.ids
 
 import java.util.*
 

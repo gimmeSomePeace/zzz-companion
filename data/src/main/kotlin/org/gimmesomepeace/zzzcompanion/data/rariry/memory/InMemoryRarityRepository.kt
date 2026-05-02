@@ -2,8 +2,8 @@ package org.gimmesomepeace.zzzcompanion.data.rariry.memory
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.gimmesomepeace.zzzcompanion.core.model.Rarity
-import org.gimmesomepeace.zzzcompanion.core.model.id.RarityId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
+import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
 import org.gimmesomepeace.zzzcompanion.core.repository.RarityRepository
 import java.net.URI
 import java.util.UUID

@@ -1,16 +1,13 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser
 
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
-import org.gimmesomepeace.zzzcompanion.app.features.browser.toUi
-import org.gimmesomepeace.zzzcompanion.core.model.Attribute
-import org.gimmesomepeace.zzzcompanion.core.model.Faction
-import org.gimmesomepeace.zzzcompanion.core.model.Rarity
-import org.gimmesomepeace.zzzcompanion.core.model.Speciality
-import org.gimmesomepeace.zzzcompanion.core.model.id.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.model.id.FactionId
-import org.gimmesomepeace.zzzcompanion.core.model.id.RarityId
-import org.gimmesomepeace.zzzcompanion.core.model.id.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
+import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
+import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
+import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
+import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 
 
 fun org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem.toUi(
