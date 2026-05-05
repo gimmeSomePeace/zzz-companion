@@ -21,13 +21,13 @@ fun ThumbCharacter(character: CharacterListItemUi) {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(
                 resource = asyncPainterResource(data = character.imageUrl),
-                contentDescription = null,
+                contentDescription = "Аватар персонажа",
                 modifier = Modifier.fillMaxSize(),
             )
 
             KamelImage(
                 resource = asyncPainterResource(data = character.speciality?.imageUrl ?: ""),
-                contentDescription = null,
+                contentDescription = "Изображение специализации",
                 modifier = Modifier
                     .size(24.dp)
                     .align(Alignment.TopEnd)
@@ -36,7 +36,7 @@ fun ThumbCharacter(character: CharacterListItemUi) {
 
             KamelImage(
                 resource = asyncPainterResource(data = character.attribute?.imageUrl ?: ""),
-                contentDescription = null,
+                contentDescription = "Изображение атрибута",
                 modifier = Modifier
                     .size(24.dp)
                     .align(Alignment.TopEnd)
