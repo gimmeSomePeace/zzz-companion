@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun EmptyItem() {
+fun DefaultItem() {
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(text = "-- Все --")
     }

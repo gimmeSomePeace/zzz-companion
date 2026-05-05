@@ -10,7 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.gimmesomepeace.uikit.EmptyItem
+import org.gimmesomepeace.uikit.DefaultItem
 import org.gimmesomepeace.uikit.FilterItem
 import org.gimmesomepeace.uikit.LabeledSelect
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
@@ -52,7 +52,7 @@ fun CharactersFilterBar(
             selectedRarity,
             { onRarityChanged(it?.id) },
             { item ->
-                if (item == null) EmptyItem() else FilterItem(
+                if (item == null) DefaultItem() else FilterItem(
                     item.name,
                     item.imageUrl
                 )
@@ -65,7 +65,7 @@ fun CharactersFilterBar(
             selectedFaction,
             { onFactionChanged(it?.id) },
             { item ->
-                if (item == null) EmptyItem() else FilterItem(
+                if (item == null) DefaultItem() else FilterItem(
                     item.name,
                     item.imageUrl
                 )
@@ -78,7 +78,7 @@ fun CharactersFilterBar(
             selectedAttribute,
             { onAttributeChanged(it?.id) },
             { item ->
-                if (item == null) EmptyItem() else FilterItem(
+                if (item == null) DefaultItem() else FilterItem(
                     item.name,
                     item.imageUrl
                 )
@@ -91,7 +91,7 @@ fun CharactersFilterBar(
             selectedSpeciality,
             { onSpecialityChanged(it?.id) },
             { item ->
-                if (item == null) EmptyItem() else FilterItem(
+                if (item == null) DefaultItem() else FilterItem(
                     item.name,
                     item.imageUrl
                 )
