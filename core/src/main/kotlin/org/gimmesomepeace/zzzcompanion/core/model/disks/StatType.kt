@@ -1,6 +1,9 @@
 package org.gimmesomepeace.zzzcompanion.core.model.disks
 
 
+/**
+ * Сущность вида характеристики. Используется и как главная характеристика, и как дополнительные.
+ */
 enum class StatType {
     HP,
     HP_PERCENTAGE,

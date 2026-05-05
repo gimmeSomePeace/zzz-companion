@@ -5,6 +5,9 @@ import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 
+/**
+ * Набор фильтров при пагинации персонажей.
+ */
 data class CharacterFilters(
     val query: String = "",
     val factionId: FactionId? = null,

@@ -1,6 +1,11 @@
 package org.gimmesomepeace.zzzcompanion.core.model.disks
 
 
+/**
+ * Агрегирует дополнительные характеристики в одну сущность.
+ *
+ * Инвариант: сумма уровней дополнительных характеристик не должна превышать 5.
+ */
 class SubStats private constructor(
     val state1: SubStatSlot,
     val state2: SubStatSlot,

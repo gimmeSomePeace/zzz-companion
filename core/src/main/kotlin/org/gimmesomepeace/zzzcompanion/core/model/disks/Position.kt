@@ -1,5 +1,11 @@
 package org.gimmesomepeace.zzzcompanion.core.model.disks
 
+
+/**
+ * Сущность позиции персонажа.
+ *
+ * Используется для фиксации наборов разрешенных типов основных характеристик на конкретной позиции.
+ */
 enum class Position(private val allowed: Set<StatType>) {
     P1(setOf(StatType.HP)),
     P2(setOf(StatType.ATTACK)),
