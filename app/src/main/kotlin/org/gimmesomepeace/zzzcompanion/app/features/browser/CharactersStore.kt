@@ -127,6 +127,7 @@ class CharactersStore(
                     }
                 }
             }
+            is CharactersIntent.GoToCharacter -> TODO("implement GoToCharacter")
         }
     }
 }

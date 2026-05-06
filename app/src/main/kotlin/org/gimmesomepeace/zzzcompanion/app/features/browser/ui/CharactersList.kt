@@ -13,7 +13,11 @@ import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
 
 
 @Composable
-fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClick: (CharacterId) -> Unit) {
+fun CharactersList(
+    characters: List<CharacterListItemUi>,
+    onMissingCharacterClick: (CharacterId) -> Unit,
+    onOwnedCharacterClick: (CharacterId) -> Unit,
+) {
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
@@ -25,7 +29,7 @@ fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClic
             characters,
             key = { it.id.value }
         ) { item ->
-            if (item.isOwned) { ThumbCharacter(item) }
+            if (item.isOwned) { ThumbCharacter(item, onOwnedCharacterClick) }
             else MissingThumbCharacter(item, onMissingCharacterClick)
         }
     }

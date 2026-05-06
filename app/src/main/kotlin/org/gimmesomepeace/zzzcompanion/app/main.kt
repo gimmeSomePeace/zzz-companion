@@ -60,7 +60,7 @@ fun main() {
         refs = refs,
     )
 
-    val component = CharactersListComponent(
+    val rootComponent = RootComponent(
         componentContext = context,
         charactersStore = charactersStore,
     )
@@ -76,7 +76,7 @@ fun main() {
                 position = WindowPosition.Aligned(Alignment.Center),
             )
         ) {
-            App(component)
+            App(rootComponent)
         }
     }
 }

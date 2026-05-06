@@ -1,5 +1,6 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,12 +14,16 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
 
 
 @Composable
-fun ThumbCharacter(character: CharacterListItemUi) {
+fun ThumbCharacter(
+    character: CharacterListItemUi,
+    onClick: (CharacterId) -> Unit,
+) {
     Column {
-        Box(modifier = Modifier.size(120.dp)) {
+        Box(modifier = Modifier.size(120.dp).clickable(onClick = { onClick(character.id) })) {
             KamelImage(
                 resource = asyncPainterResource(data = character.imageUrl),
                 contentDescription = "Аватар персонажа",

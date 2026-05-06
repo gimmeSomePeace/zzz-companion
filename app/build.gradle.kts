@@ -29,7 +29,8 @@ dependencies {
 
     implementation(libs.compose.components.resources)
 
-    implementation("com.arkivanov.decompose:decompose:3.5.0")
+    implementation("com.arkivanov.decompose:decompose:2.2.2")
+    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.2")
 
     implementation("media.kamel:kamel-image:1.0.8")
     implementation("media.kamel:kamel-image-default:1.0.8")

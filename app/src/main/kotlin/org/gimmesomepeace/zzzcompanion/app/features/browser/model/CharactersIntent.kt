@@ -16,4 +16,5 @@ sealed interface CharactersIntent {
     data class SetRarity(val rarityId: RarityId?) : CharactersIntent
 
     data class AddCharacter(val characterId: CharacterId) : CharactersIntent
+    data class GoToCharacter(val characterId: CharacterId) : CharactersIntent
 }
