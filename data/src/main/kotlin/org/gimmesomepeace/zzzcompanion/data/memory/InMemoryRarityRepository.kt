@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.rariry.memory
+package org.gimmesomepeace.zzzcompanion.data.memory
 
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId

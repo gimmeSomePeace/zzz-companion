@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.characteruserdata.memory
+package org.gimmesomepeace.zzzcompanion.data.memory
 
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId

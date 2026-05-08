@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.character.memory
+package org.gimmesomepeace.zzzcompanion.data.memory
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.gimmesomepeace.zzzcompanion.core.character.Character

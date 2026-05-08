@@ -1,8 +1,7 @@
-package org.gimmesomepeace.zzzcompanion.data.util
+package org.gimmesomepeace.zzzcompanion.data.shared
 
-import java.util.UUID
 import org.gimmesomepeace.zzzcompanion.core.shared.IdGenerator
-
+import java.util.UUID
 
 class UuidIdGenerator : IdGenerator {
     override fun generateId(): String {

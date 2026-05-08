@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.speciality.memory
+package org.gimmesomepeace.zzzcompanion.data.memory
 
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityFilters

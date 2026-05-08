@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.attribute.memory
+package org.gimmesomepeace.zzzcompanion.data.memory
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters

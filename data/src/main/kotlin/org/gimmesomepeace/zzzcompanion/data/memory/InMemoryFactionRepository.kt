@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.faction.memory
+package org.gimmesomepeace.zzzcompanion.data.memory
 
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionFilters
