@@ -1,6 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.core.disk
 
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
 
 
@@ -23,7 +22,6 @@ import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
  *
  *  @property id Уникальный идентификатор диска
  *  @property diskTypeId Вид диска
- *  @property characterId Идентификатор персонажа, к которому применен диск
  *  @property position Позиция диска (от 1 до 6)
  *  @property mainStat Основная характеристика
  *  @property subStats Набор дополнительных характеристик
@@ -33,7 +31,6 @@ class Disk private constructor(
     val id: DiskId,
     val diskTypeId: DiskTypeId,
 
-    val characterId: CharacterId,
     val position: Position,
 
     val mainStat: MainStatSlot,
@@ -43,7 +40,6 @@ class Disk private constructor(
         fun create(
             id: DiskId,
             diskTypeId: DiskTypeId,
-            characterId: CharacterId,
             position: Position,
             mainStat: MainStatSlot,
             subStats: SubStats
@@ -51,7 +47,7 @@ class Disk private constructor(
             require(position.isAllowed(mainStat.type)) {
                 "Stat (${mainStat.type}) should be allowed when position is $position"
             }
-            return Disk(id, diskTypeId, characterId, position, mainStat, subStats)
+            return Disk(id, diskTypeId, position, mainStat, subStats)
         }
     }
 }

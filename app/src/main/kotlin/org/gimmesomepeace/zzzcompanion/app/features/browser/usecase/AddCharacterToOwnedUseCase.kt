@@ -4,6 +4,7 @@ import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
 
 
 class AddCharacterToOwnedUseCase(
@@ -12,7 +13,8 @@ class AddCharacterToOwnedUseCase(
     fun execute(characterId: CharacterId): AddCharacterUserDataResult {
         return characterUserDataRepository.addIfNotExists(
             CharacterUserData(
-                id = characterId
+                id = characterId,
+                EquippedDisks()
             )
         )
     }

@@ -4,6 +4,7 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
@@ -13,7 +14,8 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
 
     private var userInfo = listOf(
         CharacterUserData(
-            CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc"))
+            CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
+            EquippedDisks()
         )
     )
 

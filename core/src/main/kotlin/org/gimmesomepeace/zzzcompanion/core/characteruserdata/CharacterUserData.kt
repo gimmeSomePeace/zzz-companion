@@ -9,5 +9,6 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
  * но при этом не уверен, что объединение этой модели с моделью Character это хорошая идея.
  */
 data class CharacterUserData(
-    val id: CharacterId
+    val id: CharacterId,
+    val equippedDisks: EquippedDisks
 )
