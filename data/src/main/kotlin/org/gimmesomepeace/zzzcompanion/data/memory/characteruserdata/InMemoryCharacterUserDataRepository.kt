@@ -12,10 +12,17 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
         CharacterUserData(
             CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc"))
         )
-        )
+    )
+
     override fun getAll(): List<CharacterUserData> = userInfo
 
     override fun getById(id: CharacterId): CharacterUserData? = userInfo.find { it.id == id }
+
+    override fun getByIds(ids: List<CharacterId>): Map<CharacterId, CharacterUserData> {
+        return userInfo
+            .filter { it.id in ids }
+            .associateBy { it.id }
+    }
 
     override fun addIfNotExists(characterUserData: CharacterUserData) : AddCharacterUserDataResult {
         if (userInfo.any { it.id == characterUserData.id }) {

@@ -13,10 +13,8 @@ class GetCharactersPageUseCase(
     private val characterUserDataRepository: CharacterUserDataRepository
 ) {
     fun execute(cursor: String?, pageSize: PageSize, filters: CharacterFilters): Page<CharacterListItem> {
-        // TODO(#17): Получать разом все id это долго. Переделать на join
-        val userData = characterUserDataRepository.getAll()
-
         val page = characterRepository.getPage(cursor, pageSize, filters)
+        val userDataMap = characterUserDataRepository.getByIds(page.items.map { it.id })
 
         val items = page.items.map {
             CharacterListItem(
@@ -28,7 +26,7 @@ class GetCharactersPageUseCase(
                 rarityId = it.rarityId,
                 imageUrl = it.imageUrl,
 
-                isOwned = userData.any { data -> it.id == data.id },
+                isOwned = userDataMap.containsKey(it.id)
             )
         }
         return Page(items, page.nextCursor)
