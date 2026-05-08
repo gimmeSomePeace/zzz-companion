@@ -18,13 +18,14 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScre
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.core.repository.AddCharacterUserDataResult
+import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
 import kotlin.collections.emptyList
 
 class CharactersStore(
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
     private val refs: ReferenceData,
-    private val pageSize: Int = 20
+    private val pageSize: PageSize = PageSize(10),
 ) {
     private val _filters: MutableStateFlow<CharacterFilters> = MutableStateFlow(
         CharacterFilters()

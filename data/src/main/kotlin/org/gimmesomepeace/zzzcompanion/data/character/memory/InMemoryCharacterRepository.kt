@@ -10,6 +10,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
 import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 import org.gimmesomepeace.zzzcompanion.core.repository.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
 import java.net.URI
 import java.util.UUID
 import kotlin.collections.filter
@@ -41,16 +42,22 @@ class InMemoryCharacterRepository : CharacterRepository {
 
     override fun getPage(
         cursor: String?,
-        limit: Int,
-        filters: CharacterFilters
+        pageSize: PageSize,
+        filters: CharacterFilters?
     ): Page<Character> {
-        val items = applyFilters(characters.value, filters)
+
+        val filteredItems = if (filters != null) applyFilters(characters.value, filters) else characters.value
+
+        val itemsWithExtra = filteredItems
             .sortedBy { it.id.value.toString() }
             .filter { cursor == null || it.id.value.toString() > cursor }
-            .take(limit)
-        val nextCursor = items.lastOrNull()?.id?.value?.toString()
+            .take(pageSize.value + 1)
+        val hasMore = itemsWithExtra.size > pageSize.value
+        val result = itemsWithExtra.take(pageSize.value)
 
-        return Page(items, nextCursor)
+        val nextCursor = if (hasMore) result.last().id.value.toString() else null
+
+        return Page(result, nextCursor)
     }
 
     private fun applyFilters(
