@@ -14,11 +14,19 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
         )
     )
 
+    private companion object {
+        const val MAX_BATCH_SIZE = 100
+    }
+
     override fun getAll(): List<CharacterUserData> = userInfo
 
     override fun getById(id: CharacterId): CharacterUserData? = userInfo.find { it.id == id }
 
     override fun getByIds(ids: List<CharacterId>): Map<CharacterId, CharacterUserData> {
+        require(ids.size <= MAX_BATCH_SIZE) {
+            "IDs size must be less or equal $MAX_BATCH_SIZE"
+        }
+
         return userInfo
             .filter { it.id in ids }
             .associateBy { it.id }
