@@ -1,15 +1,14 @@
-package org.gimmesomepeace.zzzcompanion.data.memory
+package org.gimmesomepeace.zzzcompanion.data.memory.speciality
 
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityFilters
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityRepository
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
-
 
 class InMemorySpecialityRepository : SpecialityRepository {
     private val specialities = listOf(
@@ -30,7 +29,7 @@ class InMemorySpecialityRepository : SpecialityRepository {
         pageSize: PageSize,
         filters: SpecialityFilters?
     ): Page<Speciality> {
-        val filteredItems = if (filters != null) applyFilters(specialities, filters) else specialities
+        val filteredItems = if (filters != null) specialities.applyFilters(filters) else specialities
 
         return filteredItems.paginate(
             cursor = cursor,
@@ -38,12 +37,5 @@ class InMemorySpecialityRepository : SpecialityRepository {
         ) { speciality ->
             speciality.id.value.toString()
         }
-    }
-
-    private fun applyFilters(
-        specialities: List<Speciality>,
-        filters: SpecialityFilters
-    ): List<Speciality> = specialities.filter {
-        filters.query == null || filters.query!!.isBlank() || it.name.contains(filters.query!!, ignoreCase = true)
     }
 }

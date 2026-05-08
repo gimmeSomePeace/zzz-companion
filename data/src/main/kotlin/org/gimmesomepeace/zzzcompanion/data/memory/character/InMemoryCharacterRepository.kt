@@ -1,21 +1,19 @@
-package org.gimmesomepeace.zzzcompanion.data.memory
+package org.gimmesomepeace.zzzcompanion.data.memory.character
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.Character
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
-import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
-import kotlin.collections.filter
-
 
 class InMemoryCharacterRepository : CharacterRepository {
     private val characters = MutableStateFlow(
@@ -47,7 +45,7 @@ class InMemoryCharacterRepository : CharacterRepository {
         filters: CharacterFilters?
     ): Page<Character> {
 
-        val filteredItems = if (filters != null) applyFilters(characters.value, filters) else characters.value
+        val filteredItems = if (filters != null) characters.value.applyFilters(filters) else characters.value
 
         return filteredItems.paginate(
             cursor = cursor,
@@ -55,17 +53,5 @@ class InMemoryCharacterRepository : CharacterRepository {
         ) { character ->
             character.id.value.toString()
         }
-
-    }
-
-    private fun applyFilters(
-        characters: List<Character>,
-        filters: CharacterFilters
-    ): List<Character> = characters.filter {
-        (filters.query.isBlank() || it.name.contains(filters.query, ignoreCase = true)) &&
-                (filters.factionId == null || it.factionId == filters.factionId) &&
-                (filters.attributeId == null || it.attributeId == filters.attributeId) &&
-                (filters.specialityId == null || it.specialityId == filters.specialityId) &&
-                (filters.rarityId == null || it.rarityId == filters.rarityId)
     }
 }

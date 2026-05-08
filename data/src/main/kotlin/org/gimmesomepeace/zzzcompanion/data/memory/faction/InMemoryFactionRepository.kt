@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.data.memory
+package org.gimmesomepeace.zzzcompanion.data.memory.faction
 
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionFilters
@@ -29,7 +29,7 @@ class InMemoryFactionRepository : FactionRepository {
         pageSize: PageSize,
         filters: FactionFilters?
     ): Page<Faction> {
-        val filteredItems = if (filters != null) applyFilters(factions, filters) else factions
+        val filteredItems = if (filters != null) factions.applyFilters(filters) else factions
 
         return filteredItems.paginate(
             cursor = cursor,
@@ -37,12 +37,5 @@ class InMemoryFactionRepository : FactionRepository {
         ) { character ->
             character.id.value.toString()
         }
-    }
-
-    private fun applyFilters(
-        factions: List<Faction>,
-        filters: FactionFilters
-    ): List<Faction> = factions.filter {
-        filters.query == null || filters.query!!.isBlank() || it.name.contains(filters.query!!, ignoreCase = true)
     }
 }
