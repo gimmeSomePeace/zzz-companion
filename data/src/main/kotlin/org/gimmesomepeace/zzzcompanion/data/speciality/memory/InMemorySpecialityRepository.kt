@@ -1,8 +1,12 @@
 package org.gimmesomepeace.zzzcompanion.data.speciality.memory
 
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
+import org.gimmesomepeace.zzzcompanion.core.model.characters.SpecialityFilters
 import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.repository.SpecialityRepository
+import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
 
@@ -21,5 +25,25 @@ class InMemorySpecialityRepository : SpecialityRepository {
         )
     )
 
-    override fun getAll(): List<Speciality> = specialities
+    override fun getPage(
+        cursor: String?,
+        pageSize: PageSize,
+        filters: SpecialityFilters?
+    ): Page<Speciality> {
+        val filteredItems = if (filters != null) applyFilters(specialities, filters) else specialities
+
+        return filteredItems.paginate(
+            cursor = cursor,
+            pageSize = pageSize
+        ) { speciality ->
+            speciality.id.value.toString()
+        }
+    }
+
+    private fun applyFilters(
+        specialities: List<Speciality>,
+        filters: SpecialityFilters
+    ): List<Speciality> = specialities.filter {
+        filters.query == null || filters.query!!.isBlank() || it.name.contains(filters.query!!, ignoreCase = true)
+    }
 }

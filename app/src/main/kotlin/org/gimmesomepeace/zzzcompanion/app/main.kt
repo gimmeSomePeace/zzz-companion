@@ -20,12 +20,25 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacter
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
+import org.gimmesomepeace.zzzcompanion.core.repository.Page
+
+
+fun <T> loadAllPages(loader: (cursor: String?) -> Page<T>): List<T> {
+    val result = mutableListOf<T>()
+    var cursor: String? = null
+    do {
+        val page = loader(cursor)
+        result += page.items
+        cursor = page.nextCursor
+    } while (cursor != null)
+
+    return result
+}
 
 
 fun main() {
     val lifecycle = LifecycleRegistry()
     val context = DefaultComponentContext(lifecycle = lifecycle)
-
 
     val characterRepository = InMemoryCharacterRepository()
     val factionRepository = InMemoryFactionRepository()
@@ -34,9 +47,16 @@ fun main() {
     val rarityRepository = InMemoryRarityRepository()
     val characterUserDataRepository = InMemoryCharacterUserDataRepository()
 
-    val factions = factionRepository.getAll()
-    val attributes = attributeRepository.getAll()
-    val specialities = specialityRepository.getAll()
+    val factions = loadAllPages {cursor ->
+        factionRepository.getPage(cursor)
+    }
+    val attributes = loadAllPages {cursor ->
+        attributeRepository.getPage(cursor)
+    }
+    val specialities = loadAllPages {cursor ->
+        specialityRepository.getPage(cursor)
+    }
+
     val rarities = rarityRepository.getAll()
     val refs = ReferenceData(
         factions = factions,

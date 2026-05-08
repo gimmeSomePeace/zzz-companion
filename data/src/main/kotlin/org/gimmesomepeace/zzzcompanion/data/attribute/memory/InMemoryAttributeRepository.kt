@@ -1,10 +1,15 @@
 package org.gimmesomepeace.zzzcompanion.data.attribute.memory
 
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
+import org.gimmesomepeace.zzzcompanion.core.model.characters.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.repository.AttributeRepository
+import org.gimmesomepeace.zzzcompanion.core.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+
 
 class InMemoryAttributeRepository : AttributeRepository {
     private val attributes = listOf(
@@ -20,5 +25,25 @@ class InMemoryAttributeRepository : AttributeRepository {
         )
     )
 
-    override fun getAll(): List<Attribute> = attributes
+    override fun getPage(
+        cursor: String?,
+        pageSize: PageSize,
+        filters: AttributeFilters?
+    ): Page<Attribute> {
+        val filteredItems = if (filters != null) applyFilters(attributes, filters) else attributes
+
+        return filteredItems.paginate(
+            cursor = cursor,
+            pageSize = pageSize
+        ) { attribute ->
+            attribute.id.value.toString()
+        }
+    }
+
+    private fun applyFilters(
+        attributes: List<Attribute>,
+        filters: AttributeFilters
+    ): List<Attribute> = attributes.filter {
+        filters.query == null || filters.query!!.isBlank() || it.name.contains(filters.query!!, ignoreCase = true)
+    }
 }

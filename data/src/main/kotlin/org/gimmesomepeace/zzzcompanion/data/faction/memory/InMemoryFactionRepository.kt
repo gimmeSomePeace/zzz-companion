@@ -1,8 +1,12 @@
 package org.gimmesomepeace.zzzcompanion.data.faction.memory
 
 import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
+import org.gimmesomepeace.zzzcompanion.core.model.characters.FactionFilters
 import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
 import org.gimmesomepeace.zzzcompanion.core.repository.FactionRepository
+import org.gimmesomepeace.zzzcompanion.core.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
 
@@ -20,7 +24,25 @@ class InMemoryFactionRepository : FactionRepository {
         )
     )
 
-    override fun getAll(): List<Faction> {
-        return factions
+    override fun getPage(
+        cursor: String?,
+        pageSize: PageSize,
+        filters: FactionFilters?
+    ): Page<Faction> {
+        val filteredItems = if (filters != null) applyFilters(factions, filters) else factions
+
+        return filteredItems.paginate(
+            cursor = cursor,
+            pageSize = pageSize
+        ) { character ->
+            character.id.value.toString()
+        }
+    }
+
+    private fun applyFilters(
+        factions: List<Faction>,
+        filters: FactionFilters
+    ): List<Faction> = factions.filter {
+        filters.query == null || filters.query!!.isBlank() || it.name.contains(filters.query!!, ignoreCase = true)
     }
 }

@@ -11,6 +11,7 @@ import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
 import org.gimmesomepeace.zzzcompanion.core.repository.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
 import kotlin.collections.filter
@@ -48,16 +49,13 @@ class InMemoryCharacterRepository : CharacterRepository {
 
         val filteredItems = if (filters != null) applyFilters(characters.value, filters) else characters.value
 
-        val itemsWithExtra = filteredItems
-            .sortedBy { it.id.value.toString() }
-            .filter { cursor == null || it.id.value.toString() > cursor }
-            .take(pageSize.value + 1)
-        val hasMore = itemsWithExtra.size > pageSize.value
-        val result = itemsWithExtra.take(pageSize.value)
+        return filteredItems.paginate(
+            cursor = cursor,
+            pageSize = pageSize
+        ) { character ->
+            character.id.value.toString()
+        }
 
-        val nextCursor = if (hasMore) result.last().id.value.toString() else null
-
-        return Page(result, nextCursor)
     }
 
     private fun applyFilters(
