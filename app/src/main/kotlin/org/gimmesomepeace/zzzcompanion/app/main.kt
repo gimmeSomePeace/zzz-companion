@@ -20,7 +20,7 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacter
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
-import org.gimmesomepeace.zzzcompanion.core.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
 
 
 fun <T> loadAllPages(loader: (cursor: String?) -> Page<T>): List<T> {

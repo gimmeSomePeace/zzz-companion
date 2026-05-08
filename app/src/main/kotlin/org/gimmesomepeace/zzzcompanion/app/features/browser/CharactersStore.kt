@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersStateUi
-import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.toUi
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
-import org.gimmesomepeace.zzzcompanion.core.repository.AddCharacterUserDataResult
-import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import kotlin.collections.emptyList
 
 class CharactersStore(

@@ -13,14 +13,14 @@ import androidx.compose.ui.unit.dp
 import org.gimmesomepeace.uikit.DefaultItem
 import org.gimmesomepeace.uikit.FilterItem
 import org.gimmesomepeace.uikit.LabeledSelect
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
-import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
+import org.gimmesomepeace.zzzcompanion.core.faction.Faction
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
+import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
+import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 
 @Composable

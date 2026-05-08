@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
-import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 
 
 @Composable

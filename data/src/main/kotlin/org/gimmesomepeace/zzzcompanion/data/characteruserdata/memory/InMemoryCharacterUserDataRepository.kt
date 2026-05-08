@@ -1,9 +1,9 @@
 package org.gimmesomepeace.zzzcompanion.data.characteruserdata.memory
 
-import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterUserData
-import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.repository.AddCharacterUserDataResult
-import org.gimmesomepeace.zzzcompanion.core.repository.CharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
+import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
 import java.util.UUID
 
 

@@ -1,16 +1,16 @@
 package org.gimmesomepeace.zzzcompanion.data.character.memory
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Character
-import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
-import org.gimmesomepeace.zzzcompanion.core.repository.CharacterRepository
-import org.gimmesomepeace.zzzcompanion.core.repository.Page
-import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.core.character.Character
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
+import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
+import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID

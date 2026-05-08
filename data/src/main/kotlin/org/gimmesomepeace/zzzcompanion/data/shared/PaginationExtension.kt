@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.shared
 
-import org.gimmesomepeace.zzzcompanion.core.repository.Page
-import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
 fun <T> List<T>.paginate(
     cursor: String?,

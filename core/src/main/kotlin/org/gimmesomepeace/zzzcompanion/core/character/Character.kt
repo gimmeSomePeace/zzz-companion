@@ -1,13 +1,18 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.model
+package org.gimmesomepeace.zzzcompanion.core.character
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import java.net.URI
 
-data class CharacterListItem(
+/**
+ * Референсное описание персонажа.
+ *
+ * Представляет собой неизменную доменную сущность, описывающая информацию о персонаже.
+ *
+ */
+data class Character(
     val id: CharacterId,
     val name: String,
 
@@ -16,6 +21,5 @@ data class CharacterListItem(
     val specialityId: SpecialityId,
     val rarityId: RarityId,
 
-    val imageUrl: URI,
-    val isOwned: Boolean,
+    val imageUrl: URI
 )

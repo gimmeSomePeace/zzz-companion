@@ -1,10 +1,10 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser.model
 
-import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
+import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 
 sealed interface CharactersIntent {

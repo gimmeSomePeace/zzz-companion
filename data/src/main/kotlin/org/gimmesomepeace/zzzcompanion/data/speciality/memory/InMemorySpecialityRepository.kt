@@ -1,11 +1,11 @@
 package org.gimmesomepeace.zzzcompanion.data.speciality.memory
 
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
-import org.gimmesomepeace.zzzcompanion.core.model.characters.SpecialityFilters
-import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
-import org.gimmesomepeace.zzzcompanion.core.repository.Page
-import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
-import org.gimmesomepeace.zzzcompanion.core.repository.SpecialityRepository
+import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityFilters
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityRepository
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID

@@ -1,14 +1,14 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter
 
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Attribute
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
-import org.gimmesomepeace.zzzcompanion.core.model.characters.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Speciality
-import org.gimmesomepeace.zzzcompanion.core.model.ids.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
-import org.gimmesomepeace.zzzcompanion.core.model.ids.SpecialityId
+import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
+import org.gimmesomepeace.zzzcompanion.core.faction.Faction
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
+import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
+import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import kotlin.collections.get
 
 

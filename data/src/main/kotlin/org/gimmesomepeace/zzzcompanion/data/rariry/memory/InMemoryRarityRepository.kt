@@ -1,8 +1,8 @@
 package org.gimmesomepeace.zzzcompanion.data.rariry.memory
 
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Rarity
-import org.gimmesomepeace.zzzcompanion.core.model.ids.RarityId
-import org.gimmesomepeace.zzzcompanion.core.repository.RarityRepository
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.rarity.RarityRepository
 import java.net.URI
 import java.util.UUID
 

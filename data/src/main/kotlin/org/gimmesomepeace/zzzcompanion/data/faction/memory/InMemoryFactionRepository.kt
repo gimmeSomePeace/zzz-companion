@@ -1,11 +1,11 @@
 package org.gimmesomepeace.zzzcompanion.data.faction.memory
 
-import org.gimmesomepeace.zzzcompanion.core.model.characters.Faction
-import org.gimmesomepeace.zzzcompanion.core.model.characters.FactionFilters
-import org.gimmesomepeace.zzzcompanion.core.model.ids.FactionId
-import org.gimmesomepeace.zzzcompanion.core.repository.FactionRepository
-import org.gimmesomepeace.zzzcompanion.core.repository.Page
-import org.gimmesomepeace.zzzcompanion.core.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.core.faction.Faction
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionFilters
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
+import org.gimmesomepeace.zzzcompanion.core.faction.FactionRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
