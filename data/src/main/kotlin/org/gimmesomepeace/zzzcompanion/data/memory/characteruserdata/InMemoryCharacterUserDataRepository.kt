@@ -4,6 +4,9 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.util.UUID
 
 class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
@@ -18,7 +21,21 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
         const val MAX_BATCH_SIZE = 100
     }
 
-    override fun getAll(): List<CharacterUserData> = userInfo
+    override fun getByPage(
+        cursor: String?,
+        pageSize: PageSize
+    ): Page<CharacterUserData> {
+        require(pageSize.value <= MAX_BATCH_SIZE) {
+            "Page size must be between 0 and $MAX_BATCH_SIZE"
+        }
+
+        return userInfo.paginate(
+            cursor,
+            pageSize
+        ) {
+            it.id.value.toString()
+        }
+    }
 
     override fun getById(id: CharacterId): CharacterUserData? = userInfo.find { it.id == id }
 
