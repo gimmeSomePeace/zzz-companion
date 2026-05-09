@@ -44,7 +44,7 @@ fun MissingThumbCharacter(
             )
 
             KamelImage(
-                resource = asyncPainterResource(data = character.attribute?.imageUrl ?: ""),
+                resource = asyncPainterResource(data = character.attribute?.imageUri ?: ""),
                 contentDescription = "Изображение атрибута",
                 modifier = Modifier
                     .size(24.dp)

@@ -1,5 +1,12 @@
 package org.gimmesomepeace.zzzcompanion.core.attribute
 
+
+/**
+ * Набор параметров, по которым выполняется фильтрация атрибутов.
+ *
+ * @property query строка, используемая при фильтрации по имени атрибута.
+ * Пустая строка означает, что параметр не применяется.
+ */
 data class AttributeFilters(
-    val query: String? = "",
+    val query: String = "",
 )

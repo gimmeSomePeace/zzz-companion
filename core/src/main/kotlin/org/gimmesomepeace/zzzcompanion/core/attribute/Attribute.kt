@@ -4,16 +4,27 @@ import java.net.URI
 
 
 /**
- * Референсное описание атрибута персонажа.
+ * Атрибут (например: лёд, ветер и т.д.).
  *
- * У одного персонажа может быть лишь один атрибут (Лед, электричество и тд)
- * Атрибут используется в расчетах игровых механик и влияет на поведение персонажа.
- * В логике на уровне проекта не используется. Это лишь референсный тип.
+ * Инварианты:
+ *  - name не может быть пустым или состоять только из пробелов
  *
- * @property imageUrl URL картинки с изображением атрибута.
+ * @property imageUri URI изображения атрибута
  */
-data class Attribute(
+@ConsistentCopyVisibility
+data class Attribute private constructor(
     val id: AttributeId,
     val name: String,
-    val imageUrl: URI
-)
+    val imageUri: URI
+) {
+    companion object {
+        fun create(
+            id: AttributeId,
+            name: String,
+            imageUri: URI
+        ): Attribute {
+            require(!name.isBlank()) { "Name must not be blank" }
+            return Attribute(id, name, imageUri)
+        }
+    }
+}
