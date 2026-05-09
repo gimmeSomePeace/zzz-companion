@@ -8,5 +8,5 @@ fun List<Character>.applyFilters(filters: CharacterFilters) = this.filter {
     (filters.factionId == null || it.factionId == filters.factionId) &&
     (filters.attributeId == null || it.attributeId == filters.attributeId) &&
     (filters.specialityId == null || it.specialityId == filters.specialityId) &&
-    (filters.rarityId == null || it.rarityId == filters.rarityId)
+    (filters.rarity == null || it.rarity == filters.rarity)
 }

@@ -23,7 +23,7 @@ class GetCharactersPageUseCase(
                 factionId = it.factionId,
                 attributeId = it.attributeId,
                 specialityId = it.specialityId,
-                rarityId = it.rarityId,
+                rarity = it.rarity,
                 imageUrl = it.imageUrl,
 
                 isOwned = userDataMap.containsKey(it.id)

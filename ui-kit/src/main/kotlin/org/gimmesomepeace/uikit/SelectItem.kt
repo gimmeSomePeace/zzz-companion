@@ -15,17 +15,19 @@ import java.net.URI
 
 
 @Composable
-fun FilterItem(
+fun SelectItem(
     text: String,
-    imageUrl: URI,
+    imageUrl: URI?,
     modifier: Modifier = Modifier
 ) {
     Row(modifier.fillMaxWidth()) {
-        KamelImage(
-            resource = asyncPainterResource(data = imageUrl),
-            contentDescription = null,
-            modifier = Modifier.size(30.dp).align(Alignment.CenterVertically)
-        )
+        if (imageUrl != null) {
+            KamelImage(
+                resource = asyncPainterResource(data = imageUrl),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp).align(Alignment.CenterVertically)
+            )
+        }
         Text(text, style = TextStyle(), modifier = Modifier.align(Alignment.CenterVertically))
     } 
 }

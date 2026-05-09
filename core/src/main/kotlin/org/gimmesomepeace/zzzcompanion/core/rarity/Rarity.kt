@@ -13,8 +13,16 @@ import java.net.URI
  *
  * @property imageUrl URL картинки с изображением уровня редкости.
  */
-data class Rarity(
-    val id: RarityId,
-    val name: String,
-    val imageUrl: URI
-)
+enum class Rarity(
+    val title: String,
+    val imageUrl: URI,
+) {
+    S(
+        "S",
+        URI("https://static.wikia.nocookie.net/zenless-zone-zero/images/d/d0/Icon_AgentRank_S.png/revision/latest/scale-to-width-down/32?cb=20240914140011")
+    ),
+    A(
+        "A",
+        URI("https://static.wikia.nocookie.net/zenless-zone-zero/images/5/5c/Icon_AgentRank_A.png/revision/latest/scale-to-width-down/32?cb=20240914135957")
+    ),
+}

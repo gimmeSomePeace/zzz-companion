@@ -17,13 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 
+
 @Composable
 fun <T> SelectBox(
-    label: String,
-    options: List<T>,
-    selectedOption: T,
-    onOptionSelected: (T) -> Unit,
-    itemContent: @Composable (T) -> Unit
+    options: List<SelectOption<T>>,
+    selectedOption: SelectOption<T>,
+    onOptionSelected: (T?) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(
@@ -35,7 +34,7 @@ fun <T> SelectBox(
             modifier = Modifier.fillMaxWidth().height(50.dp).padding(5.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            itemContent(selectedOption)
+            SelectItem(selectedOption.title, selectedOption.imageUrl)
         }
 
        DropdownMenu(
@@ -44,9 +43,9 @@ fun <T> SelectBox(
        ) {
            options.forEach { item ->
                DropdownMenuItem(
-                   text = { itemContent(item)  },
+                   text = { SelectItem(item.title, item.imageUrl)  },
                    onClick = {
-                       onOptionSelected(item)
+                       onOptionSelected(item.toValueOrNull())
                        expanded = false
                    }
                )

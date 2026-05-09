@@ -3,7 +3,7 @@ package org.gimmesomepeace.zzzcompanion.app.features.browser.model
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import java.net.URI
 
@@ -14,7 +14,7 @@ data class CharacterListItem(
     val factionId: FactionId,
     val attributeId: AttributeId,
     val specialityId: SpecialityId,
-    val rarityId: RarityId,
+    val rarity: Rarity,
 
     val imageUrl: URI,
     val isOwned: Boolean,

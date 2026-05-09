@@ -14,7 +14,6 @@ import org.gimmesomepeace.zzzcompanion.data.memory.attribute.InMemoryAttributeRe
 import org.gimmesomepeace.zzzcompanion.data.memory.character.InMemoryCharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata.InMemoryCharacterUserDataRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.faction.InMemoryFactionRepository
-import org.gimmesomepeace.zzzcompanion.data.memory.rarity.InMemoryRarityRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.speciality.InMemorySpecialityRepository
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
@@ -44,7 +43,6 @@ fun main() {
     val factionRepository = InMemoryFactionRepository()
     val attributeRepository = InMemoryAttributeRepository()
     val specialityRepository = InMemorySpecialityRepository()
-    val rarityRepository = InMemoryRarityRepository()
     val characterUserDataRepository = InMemoryCharacterUserDataRepository()
 
     val factions = loadAllPages {cursor ->
@@ -57,17 +55,14 @@ fun main() {
         specialityRepository.getPage(cursor)
     }
 
-    val rarities = rarityRepository.getAll()
     val refs = ReferenceData(
         factions = factions,
         attributes = attributes,
         specialities = specialities,
-        rarities = rarities,
 
         factionsById = factions.associateBy { it.id },
         attributesById = attributes.associateBy { it.id },
         specialitiesById = specialities.associateBy { it.id },
-        raritiesById = rarities.associateBy { it.id }
     )
 
 

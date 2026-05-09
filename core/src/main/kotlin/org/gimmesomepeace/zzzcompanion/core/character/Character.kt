@@ -2,7 +2,7 @@ package org.gimmesomepeace.zzzcompanion.core.character
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import java.net.URI
 
@@ -19,7 +19,7 @@ data class Character(
     val factionId: FactionId,
     val attributeId: AttributeId,
     val specialityId: SpecialityId,
-    val rarityId: RarityId,
+    val rarity: Rarity,
 
     val imageUrl: URI
 )

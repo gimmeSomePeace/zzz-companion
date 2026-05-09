@@ -41,10 +41,10 @@ fun CharactersScreen(component: CharactersListComponent) {
     ) {
         CharactersFilterBar(
             localQuery,
-            state.filters.faction,
-            state.filters.rarity,
-            state.filters.attribute,
-            state.filters.speciality,
+            state.selectedFactionOption,
+            state.selectedRarityOption,
+            state.selectedAttributeOption,
+            state.selectedSpecialityOption,
 
             onSearchQueryChanged = { localQuery = it },
             { component.onIntent(CharactersIntent.SetFaction(it)) },

@@ -2,7 +2,7 @@ package org.gimmesomepeace.zzzcompanion.core.character
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 /**
@@ -13,5 +13,5 @@ data class CharacterFilters(
     val factionId: FactionId? = null,
     val attributeId: AttributeId? = null,
     val specialityId: SpecialityId? = null,
-    val rarityId: RarityId? = null
+    val rarity: Rarity? = null
 )

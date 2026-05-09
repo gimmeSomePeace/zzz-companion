@@ -9,16 +9,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.FiltersStateUi
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.toUi
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.uikit.SelectOption
+import org.gimmesomepeace.uikit.matches
 import kotlin.collections.emptyList
 
 class CharactersStore(
@@ -49,36 +50,64 @@ class CharactersStore(
     ) { characters, filters ->
 
         // TODO(#16): добавить анимацию загрузки списка персонажей. Сейчас отображается пустой список
-        val characterItems = characters.toUi(
+        val characterItems = characters.map { it.toUi(
             factionById = refs.factionsById,
             specialitiesById = refs.specialitiesById,
             attributesById = refs.attributesById,
-            raritiesById = refs.raritiesById
-        )
+        )}
+
+        val factionOptions = refs.factions.map {
+            SelectOption.Item(it.id, it.name, it.imageUrl)
+        } + SelectOption.All
+        val selectedFactionOption = factionOptions.find { it.matches(filters.factionId) }
+            ?: SelectOption.All
+
+        val attributeOptions = refs.attributes.map {
+            SelectOption.Item(it.id, it.name, it.imageUrl)
+        } + SelectOption.All
+        val selectedAttributeOption = attributeOptions.find { it.matches(filters.attributeId) }
+            ?: SelectOption.All
+
+        val specialityOptions = refs.specialities.map {
+            SelectOption.Item(it.id, it.name, it.imageUrl)
+        } + SelectOption.All
+        val selectedSpecialityOption = specialityOptions.find { it.matches(filters.specialityId) }
+            ?: SelectOption.All
+
+        val rarityOptions = Rarity.entries.map {
+            SelectOption.Item(it, it.title, it.imageUrl)
+        } + SelectOption.All
+        val selectedRarityOption = rarityOptions.find { it.matches(filters.rarity) }
+            ?: SelectOption.All
 
         CharactersScreenState(
             characters = characterItems,
-            factionOptions = listOf(null) + refs.factions,
-            attributeOptions = listOf(null) + refs.attributes,
-            specialityOptions = listOf(null) + refs.specialities,
-            rarityOptions = listOf(null) + refs.rarities,
-            filters = filters.toUi(
-                factionsById = refs.factionsById,
-                specialitiesById = refs.specialitiesById,
-                raritiesById = refs.raritiesById,
-                attributesById = refs.attributesById,
-            )
+
+            factionOptions = factionOptions,
+            selectedFactionOption = selectedFactionOption,
+
+            attributeOptions = attributeOptions,
+            selectedAttributeOption = selectedAttributeOption,
+
+            specialityOptions = specialityOptions,
+            selectedSpecialityOption = selectedSpecialityOption,
+
+            rarityOptions = rarityOptions,
+            selectedRarityOption = selectedRarityOption,
         )
     }.stateIn(
         scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
         SharingStarted.Eagerly,
         CharactersScreenState(
-            filters = FiltersStateUi(),
             characters = emptyList(),
             factionOptions = emptyList(),
             attributeOptions = emptyList(),
             rarityOptions = emptyList(),
             specialityOptions = emptyList(),
+            selectedFactionOption = SelectOption.All,
+            selectedAttributeOption = SelectOption.All,
+            selectedRarityOption = SelectOption.All,
+            selectedSpecialityOption = SelectOption.All,
         )
     )
 
@@ -113,8 +142,8 @@ class CharactersStore(
                 }
             }
             is CharactersIntent.SetRarity -> {
-                if (_filters.value.rarityId != intent.rarityId) {
-                    _filters.value = _filters.value.copy(rarityId = intent.rarityId)
+                if (_filters.value.rarity != intent.rarity) {
+                    _filters.value = _filters.value.copy(rarity = intent.rarity)
                     cursor = null
                     updatePage()
                 }

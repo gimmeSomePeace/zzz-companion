@@ -10,37 +10,32 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.gimmesomepeace.uikit.DefaultItem
-import org.gimmesomepeace.uikit.FilterItem
 import org.gimmesomepeace.uikit.LabeledSelect
-import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
-import org.gimmesomepeace.zzzcompanion.core.faction.Faction
+import org.gimmesomepeace.uikit.SelectOption
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
-import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 
 @Composable
 fun CharactersFilterBar(
     searchQuery: String,
-    selectedFaction: Faction?,
-    selectedRarity: Rarity?,
-    selectedAttribute: Attribute?,
-    selectedSpeciality: Speciality?,
+    selectedFaction: SelectOption<FactionId>,
+    selectedRarity: SelectOption<Rarity>,
+    selectedAttribute: SelectOption<AttributeId>,
+    selectedSpeciality: SelectOption<SpecialityId>,
 
     onSearchQueryChanged: (String) -> Unit,
     onFactionChanged: (factionId: FactionId?) -> Unit,
     onAttributeChanged: (attributeId: AttributeId?) -> Unit,
     onSpecialityChanged: (specialityId: SpecialityId?) -> Unit,
-    onRarityChanged: (rarityId: RarityId?) -> Unit,
+    onRarityChanged: (rarity: Rarity?) -> Unit,
 
-    factions: List<Faction?>,
-    attributes: List<Attribute?>,
-    specialities: List<Speciality?>,
-    rarities: List<Rarity?>
+    factions: List<SelectOption<FactionId>>,
+    attributes: List<SelectOption<AttributeId>>,
+    specialities: List<SelectOption<SpecialityId>>,
+    rarities: List<SelectOption<Rarity>>
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -50,52 +45,28 @@ fun CharactersFilterBar(
             "Rarity",
             rarities,
             selectedRarity,
-            { onRarityChanged(it?.id) },
-            { item ->
-                if (item == null) DefaultItem() else FilterItem(
-                    item.name,
-                    item.imageUrl
-                )
-            },
+            onRarityChanged,
             modifier = Modifier.weight(1f),
         )
         LabeledSelect(
             "Faction",
             factions,
             selectedFaction,
-            { onFactionChanged(it?.id) },
-            { item ->
-                if (item == null) DefaultItem() else FilterItem(
-                    item.name,
-                    item.imageUrl
-                )
-            },
+            onFactionChanged,
             modifier = Modifier.weight(1f),
         )
         LabeledSelect(
             "Attribute",
             attributes,
             selectedAttribute,
-            { onAttributeChanged(it?.id) },
-            { item ->
-                if (item == null) DefaultItem() else FilterItem(
-                    item.name,
-                    item.imageUrl
-                )
-            },
+            onAttributeChanged,
             modifier = Modifier.weight(1f),
         )
         LabeledSelect(
             "Speciality",
             specialities,
             selectedSpeciality,
-            { onSpecialityChanged(it?.id) },
-            { item ->
-                if (item == null) DefaultItem() else FilterItem(
-                    item.name,
-                    item.imageUrl
-                )
-            },
+            onSpecialityChanged,
             modifier = Modifier.weight(1f),
         )
         Box(Modifier.weight(2f)) {

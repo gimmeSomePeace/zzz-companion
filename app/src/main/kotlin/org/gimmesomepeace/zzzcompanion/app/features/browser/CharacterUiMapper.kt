@@ -4,22 +4,18 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListI
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
-import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.rarity.RarityId
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 
 fun CharacterListItem.toUi(
     factionById: Map<FactionId, Faction>,
-    raritiesById: Map<RarityId, Rarity>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,
     ) : CharacterListItemUi {
     val faction = factionById.getValue(factionId)
-    val rarity = requireNotNull(raritiesById[rarityId])
     val speciality = requireNotNull(specialitiesById[specialityId])
     val attribute = requireNotNull(attributesById[attributeId])
 
@@ -35,15 +31,3 @@ fun CharacterListItem.toUi(
         isOwned = isOwned
     )
 }
-
-fun List<CharacterListItem>.toUi(
-    factionById: Map<FactionId, Faction>,
-    raritiesById: Map<RarityId, Rarity>,
-    attributesById: Map<AttributeId, Attribute>,
-    specialitiesById: Map<SpecialityId, Speciality>,
-): List<CharacterListItemUi> = this.map { it.toUi(
-    factionById = factionById,
-    raritiesById = raritiesById,
-    specialitiesById = specialitiesById,
-    attributesById = attributesById
-)}
