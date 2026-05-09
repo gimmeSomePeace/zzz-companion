@@ -1,20 +1,6 @@
-package org.gimmesomepeace.uikit
+package org.gimmesomepeace.uikit.select
 
 import java.net.URI
-
-fun <T> SelectOption<T>.toValueOrNull(): T? {
-    return when (this) {
-        is SelectOption.Item -> value
-        SelectOption.All -> null
-    }
-}
-
-fun <T> SelectOption<T>.matches(selected: T?): Boolean {
-    return when (this) {
-        is SelectOption.Item -> this.value == selected
-        SelectOption.All -> selected == null
-    }
-}
 
 sealed interface SelectOption<out T> {
     val title: String

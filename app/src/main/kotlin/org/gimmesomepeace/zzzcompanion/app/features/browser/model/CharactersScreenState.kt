@@ -1,6 +1,6 @@
 package org.gimmesomepeace.zzzcompanion.app.features.browser.model
 
-import org.gimmesomepeace.uikit.SelectOption
+import org.gimmesomepeace.uikit.select.SelectOption
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity

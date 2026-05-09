@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
@@ -18,9 +18,10 @@ import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharacter
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
-import org.gimmesomepeace.uikit.SelectOption
-import org.gimmesomepeace.uikit.matches
+import org.gimmesomepeace.uikit.select.SelectOption
+import org.gimmesomepeace.uikit.select.selectedOrAll
 import kotlin.collections.emptyList
+
 
 class CharactersStore(
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
@@ -56,29 +57,26 @@ class CharactersStore(
             attributesById = refs.attributesById,
         )}
 
-        val factionOptions = refs.factions.map {
+        val factionOptions = listOf(SelectOption.All) + refs.factions.map {
             SelectOption.Item(it.id, it.name, it.imageUrl)
-        } + SelectOption.All
-        val selectedFactionOption = factionOptions.find { it.matches(filters.factionId) }
-            ?: SelectOption.All
+        }
 
-        val attributeOptions = refs.attributes.map {
+        val selectedFactionOption = factionOptions.selectedOrAll(filters.factionId)
+
+        val attributeOptions = listOf(SelectOption.All) + refs.attributes.map {
             SelectOption.Item(it.id, it.name, it.imageUrl)
-        } + SelectOption.All
-        val selectedAttributeOption = attributeOptions.find { it.matches(filters.attributeId) }
-            ?: SelectOption.All
+        }
+        val selectedAttributeOption = attributeOptions.selectedOrAll(filters.attributeId)
 
-        val specialityOptions = refs.specialities.map {
+        val specialityOptions = listOf(SelectOption.All) + refs.specialities.map {
             SelectOption.Item(it.id, it.name, it.imageUrl)
-        } + SelectOption.All
-        val selectedSpecialityOption = specialityOptions.find { it.matches(filters.specialityId) }
-            ?: SelectOption.All
+        }
+        val selectedSpecialityOption = specialityOptions.selectedOrAll(filters.specialityId)
 
-        val rarityOptions = Rarity.entries.map {
+        val rarityOptions = listOf(SelectOption.All) + Rarity.entries.map {
             SelectOption.Item(it, it.title, it.imageUrl)
-        } + SelectOption.All
-        val selectedRarityOption = rarityOptions.find { it.matches(filters.rarity) }
-            ?: SelectOption.All
+        }
+        val selectedRarityOption = rarityOptions.selectedOrAll(filters.rarity)
 
         CharactersScreenState(
             characters = characterItems,

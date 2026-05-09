@@ -10,8 +10,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.gimmesomepeace.uikit.LabeledSelect
-import org.gimmesomepeace.uikit.SelectOption
+import org.gimmesomepeace.uikit.select.LabeledSelect
+import org.gimmesomepeace.uikit.select.SelectOption
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId

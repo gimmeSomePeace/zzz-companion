@@ -1,4 +1,4 @@
-package org.gimmesomepeace.uikit
+package org.gimmesomepeace.uikit.select
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

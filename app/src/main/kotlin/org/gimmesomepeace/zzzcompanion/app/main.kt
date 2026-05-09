@@ -18,7 +18,7 @@ import org.gimmesomepeace.zzzcompanion.data.memory.speciality.InMemorySpeciality
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.aggregator.ReferenceData
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 
 

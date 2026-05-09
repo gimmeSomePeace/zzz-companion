@@ -1,4 +1,4 @@
-package org.gimmesomepeace.uikit
+package org.gimmesomepeace.uikit.select
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
