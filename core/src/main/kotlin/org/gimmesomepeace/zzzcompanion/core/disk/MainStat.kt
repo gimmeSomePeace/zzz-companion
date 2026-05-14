@@ -10,7 +10,7 @@ value class MainStatValue(val value: Int) {
  * Сущность основной характеристики.
  * Инвариант: уровень характеристики должен находиться строго в диапазоне от 0 до 15
  */
-data class MainStatSlot(
+data class MainStat(
     val type: StatType,
     val value: MainStatValue,
 )

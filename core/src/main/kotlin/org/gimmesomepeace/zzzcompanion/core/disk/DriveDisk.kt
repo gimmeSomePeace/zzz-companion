@@ -11,12 +11,11 @@ import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
  *  - Вид диска (дает фиксированные усиления игровых механик)
  *  - Основную характеристику (усиливается сильнее остальных, назначается рандомно сразу при создании диска)
  *  - Набор дополнительных характеристик (изменить их нельзя, назначаются рандомно сразу при создании диска)
- *  - Позицию
+ *  - Допустимый слот
  *
- *  Возможные основные характеристики зависят от позиции диска.
- *  Условно если позиция диска 1, то ему доступна только 1 основная характеристика - усиление HP.
+ *  Возможные основные характеристики зависят от допустимого слота диска.
+ *  Условно если допустимый слот диска - 1, то ему доступна только 1 основная характеристика - усиление HP.
  *  На дополнительные характеристики таких ограничений не накладывается.
- *
  *
  *  @property mainStat Основная характеристика
  *  @property subStats Набор дополнительных характеристик
@@ -26,23 +25,23 @@ class DriveDisk private constructor(
     val id: DriveDiskId,
     val diskTypeId: DiskTypeId,
 
-    val position: Position,
+    val allowedSlot: Slot,
 
-    val mainStat: MainStatSlot,
-    val subStats: SubStats
+    val mainStat: MainStat,
+    val subStats: SubStatsSet
 ) {
     companion object {
         fun create(
             id: DriveDiskId,
             diskTypeId: DiskTypeId,
-            position: Position,
-            mainStat: MainStatSlot,
-            subStats: SubStats
+            allowedSlot: Slot,
+            mainStat: MainStat,
+            subStats: SubStatsSet
         ): DriveDisk {
-            require(position.isAllowed(mainStat.type)) {
-                "Stat (${mainStat.type}) should be allowed when position is $position"
+            require(allowedSlot.isAllowed(mainStat.type)) {
+                "Stat (${mainStat.type}) should be allowed when allowed slot is $allowedSlot"
             }
-            return DriveDisk(id, diskTypeId, position, mainStat, subStats)
+            return DriveDisk(id, diskTypeId, allowedSlot, mainStat, subStats)
         }
     }
 }

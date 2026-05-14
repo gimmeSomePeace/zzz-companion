@@ -1,32 +1,32 @@
 package org.gimmesomepeace.zzzcompanion.core.characteruserdata
 
 import org.gimmesomepeace.zzzcompanion.core.disk.DriveDiskId
-import org.gimmesomepeace.zzzcompanion.core.disk.Position
+import org.gimmesomepeace.zzzcompanion.core.disk.Slot
 
 /**
- * Экипировка дисков персонажа по позициям.
+ * Экипировка дисков персонажа по слотам.
  *
- * Хранит соответствие между слотами (Position) и установленными дисками.
- * Отсутствие записи для позиции означает, что слот пуст.
+ * Хранит соответствие между слотами и установленными дисками.
+ * Отсутствие записи означает, что слот пуст.
  */
 @ConsistentCopyVisibility
 data class EquippedDisks private constructor(
-    private val disks: Map<Position, DriveDiskId>
+    private val disks: Map<Slot, DriveDiskId>
 ) {
     companion object {
         fun create(
-            disks: Map<Position, DriveDiskId> = emptyMap()
+            disks: Map<Slot, DriveDiskId> = emptyMap()
         ) = EquippedDisks(disks)
     }
 
-    fun isEquipped(position: Position): Boolean = disks.containsKey(position)
-    fun getDisk(position: Position): DriveDiskId? = disks[position]
+    fun isEquipped(slot: Slot): Boolean = disks.containsKey(slot)
+    fun getDisk(slot: Slot): DriveDiskId? = disks[slot]
 
-    fun equip(position: Position, diskId: DriveDiskId): EquippedDisks = EquippedDisks(
-        disks + (position to diskId)
+    fun equip(slot: Slot, diskId: DriveDiskId): EquippedDisks = EquippedDisks(
+        disks + (slot to diskId)
     )
 
-    fun unequip(position: Position): EquippedDisks = EquippedDisks(
-        disks - position
+    fun unequip(slot: Slot): EquippedDisks = EquippedDisks(
+        disks - slot
     )
 }

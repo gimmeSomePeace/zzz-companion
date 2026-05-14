@@ -9,7 +9,7 @@ value class SubStatValue(val value: Int) {
  * Сущность дополнительной характеристики.
  * Инвариант: уровень характеристики должен находиться строго в диапазоне от 0 до 5
  */
-data class SubStatSlot(
+data class SubStat(
     val type: StatType,
     val level: SubStatValue,
 )
