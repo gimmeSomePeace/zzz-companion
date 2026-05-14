@@ -1,6 +1,6 @@
 package org.gimmesomepeace.zzzcompanion.core.characteruserdata
 
-import org.gimmesomepeace.zzzcompanion.core.disk.DiskId
+import org.gimmesomepeace.zzzcompanion.core.disk.DriveDiskId
 import org.gimmesomepeace.zzzcompanion.core.disk.Position
 
 /**
@@ -11,18 +11,18 @@ import org.gimmesomepeace.zzzcompanion.core.disk.Position
  */
 @ConsistentCopyVisibility
 data class EquippedDisks private constructor(
-    private val disks: Map<Position, DiskId>
+    private val disks: Map<Position, DriveDiskId>
 ) {
     companion object {
         fun create(
-            disks: Map<Position, DiskId> = emptyMap()
+            disks: Map<Position, DriveDiskId> = emptyMap()
         ) = EquippedDisks(disks)
     }
 
     fun isEquipped(position: Position): Boolean = disks.containsKey(position)
-    fun getDisk(position: Position): DiskId? = disks[position]
+    fun getDisk(position: Position): DriveDiskId? = disks[position]
 
-    fun equip(position: Position, diskId: DiskId): EquippedDisks = EquippedDisks(
+    fun equip(position: Position, diskId: DriveDiskId): EquippedDisks = EquippedDisks(
         disks + (position to diskId)
     )
 

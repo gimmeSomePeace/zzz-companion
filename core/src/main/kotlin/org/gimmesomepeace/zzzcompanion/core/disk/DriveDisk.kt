@@ -22,8 +22,8 @@ import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
  *  @property subStats Набор дополнительных характеристик
  */
 
-class Disk private constructor(
-    val id: DiskId,
+class DriveDisk private constructor(
+    val id: DriveDiskId,
     val diskTypeId: DiskTypeId,
 
     val position: Position,
@@ -33,16 +33,16 @@ class Disk private constructor(
 ) {
     companion object {
         fun create(
-            id: DiskId,
+            id: DriveDiskId,
             diskTypeId: DiskTypeId,
             position: Position,
             mainStat: MainStatSlot,
             subStats: SubStats
-        ): Disk {
+        ): DriveDisk {
             require(position.isAllowed(mainStat.type)) {
                 "Stat (${mainStat.type}) should be allowed when position is $position"
             }
-            return Disk(id, diskTypeId, position, mainStat, subStats)
+            return DriveDisk(id, diskTypeId, position, mainStat, subStats)
         }
     }
 }
