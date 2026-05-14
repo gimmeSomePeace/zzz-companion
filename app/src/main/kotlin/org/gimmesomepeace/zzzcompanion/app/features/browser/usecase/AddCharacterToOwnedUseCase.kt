@@ -14,7 +14,7 @@ class AddCharacterToOwnedUseCase(
         return characterUserDataRepository.addIfNotExists(
             CharacterUserData.create(
                 id = characterId,
-                EquippedDisks()
+                EquippedDisks.create()
             )
         )
     }

@@ -15,7 +15,7 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
     private var userInfo = listOf(
         CharacterUserData.create(
             CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
-            EquippedDisks()
+            EquippedDisks.create()
         )
     )
 

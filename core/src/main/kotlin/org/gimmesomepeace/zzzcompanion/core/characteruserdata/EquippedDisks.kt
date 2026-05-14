@@ -9,9 +9,16 @@ import org.gimmesomepeace.zzzcompanion.core.disk.Position
  * Хранит соответствие между слотами (Position) и установленными дисками.
  * Отсутствие записи для позиции означает, что слот пуст.
  */
-data class EquippedDisks(
-    private val disks: Map<Position, DiskId> = emptyMap()
+@ConsistentCopyVisibility
+data class EquippedDisks private constructor(
+    private val disks: Map<Position, DiskId>
 ) {
+    companion object {
+        fun create(
+            disks: Map<Position, DiskId> = emptyMap()
+        ) = EquippedDisks(disks)
+    }
+
     fun isEquipped(position: Position): Boolean = disks.containsKey(position)
     fun getDisk(position: Position): DiskId? = disks[position]
 
