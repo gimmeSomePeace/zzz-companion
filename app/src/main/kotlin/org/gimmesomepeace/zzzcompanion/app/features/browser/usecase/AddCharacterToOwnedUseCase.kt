@@ -10,7 +10,7 @@ import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
 class AddCharacterToOwnedUseCase(
     private val characterUserDataRepository: CharacterUserDataRepository,
 ) {
-    fun execute(characterId: CharacterId): AddCharacterUserDataResult {
+    operator fun invoke(characterId: CharacterId): AddCharacterUserDataResult {
         return characterUserDataRepository.addIfNotExists(
             CharacterUserData(
                 id = characterId,

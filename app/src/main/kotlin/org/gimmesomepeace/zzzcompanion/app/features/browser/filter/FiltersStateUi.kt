@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter
+package org.gimmesomepeace.zzzcompanion.app.features.browser.filter
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction

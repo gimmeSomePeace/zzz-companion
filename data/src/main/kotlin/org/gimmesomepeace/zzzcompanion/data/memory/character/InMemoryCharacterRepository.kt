@@ -16,7 +16,7 @@ import java.util.UUID
 
 class InMemoryCharacterRepository : CharacterRepository {
     private val characters = listOf(
-        Character(
+        Character.create(
             CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
             "Korin",
             FactionId(UUID.fromString("f0a2b3ed-beda-4975-aa25-d9c1146ade00")),
@@ -25,7 +25,7 @@ class InMemoryCharacterRepository : CharacterRepository {
             Rarity.S,
             URI("https://sunderarmor.com/ZZZ/Character/thumb_corin.png")
         ),
-        Character(
+        Character.create(
             CharacterId(UUID.fromString("c9faa28a-e555-4aa6-a219-6ac331644c0e")),
             "Alice Thymefield",
             FactionId(UUID.fromString("021583e1-1f01-488a-a842-bb2195e4cd6e")),

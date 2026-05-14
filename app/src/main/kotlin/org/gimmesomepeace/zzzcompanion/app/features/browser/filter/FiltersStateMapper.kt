@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter
+package org.gimmesomepeace.zzzcompanion.app.features.browser.filter
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
@@ -10,14 +10,15 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import kotlin.collections.get
 
 
-fun CharacterFilters.toUi(
+fun FiltersStateUi.from(
+    filters: CharacterFilters,
     factionsById: Map<FactionId, Faction>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,
-) : FiltersStateUi {
-    val faction = factionsById[factionId]
-    val attribute = attributesById[attributeId]
-    val speciality = specialitiesById[specialityId]
+): FiltersStateUi {
+    val faction = factionsById[filters.factionId]
+    val attribute = attributesById[filters.attributeId]
+    val speciality = specialitiesById[filters.specialityId]
 
     return FiltersStateUi(
         query = query,

@@ -18,7 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.debounce
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.internal.filter.CharactersFilterBar
+import org.gimmesomepeace.zzzcompanion.app.features.browser.filter.CharactersFilterBar
 
 
 @Composable

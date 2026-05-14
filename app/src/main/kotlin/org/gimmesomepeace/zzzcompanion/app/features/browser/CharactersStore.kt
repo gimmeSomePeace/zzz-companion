@@ -40,7 +40,7 @@ class CharactersStore(
     }
 
     private fun updatePage() {
-        val page = getCharactersPageUseCase.execute(null, pageSize, _filters.value)
+        val page = getCharactersPageUseCase(null, pageSize, _filters.value)
         _characters.value = page.items
         cursor = page.nextCursor
     }
@@ -147,7 +147,7 @@ class CharactersStore(
                 }
             }
             is CharactersIntent.AddCharacter -> {
-                val result = addCharacterToOwnedUseCase.execute(intent.characterId)
+                val result = addCharacterToOwnedUseCase(intent.characterId)
                 if (result == AddCharacterUserDataResult.ADDED) {
                     _characters.value = _characters.value.map {
                         if (it.id == intent.characterId) it.copy(isOwned = true)
