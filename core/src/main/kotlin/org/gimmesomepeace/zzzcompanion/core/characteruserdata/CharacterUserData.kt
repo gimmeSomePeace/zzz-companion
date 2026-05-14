@@ -11,7 +11,17 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
  * @property id Идентификатор персонажа, к которому относятся данные.
  * @property equippedDisks Расположение дисков по слотам персонажа.
  */
-data class CharacterUserData(
+@ConsistentCopyVisibility
+data class CharacterUserData private constructor(
     val id: CharacterId,
     val equippedDisks: EquippedDisks
-)
+) {
+    companion object {
+        fun create(
+            id: CharacterId,
+            equippedDisks: EquippedDisks
+        ): CharacterUserData {
+            return CharacterUserData(id, equippedDisks)
+        }
+    }
+}

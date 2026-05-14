@@ -58,7 +58,7 @@ class CharactersStore(
         )}
 
         val factionOptions = listOf(SelectOption.All) + refs.factions.map {
-            SelectOption.Item(it.id, it.name, it.imageUrl)
+            SelectOption.Item(it.id, it.name, it.imageUri)
         }
 
         val selectedFactionOption = factionOptions.selectedOrAll(filters.factionId)
@@ -69,7 +69,7 @@ class CharactersStore(
         val selectedAttributeOption = attributeOptions.selectedOrAll(filters.attributeId)
 
         val specialityOptions = listOf(SelectOption.All) + refs.specialities.map {
-            SelectOption.Item(it.id, it.name, it.imageUrl)
+            SelectOption.Item(it.id, it.name, it.imageUri)
         }
         val selectedSpecialityOption = specialityOptions.selectedOrAll(filters.specialityId)
 

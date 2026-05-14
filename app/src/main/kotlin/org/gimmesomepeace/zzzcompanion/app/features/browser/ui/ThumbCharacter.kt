@@ -26,7 +26,7 @@ fun ThumbCharacter(character: CharacterListItemUi) {
             )
 
             KamelImage(
-                resource = asyncPainterResource(data = character.speciality?.imageUrl ?: ""),
+                resource = asyncPainterResource(data = character.speciality?.imageUri ?: ""),
                 contentDescription = "Изображение специализации",
                 modifier = Modifier
                     .size(24.dp)

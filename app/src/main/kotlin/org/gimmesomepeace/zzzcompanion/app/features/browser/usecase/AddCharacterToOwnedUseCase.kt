@@ -12,7 +12,7 @@ class AddCharacterToOwnedUseCase(
 ) {
     operator fun invoke(characterId: CharacterId): AddCharacterUserDataResult {
         return characterUserDataRepository.addIfNotExists(
-            CharacterUserData(
+            CharacterUserData.create(
                 id = characterId,
                 EquippedDisks()
             )

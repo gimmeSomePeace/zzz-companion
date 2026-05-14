@@ -14,10 +14,10 @@ fun CharacterListItem.toUi(
     factionById: Map<FactionId, Faction>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,
-    ) : CharacterListItemUi {
-    val faction = factionById.getValue(factionId)
-    val speciality = requireNotNull(specialitiesById[specialityId])
-    val attribute = requireNotNull(attributesById[attributeId])
+): CharacterListItemUi {
+    val faction = requireNotNull(factionById[factionId]) { "Unknown character faction: $factionId" }
+    val speciality = requireNotNull(specialitiesById[specialityId]) { "Unknown character speciality: $specialityId" }
+    val attribute = requireNotNull(attributesById[attributeId]) { "Unknown character attribute: $attributeId" }
 
     return CharacterListItemUi(
         id = id,
