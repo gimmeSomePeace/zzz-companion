@@ -74,7 +74,7 @@ class CharactersStore(
         val selectedSpecialityOption = specialityOptions.selectedOrAll(filters.specialityId)
 
         val rarityOptions = listOf(SelectOption.All) + Rarity.entries.map {
-            SelectOption.Item(it, it.title, it.imageUrl)
+            SelectOption.Item(it, it.title, it.imageUri)
         }
         val selectedRarityOption = rarityOptions.selectedOrAll(filters.rarity)
 
