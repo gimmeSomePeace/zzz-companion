@@ -50,7 +50,6 @@ class CharactersStore(
         _filters
     ) { characters, filters ->
 
-        // TODO(#16): добавить анимацию загрузки списка персонажей. Сейчас отображается пустой список
         val characterItems = characters.map { it.toUi(
             factionById = refs.factionsById,
             specialitiesById = refs.specialitiesById,
