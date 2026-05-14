@@ -4,12 +4,10 @@ import java.net.URI
 
 
 /**
- * Референсное описание фракции персонажа.
+ * Фракция
  *
- * У одного персонажа может быть лишь одна фракция.
- * В логике на уровне проекта не используется. Это лишь референсный тип.
  *
- * @property imageUri URL картинки с изображением фракции.
+ * @property imageUri URI изображения эмблемы фракции.
  */
 @ConsistentCopyVisibility
 data class Faction private constructor(
