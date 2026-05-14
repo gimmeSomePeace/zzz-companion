@@ -7,5 +7,5 @@ package org.gimmesomepeace.zzzcompanion.core.speciality
  * Пустая строка означает, что параметр не применяется.
  */
 data class SpecialityFilters(
-    val query: String? = "",
+    val query: String = "",
 )

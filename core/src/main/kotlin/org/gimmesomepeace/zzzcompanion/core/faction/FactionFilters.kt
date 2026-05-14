@@ -7,5 +7,5 @@ package org.gimmesomepeace.zzzcompanion.core.faction
  * Пустая строка означает, что параметр не применяется.
  */
 data class FactionFilters(
-    val query: String? = "",
+    val query: String = "",
 )
