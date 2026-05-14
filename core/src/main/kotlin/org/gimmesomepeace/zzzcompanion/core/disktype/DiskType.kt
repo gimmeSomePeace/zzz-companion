@@ -4,12 +4,12 @@ import java.net.URI
 
 
 /**
- * Референсная сущность вида диска.
+ * Тип диска
  *
- * Используется лишь для отображения в UI.
+ * @property imageUri URI изображения типа диска
  */
 data class DiskType (
     val id: DiskTypeId,
     val name: String,
-    val imageUrl: URI
+    val imageUri: URI
 )

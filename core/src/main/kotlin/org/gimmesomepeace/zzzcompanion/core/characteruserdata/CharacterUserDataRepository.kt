@@ -10,9 +10,22 @@ enum class AddCharacterUserDataResult {
 }
 
 interface CharacterUserDataRepository {
+    /**
+     * Возвращает страницу данных о персонажах, применяя cursor-based pagination.
+     *
+     * @param cursor маркер, определяющий, с какого места продолжить выборку
+     * Если null - возвращается первая страница.
+     *
+     * @param pageSize  максимальное количество атрибутов в результате.
+     */
     fun getByPage(cursor: String?, pageSize: PageSize): Page<CharacterUserData>
 
     fun getById(id: CharacterId): CharacterUserData?
+
+    /**
+     * Возвращает данные пользователя о персонажах по указанным идентификаторам.
+     * Персонажи, отсутствующие у пользователя, не включаются в результат.
+     */
     fun getByIds(ids: List<CharacterId>): Map<CharacterId, CharacterUserData>
     fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult
 }

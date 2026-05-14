@@ -7,12 +7,21 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import java.net.URI
 
 /**
- * Референсное описание персонажа.
+ * Игровой персонаж.
  *
- * Представляет собой неизменную доменную сущность, описывающая информацию о персонаже.
+ * Каждый персонаж имеет:
+ *  - Фракцию
+ *  - Атрибут
+ *  - Специализацию
+ *  - Уровень редкости
  *
+ *  Инварианты:
+ *   - Имя персонажа не должно быть пустым
+ *
+ * @property imageUri URI изображения персонажа
  */
-data class Character(
+@ConsistentCopyVisibility
+data class Character private constructor(
     val id: CharacterId,
     val name: String,
 
@@ -21,5 +30,28 @@ data class Character(
     val specialityId: SpecialityId,
     val rarity: Rarity,
 
-    val imageUrl: URI
-)
+    val imageUri: URI
+) {
+    companion object {
+        fun create(
+            id: CharacterId,
+            name: String,
+            factionId: FactionId,
+            attributeId: AttributeId,
+            specialityId: SpecialityId,
+            rarity: Rarity,
+            imageUri: URI
+        ): Character {
+            require(name.isNotBlank())  { "Name must not be blank" }
+            return Character(
+                id = id,
+                name = name,
+                factionId = factionId,
+                attributeId = attributeId,
+                specialityId = specialityId,
+                rarity = rarity,
+                imageUri = imageUri
+            )
+        }
+    }
+}

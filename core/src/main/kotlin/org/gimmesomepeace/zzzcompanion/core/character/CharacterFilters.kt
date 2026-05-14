@@ -6,7 +6,10 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 /**
- * Набор фильтров при пагинации персонажей.
+ * Набор параметров, по которым выполняется фильтрация персонажей.
+ *
+ * Пустые значения (null или пустая строка) означают, что соответствующий фильтр не применяется.
+ * @property query строка, используемая при фильтрации по имени персонажа.
  */
 data class CharacterFilters(
     val query: String = "",

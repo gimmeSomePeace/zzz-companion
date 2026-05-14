@@ -24,7 +24,7 @@ class GetCharactersPageUseCase(
                 attributeId = it.attributeId,
                 specialityId = it.specialityId,
                 rarity = it.rarity,
-                imageUrl = it.imageUrl,
+                imageUrl = it.imageUri,
 
                 isOwned = userDataMap.containsKey(it.id)
             )
