@@ -33,7 +33,7 @@ jobs:
         run: ./gradlew ktlintCheck
 
       - name: Upload ktlint report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ktlint-report
-          path: build/reports/ktlint
+          path: ./build/reports/ktlint
