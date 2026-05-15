@@ -42,10 +42,12 @@ data class Character private constructor(
             rarity: Rarity,
             imageUri: URI
         ): Character {
-            require(name.isNotBlank())  { "Name must not be blank" }
+            val trimmedName = name.trim()
+
+            require(trimmedName.isNotBlank())  { "Name must not be blank" }
             return Character(
                 id = id,
-                name = name,
+                name = trimmedName,
                 factionId = factionId,
                 attributeId = attributeId,
                 specialityId = specialityId,

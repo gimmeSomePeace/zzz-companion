@@ -21,8 +21,10 @@ data class Faction private constructor(
             name: String,
             imageUri: URI
         ): Faction {
-            require(name.isNotBlank()) { "Name must not be blank" }
-            return Faction(id, name, imageUri)
+            val trimmedName = name.trim()
+
+            require(trimmedName.isNotBlank()) { "Name must not be blank" }
+            return Faction(id, trimmedName, imageUri)
         }
     }
 }

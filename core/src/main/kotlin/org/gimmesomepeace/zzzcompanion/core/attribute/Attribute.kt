@@ -23,8 +23,10 @@ data class Attribute private constructor(
             name: String,
             imageUri: URI
         ): Attribute {
-            require(!name.isBlank()) { "Name must not be blank" }
-            return Attribute(id, name, imageUri)
+            val trimmedName = name.trim()
+
+            require(trimmedName.isNotBlank()) { "Name must not be blank" }
+            return Attribute(id, trimmedName, imageUri)
         }
     }
 }

@@ -20,8 +20,10 @@ data class Speciality private constructor(
             name: String,
             imageUri: URI
         ): Speciality {
-            require(name.isNotBlank()) { "Name must not be blank" }
-            return Speciality(id, name, imageUri)
+            val trimmedName = name.trim()
+
+            require(trimmedName.isNotBlank()) { "Name must not be blank" }
+            return Speciality(id, trimmedName, imageUri)
         }
     }
 }
