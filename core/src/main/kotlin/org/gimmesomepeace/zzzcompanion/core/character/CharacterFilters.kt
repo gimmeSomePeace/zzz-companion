@@ -16,7 +16,7 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
  * @property rarity Уровень редкости
  */
 data class CharacterFilters(
-    val query: String = "",
+    val query: String? = null,
     val factionId: FactionId? = null,
     val attributeId: AttributeId? = null,
     val specialityId: SpecialityId? = null,

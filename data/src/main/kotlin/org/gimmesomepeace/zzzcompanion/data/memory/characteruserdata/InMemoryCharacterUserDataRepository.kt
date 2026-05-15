@@ -48,11 +48,12 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
             .associateBy { it.id }
     }
 
-    override fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult {
+    override fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult =
         if (userInfo.any { it.id == characterUserData.id }) {
-            return AddCharacterUserDataResult.ALREADY_EXISTS
+            AddCharacterUserDataResult.ALREADY_EXISTS
         }
-        userInfo = userInfo.plus(characterUserData)
-        return AddCharacterUserDataResult.ADDED
-    }
+        else {
+            userInfo = userInfo.plus(characterUserData)
+            AddCharacterUserDataResult.ADDED
+        }
 }
