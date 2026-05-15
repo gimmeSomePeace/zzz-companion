@@ -11,12 +11,10 @@ import org.gimmesomepeace.zzzcompanion.core.disk.Slot
  */
 @ConsistentCopyVisibility
 data class EquippedDisks private constructor(
-    private val disks: Map<Slot, DriveDiskId>
+    private val disks: Map<Slot, DriveDiskId>,
 ) {
     companion object {
-        fun create(
-            disks: Map<Slot, DriveDiskId> = emptyMap()
-        ) = EquippedDisks(disks)
+        fun create(disks: Map<Slot, DriveDiskId> = emptyMap()) = EquippedDisks(disks)
     }
 
     fun isEquipped(slot: Slot): Boolean = disks.containsKey(slot)

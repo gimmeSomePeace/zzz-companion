@@ -14,7 +14,6 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 
-
 @Composable
 fun ThumbCharacter(character: CharacterListItemUi) {
     Column {
@@ -22,7 +21,7 @@ fun ThumbCharacter(character: CharacterListItemUi) {
             KamelImage(
                 resource = asyncPainterResource(data = character.imageUrl),
                 contentDescription = "Аватар персонажа",
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
             )
 
             KamelImage(

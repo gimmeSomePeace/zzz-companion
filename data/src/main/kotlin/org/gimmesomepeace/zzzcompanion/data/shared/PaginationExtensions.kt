@@ -3,11 +3,7 @@ package org.gimmesomepeace.zzzcompanion.data.shared
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
-fun <T> List<T>.paginate(
-    cursor: String?,
-    pageSize: PageSize,
-    idSelector: (T) -> String,
-): Page<T> {
+fun <T> List<T>.paginate(cursor: String?, pageSize: PageSize, idSelector: (T) -> String): Page<T> {
     val itemsWithExtra = this
         .sortedBy { idSelector(it) }
         .filter { cursor == null || idSelector(it) > cursor }

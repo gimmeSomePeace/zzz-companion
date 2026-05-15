@@ -1,6 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.core.attribute
 
-
 /**
  * Набор параметров, по которым выполняется фильтрация атрибутов.
  *

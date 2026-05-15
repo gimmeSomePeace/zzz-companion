@@ -6,7 +6,6 @@ import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
-
 sealed interface CharactersIntent {
     // filters bar
     data class SetQuery(val query: String) : CharactersIntent

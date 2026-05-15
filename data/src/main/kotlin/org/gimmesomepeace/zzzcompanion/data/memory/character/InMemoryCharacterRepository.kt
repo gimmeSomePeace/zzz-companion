@@ -36,12 +36,7 @@ class InMemoryCharacterRepository : CharacterRepository {
         )
     )
 
-    override fun getPage(
-        cursor: String?,
-        pageSize: PageSize,
-        filters: CharacterFilters?
-    ): Page<Character> {
-
+    override fun getPage(cursor: String?, pageSize: PageSize, filters: CharacterFilters?): Page<Character> {
         val filteredItems = if (filters != null) characters.applyFilters(filters) else characters
 
         return filteredItems.paginate(

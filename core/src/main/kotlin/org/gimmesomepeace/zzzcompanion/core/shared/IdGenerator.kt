@@ -5,10 +5,9 @@ import java.util.UUID
 interface IdGenerator<T> {
     fun generate(): T
 
-    fun <V> map(f: (T) -> V): IdGenerator<V> =
-        object : IdGenerator<V> {
-            override fun generate(): V = f(this@IdGenerator.generate())
-        }
+    fun <V> map(f: (T) -> V): IdGenerator<V> = object : IdGenerator<V> {
+        override fun generate(): V = f(this@IdGenerator.generate())
+    }
 }
 
 object IDGenerator {

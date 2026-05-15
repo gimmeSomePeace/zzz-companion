@@ -9,10 +9,10 @@ sealed interface SelectOption<out T> {
     data class Item<T>(
         val value: T,
         override val title: String,
-        override val imageUrl: URI? = null
-    ): SelectOption<T>
+        override val imageUrl: URI? = null,
+    ) : SelectOption<T>
 
-    data object All: SelectOption<Nothing> {
+    data object All : SelectOption<Nothing> {
         override val title: String = "-- Все --"
         override val imageUrl: URI? = null
     }

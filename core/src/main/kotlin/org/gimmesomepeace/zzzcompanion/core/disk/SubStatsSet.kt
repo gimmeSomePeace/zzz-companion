@@ -1,6 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.core.disk
 
-
 /**
  * Агрегирует дополнительные характеристики в одну сущность.
  *
@@ -14,7 +13,12 @@ class SubStatsSet private constructor(
 ) {
     companion object {
         fun create(state1: SubStat, state2: SubStat, state3: SubStat, state4: SubStat?): SubStatsSet {
-            val statValueSum = state1.level.value + state2.level.value + state3.level.value + (state4?.level?.value ?: 0)
+            val statValueSum =
+                state1.level.value +
+                    state2.level.value +
+                    state3.level.value +
+                    (state4?.level?.value ?: 0)
+
             require(statValueSum in 0..5) {
                 "Sub stats values sum must be between 0 and 5 but was $statValueSum"
             }

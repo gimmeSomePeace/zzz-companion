@@ -23,10 +23,7 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
         const val MAX_BATCH_SIZE = 100
     }
 
-    override fun getByPage(
-        cursor: String?,
-        pageSize: PageSize
-    ): Page<CharacterUserData> {
+    override fun getByPage(cursor: String?, pageSize: PageSize): Page<CharacterUserData> {
         require(pageSize.value <= MAX_BATCH_SIZE) {
             "Page size must be between 0 and $MAX_BATCH_SIZE"
         }
@@ -51,7 +48,7 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
             .associateBy { it.id }
     }
 
-    override fun addIfNotExists(characterUserData: CharacterUserData) : AddCharacterUserDataResult {
+    override fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult {
         if (userInfo.any { it.id == characterUserData.id }) {
             return AddCharacterUserDataResult.ALREADY_EXISTS
         }

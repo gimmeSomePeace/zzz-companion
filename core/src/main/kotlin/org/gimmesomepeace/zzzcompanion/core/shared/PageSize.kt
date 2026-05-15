@@ -1,6 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.core.shared
 
-
 @JvmInline
 value class PageSize(val value: Int) {
     init {

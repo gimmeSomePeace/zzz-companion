@@ -12,14 +12,10 @@ import java.net.URI
 data class Speciality private constructor(
     val id: SpecialityId,
     val name: String,
-    val imageUri: URI
+    val imageUri: URI,
 ) {
     companion object {
-        fun create(
-            id: SpecialityId,
-            name: String,
-            imageUri: URI
-        ): Speciality {
+        fun create(id: SpecialityId, name: String, imageUri: URI): Speciality {
             val trimmedName = name.trim()
 
             require(trimmedName.isNotBlank()) { "Name must not be blank" }

@@ -3,7 +3,6 @@ package org.gimmesomepeace.zzzcompanion.core.character
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
-
 interface CharacterRepository {
     /**
      * Возвращает страницу персонажей, применяя фильтры и cursor-based pagination.
@@ -16,9 +15,5 @@ interface CharacterRepository {
      * @param filters применяемый набор фильтров
      * Если null - фильтрация не применяется.
      */
-    fun getPage(
-        cursor: String?,
-        pageSize: PageSize = PageSize(10),
-        filters: CharacterFilters?
-    ) : Page<Character>
+    fun getPage(cursor: String?, pageSize: PageSize = PageSize(10), filters: CharacterFilters?): Page<Character>
 }

@@ -2,7 +2,6 @@ package org.gimmesomepeace.zzzcompanion.core.characteruserdata
 
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 
-
 /**
  * Данные о персонаже пользователя.
  *
@@ -14,13 +13,10 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 @ConsistentCopyVisibility
 data class CharacterUserData private constructor(
     val id: CharacterId,
-    val equippedDisks: EquippedDisks
+    val equippedDisks: EquippedDisks,
 ) {
     companion object {
-        fun create(
-            id: CharacterId,
-            equippedDisks: EquippedDisks
-        ): CharacterUserData {
+        fun create(id: CharacterId, equippedDisks: EquippedDisks): CharacterUserData {
             return CharacterUserData(id, equippedDisks)
         }
     }

@@ -16,10 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.debounce
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.filter.CharactersFilterBar
-
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 
 @Composable
 fun CharactersScreen(component: CharactersListComponent) {
@@ -55,7 +54,7 @@ fun CharactersScreen(component: CharactersListComponent) {
             state.factionOptions,
             state.attributeOptions,
             state.specialityOptions,
-            state.rarityOptions,
+            state.rarityOptions
         )
         Spacer(modifier = Modifier.height(8.dp))
 

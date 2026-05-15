@@ -2,7 +2,6 @@ package org.gimmesomepeace.zzzcompanion.core.faction
 
 import java.net.URI
 
-
 /**
  * Фракция
  *
@@ -13,14 +12,10 @@ import java.net.URI
 data class Faction private constructor(
     val id: FactionId,
     val name: String,
-    val imageUri: URI
+    val imageUri: URI,
 ) {
     companion object {
-        fun create(
-            id: FactionId,
-            name: String,
-            imageUri: URI
-        ): Faction {
+        fun create(id: FactionId, name: String, imageUri: URI): Faction {
             val trimmedName = name.trim()
 
             require(trimmedName.isNotBlank()) { "Name must not be blank" }

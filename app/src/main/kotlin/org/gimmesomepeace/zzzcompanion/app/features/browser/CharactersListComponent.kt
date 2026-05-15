@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.StateFlow
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
 
-class CharactersListComponent (
+class CharactersListComponent(
     private val componentContext: ComponentContext,
-    private val charactersStore: CharactersStore
+    private val charactersStore: CharactersStore,
 ) : ComponentContext by componentContext {
 
     val uiState: StateFlow<CharactersScreenState> = charactersStore.state

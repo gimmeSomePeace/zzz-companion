@@ -13,13 +13,8 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import java.net.URI
 
-
 @Composable
-fun SelectItem(
-    text: String,
-    imageUrl: URI?,
-    modifier: Modifier = Modifier
-) {
+fun SelectItem(text: String, imageUrl: URI?, modifier: Modifier = Modifier) {
     Row(modifier.fillMaxWidth()) {
         if (imageUrl != null) {
             KamelImage(
@@ -29,5 +24,5 @@ fun SelectItem(
             )
         }
         Text(text, style = TextStyle(), modifier = Modifier.align(Alignment.CenterVertically))
-    } 
+    }
 }

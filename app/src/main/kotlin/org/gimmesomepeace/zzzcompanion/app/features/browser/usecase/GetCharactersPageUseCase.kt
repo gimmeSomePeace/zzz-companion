@@ -7,16 +7,11 @@ import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataR
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
-
 class GetCharactersPageUseCase(
     private val characterRepository: CharacterRepository,
-    private val characterUserDataRepository: CharacterUserDataRepository
+    private val characterUserDataRepository: CharacterUserDataRepository,
 ) {
-    operator fun invoke(
-        cursor: String?,
-        pageSize: PageSize,
-        filters: CharacterFilters
-    ): Page<CharacterListItem> {
+    operator fun invoke(cursor: String?, pageSize: PageSize, filters: CharacterFilters): Page<CharacterListItem> {
         val page = characterRepository.getPage(cursor, pageSize, filters)
         val userDataMap = characterUserDataRepository.getByIds(page.items.map { it.id })
 

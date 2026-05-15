@@ -18,12 +18,8 @@ import org.gimmesomepeace.uikit.grayscale
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 
-
 @Composable
-fun MissingThumbCharacter(
-    character: CharacterListItemUi,
-    onClick: (CharacterId) -> Unit
-) {
+fun MissingThumbCharacter(character: CharacterListItemUi, onClick: (CharacterId) -> Unit) {
     Column(modifier = Modifier.clickable { onClick(character.id) }) {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(

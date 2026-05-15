@@ -11,10 +11,8 @@ import androidx.compose.ui.unit.dp
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 
-
 @Composable
 fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClick: (CharacterId) -> Unit) {
-
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
         modifier = Modifier.fillMaxSize(),
@@ -25,8 +23,7 @@ fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClic
             characters,
             key = { it.id.value }
         ) { item ->
-            if (item.isOwned) { ThumbCharacter(item) }
-            else MissingThumbCharacter(item, onMissingCharacterClick)
+            if (item.isOwned) { ThumbCharacter(item) } else MissingThumbCharacter(item, onMissingCharacterClick)
         }
     }
 }

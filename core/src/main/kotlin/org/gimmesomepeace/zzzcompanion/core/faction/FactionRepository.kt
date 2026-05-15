@@ -3,7 +3,6 @@ package org.gimmesomepeace.zzzcompanion.core.faction
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
-
 interface FactionRepository {
     /**
      * Возвращает страницу фракций, применяя фильтры и cursor-based pagination.
@@ -16,9 +15,5 @@ interface FactionRepository {
      * @param filters применяемый набор фильтров
      * Если null - фильтрация не применяется.
      */
-    fun getPage(
-        cursor: String?,
-        pageSize: PageSize = PageSize(10),
-        filters: FactionFilters? = null,
-    ) : Page<Faction>
+    fun getPage(cursor: String?, pageSize: PageSize = PageSize(10), filters: FactionFilters? = null): Page<Faction>
 }

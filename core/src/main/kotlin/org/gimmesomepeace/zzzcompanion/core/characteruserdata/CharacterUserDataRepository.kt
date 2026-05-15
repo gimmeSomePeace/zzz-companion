@@ -6,7 +6,7 @@ import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
 enum class AddCharacterUserDataResult {
     ADDED,
-    ALREADY_EXISTS
+    ALREADY_EXISTS,
 }
 
 interface CharacterUserDataRepository {

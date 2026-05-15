@@ -16,5 +16,5 @@ data class CharacterFilters(
     val factionId: FactionId? = null,
     val attributeId: AttributeId? = null,
     val specialityId: SpecialityId? = null,
-    val rarity: Rarity? = null
+    val rarity: Rarity? = null,
 )

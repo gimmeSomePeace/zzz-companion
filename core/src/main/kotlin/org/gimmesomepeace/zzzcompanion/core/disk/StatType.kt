@@ -1,6 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.core.disk
 
-
 enum class StatType {
     HP,
     HP_PERCENTAGE,
@@ -10,5 +9,5 @@ enum class StatType {
     DEFENSE_PERCENTAGE,
 
     ANOMALY,
-    ANOMALY_CONTROL
+    ANOMALY_CONTROL,
 }

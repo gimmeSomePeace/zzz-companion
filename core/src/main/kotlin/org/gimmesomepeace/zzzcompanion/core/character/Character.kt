@@ -30,7 +30,7 @@ data class Character private constructor(
     val specialityId: SpecialityId,
     val rarity: Rarity,
 
-    val imageUri: URI
+    val imageUri: URI,
 ) {
     companion object {
         fun create(
@@ -40,11 +40,11 @@ data class Character private constructor(
             attributeId: AttributeId,
             specialityId: SpecialityId,
             rarity: Rarity,
-            imageUri: URI
+            imageUri: URI,
         ): Character {
             val trimmedName = name.trim()
 
-            require(trimmedName.isNotBlank())  { "Name must not be blank" }
+            require(trimmedName.isNotBlank()) { "Name must not be blank" }
             return Character(
                 id = id,
                 name = trimmedName,

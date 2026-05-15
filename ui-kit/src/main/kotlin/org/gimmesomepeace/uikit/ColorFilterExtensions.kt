@@ -3,7 +3,6 @@ package org.gimmesomepeace.uikit
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 
-
 fun ColorFilter.Companion.grayscale(): ColorFilter {
     /**
      * Создаёт grayscale (чёрно-белый) ColorFilter через ColorMatrix.

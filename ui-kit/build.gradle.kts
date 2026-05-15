@@ -7,7 +7,6 @@ plugins {
 group = "org.gimmesomepeace"
 version = "unspecified"
 
-
 dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.foundation)

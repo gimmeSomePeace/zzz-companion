@@ -3,7 +3,6 @@ package org.gimmesomepeace.zzzcompanion.core.speciality
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 
-
 interface SpecialityRepository {
     /**
      * Возвращает страницу специализаций, применяя фильтры и cursor-based pagination.
@@ -20,5 +19,5 @@ interface SpecialityRepository {
         cursor: String?,
         pageSize: PageSize = PageSize(10),
         filters: SpecialityFilters? = null,
-    ) : Page<Speciality>
+    ): Page<Speciality>
 }

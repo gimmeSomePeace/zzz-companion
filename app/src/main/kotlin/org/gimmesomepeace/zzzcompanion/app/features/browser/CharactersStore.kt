@@ -8,20 +8,19 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
+import org.gimmesomepeace.uikit.select.SelectOption
+import org.gimmesomepeace.uikit.select.selectedOrAll
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
+import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
+import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
-import org.gimmesomepeace.uikit.select.SelectOption
-import org.gimmesomepeace.uikit.select.selectedOrAll
 import kotlin.collections.emptyList
-
 
 class CharactersStore(
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
@@ -50,11 +49,13 @@ class CharactersStore(
         _filters
     ) { characters, filters ->
 
-        val characterItems = characters.map { it.toUi(
-            factionById = refs.factionsById,
-            specialitiesById = refs.specialitiesById,
-            attributesById = refs.attributesById,
-        )}
+        val characterItems = characters.map {
+            it.toUi(
+                factionById = refs.factionsById,
+                specialitiesById = refs.specialitiesById,
+                attributesById = refs.attributesById
+            )
+        }
 
         val factionOptions = listOf(SelectOption.All) + refs.factions.map {
             SelectOption.Item(it.id, it.name, it.imageUri)
@@ -90,7 +91,7 @@ class CharactersStore(
             selectedSpecialityOption = selectedSpecialityOption,
 
             rarityOptions = rarityOptions,
-            selectedRarityOption = selectedRarityOption,
+            selectedRarityOption = selectedRarityOption
         )
     }.stateIn(
         scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
@@ -104,7 +105,7 @@ class CharactersStore(
             selectedFactionOption = SelectOption.All,
             selectedAttributeOption = SelectOption.All,
             selectedRarityOption = SelectOption.All,
-            selectedSpecialityOption = SelectOption.All,
+            selectedSpecialityOption = SelectOption.All
         )
     )
 
@@ -149,8 +150,11 @@ class CharactersStore(
                 val result = addCharacterToOwnedUseCase(intent.characterId)
                 if (result == AddCharacterUserDataResult.ADDED) {
                     _characters.value = _characters.value.map {
-                        if (it.id == intent.characterId) it.copy(isOwned = true)
-                        else it
+                        if (it.id == intent.characterId) {
+                            it.copy(isOwned = true)
+                        } else {
+                            it
+                        }
                     }
                 }
             }

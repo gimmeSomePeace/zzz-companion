@@ -2,7 +2,6 @@ package org.gimmesomepeace.zzzcompanion.core.attribute
 
 import java.net.URI
 
-
 /**
  * Атрибут (например: лёд, ветер и т.д.).
  *
@@ -15,14 +14,10 @@ import java.net.URI
 data class Attribute private constructor(
     val id: AttributeId,
     val name: String,
-    val imageUri: URI
+    val imageUri: URI,
 ) {
     companion object {
-        fun create(
-            id: AttributeId,
-            name: String,
-            imageUri: URI
-        ): Attribute {
+        fun create(id: AttributeId, name: String, imageUri: URI): Attribute {
             val trimmedName = name.trim()
 
             require(trimmedName.isNotBlank()) { "Name must not be blank" }

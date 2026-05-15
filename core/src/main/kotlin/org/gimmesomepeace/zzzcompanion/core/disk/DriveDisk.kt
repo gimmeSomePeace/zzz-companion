@@ -2,7 +2,6 @@ package org.gimmesomepeace.zzzcompanion.core.disk
 
 import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
 
-
 /**
  * Сущность драйв-диска.
  *
@@ -28,7 +27,7 @@ class DriveDisk private constructor(
     val allowedSlot: Slot,
 
     val mainStat: MainStat,
-    val subStats: SubStatsSet
+    val subStats: SubStatsSet,
 ) {
     companion object {
         fun create(
@@ -36,7 +35,7 @@ class DriveDisk private constructor(
             diskTypeId: DiskTypeId,
             allowedSlot: Slot,
             mainStat: MainStat,
-            subStats: SubStatsSet
+            subStats: SubStatsSet,
         ): DriveDisk {
             require(allowedSlot.isAllowed(mainStat.type)) {
                 "Stat (${mainStat.type}) should be allowed when allowed slot is $allowedSlot"
