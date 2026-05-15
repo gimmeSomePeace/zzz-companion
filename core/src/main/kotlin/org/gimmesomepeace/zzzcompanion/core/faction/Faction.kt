@@ -5,7 +5,8 @@ import java.net.URI
 /**
  * Фракция
  *
- *
+ * @property id Уникальный идентификатор
+ * @property name Имя
  * @property imageUri URI изображения эмблемы фракции.
  */
 @ConsistentCopyVisibility

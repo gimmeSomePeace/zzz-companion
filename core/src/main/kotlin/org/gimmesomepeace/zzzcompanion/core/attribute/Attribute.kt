@@ -8,6 +8,8 @@ import java.net.URI
  * Инварианты:
  *  - name не может быть пустым или состоять только из пробелов
  *
+ * @property id Уникальный идентификатор
+ * @property name Название
  * @property imageUri URI изображения атрибута
  */
 @ConsistentCopyVisibility

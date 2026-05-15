@@ -10,6 +10,6 @@ value class SubStatValue(val value: Int) {
  * Инвариант: уровень характеристики должен находиться строго в диапазоне от 0 до 5
  */
 data class SubStat(
-    val type: StatType,
+    val stat: Stat,
     val level: SubStatValue,
 )

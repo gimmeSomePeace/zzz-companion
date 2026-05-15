@@ -10,6 +10,10 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
  *
  * Пустые значения (null или пустая строка) означают, что соответствующий фильтр не применяется.
  * @property query строка, используемая при фильтрации по имени персонажа.
+ * @property factionId Идентификатор фракции
+ * @property attributeId Идентификатор атрибута
+ * @property specialityId Идентификатор специализации
+ * @property rarity Уровень редкости
  */
 data class CharacterFilters(
     val query: String = "",

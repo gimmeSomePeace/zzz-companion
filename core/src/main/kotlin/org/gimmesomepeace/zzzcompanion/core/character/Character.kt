@@ -18,6 +18,12 @@ import java.net.URI
  *  Инварианты:
  *   - Имя персонажа не должно быть пустым
  *
+ * @property id Уникальный идентификатор
+ * @property name Имя
+ * @property factionId Идентификатор фракции
+ * @property attributeId Идентификатор атрибута
+ * @property specialityId Идентификатор специализации
+ * @property rarity Уровень редкости
  * @property imageUri URI изображения персонажа
  */
 @ConsistentCopyVisibility

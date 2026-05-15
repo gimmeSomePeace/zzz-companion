@@ -10,6 +10,6 @@ value class MainStatValue(val value: Int) {
  * Инвариант: уровень характеристики должен находиться строго в диапазоне от 0 до 15
  */
 data class MainStat(
-    val type: StatType,
+    val stat: Stat,
     val value: MainStatValue,
 )

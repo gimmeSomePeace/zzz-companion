@@ -5,7 +5,8 @@ import java.net.URI
 /**
  * Специализация (например: защита, разрушение, аномалия и т.д.)
  *
- *
+ * @property id Уникальный идентификатор
+ * @property name Имя
  * @property imageUri URI изображения эмблемы специализации.
  */
 @ConsistentCopyVisibility

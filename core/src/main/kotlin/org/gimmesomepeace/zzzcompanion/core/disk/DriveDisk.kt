@@ -1,6 +1,6 @@
 package org.gimmesomepeace.zzzcompanion.core.disk
 
-import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
+import org.gimmesomepeace.zzzcompanion.core.diskset.DriveDiskSetId
 
 /**
  * Сущность драйв-диска.
@@ -16,13 +16,16 @@ import org.gimmesomepeace.zzzcompanion.core.disktype.DiskTypeId
  *  Условно если допустимый слот диска - 1, то ему доступна только 1 основная характеристика - усиление HP.
  *  На дополнительные характеристики таких ограничений не накладывается.
  *
+ *  @property id Уникальный идентификатор
+ *  @property diskTypeId Идентификатор сета
+ *  @property allowedSlot Слот, к которому диск подходит
  *  @property mainStat Основная характеристика
  *  @property subStats Набор дополнительных характеристик
  */
 
 class DriveDisk private constructor(
     val id: DriveDiskId,
-    val diskTypeId: DiskTypeId,
+    val diskTypeId: DriveDiskSetId,
 
     val allowedSlot: Slot,
 
@@ -32,13 +35,13 @@ class DriveDisk private constructor(
     companion object {
         fun create(
             id: DriveDiskId,
-            diskTypeId: DiskTypeId,
+            diskTypeId: DriveDiskSetId,
             allowedSlot: Slot,
             mainStat: MainStat,
             subStats: SubStatsSet,
         ): DriveDisk {
-            require(allowedSlot.isAllowed(mainStat.type)) {
-                "Stat (${mainStat.type}) should be allowed when allowed slot is $allowedSlot"
+            require(allowedSlot.isAllowed(mainStat.stat)) {
+                "Stat (${mainStat.stat}) should be allowed when allowed slot is $allowedSlot"
             }
             return DriveDisk(id, diskTypeId, allowedSlot, mainStat, subStats)
         }

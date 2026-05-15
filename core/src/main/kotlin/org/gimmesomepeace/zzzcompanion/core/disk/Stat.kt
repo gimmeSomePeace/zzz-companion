@@ -1,6 +1,6 @@
 package org.gimmesomepeace.zzzcompanion.core.disk
 
-enum class StatType {
+enum class Stat {
     HP,
     HP_PERCENTAGE,
     ATTACK,
