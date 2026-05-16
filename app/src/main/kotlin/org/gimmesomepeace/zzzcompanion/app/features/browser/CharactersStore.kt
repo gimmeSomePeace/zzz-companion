@@ -29,7 +29,7 @@ class CharactersStore(
     private val pageSize: PageSize = PageSize(10),
 ) {
     private val _filters: MutableStateFlow<CharacterFilters> = MutableStateFlow(
-        CharacterFilters()
+        CharacterFilters.create()
     )
     private val _characters: MutableStateFlow<List<CharacterListItem>> = MutableStateFlow(emptyList())
     private var cursor: String? = null
@@ -113,35 +113,35 @@ class CharactersStore(
         when (intent) {
             is CharactersIntent.SetQuery -> {
                 if (_filters.value.query != intent.query) {
-                    _filters.value = _filters.value.copy(query = intent.query)
+                    _filters.value = _filters.value.withQuery(query = intent.query)
                     cursor = null
                     updatePage()
                 }
             }
             is CharactersIntent.SetFaction -> {
                 if (_filters.value.factionId != intent.factionId) {
-                    _filters.value = _filters.value.copy(factionId = intent.factionId)
+                    _filters.value = _filters.value.withFactionId(factionId = intent.factionId)
                     cursor = null
                     updatePage()
                 }
             }
             is CharactersIntent.SetAttribute -> {
                 if (_filters.value.attributeId != intent.attributeId) {
-                    _filters.value = _filters.value.copy(attributeId = intent.attributeId)
+                    _filters.value = _filters.value.withAttributeId(attributeId = intent.attributeId)
                     cursor = null
                     updatePage()
                 }
             }
             is CharactersIntent.SetSpeciality -> {
                 if (_filters.value.specialityId != intent.specialityId) {
-                    _filters.value = _filters.value.copy(specialityId = intent.specialityId)
+                    _filters.value = _filters.value.withSpecialityId(specialityId = intent.specialityId)
                     cursor = null
                     updatePage()
                 }
             }
             is CharactersIntent.SetRarity -> {
                 if (_filters.value.rarity != intent.rarity) {
-                    _filters.value = _filters.value.copy(rarity = intent.rarity)
+                    _filters.value = _filters.value.withRarity(rarity = intent.rarity)
                     cursor = null
                     updatePage()
                 }

@@ -15,10 +15,53 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
  * @property specialityId Идентификатор специализации
  * @property rarity Уровень редкости
  */
-data class CharacterFilters(
+@ConsistentCopyVisibility
+data class CharacterFilters private constructor(
     val query: String? = null,
     val factionId: FactionId? = null,
     val attributeId: AttributeId? = null,
     val specialityId: SpecialityId? = null,
     val rarity: Rarity? = null,
-)
+) {
+    fun withQuery(query: String?): CharacterFilters {
+        return copy(query = normalizeQuery(query))
+    }
+
+    fun withFactionId(factionId: FactionId?): CharacterFilters {
+        return copy(factionId = factionId)
+    }
+
+    fun withAttributeId(attributeId: AttributeId?): CharacterFilters {
+        return copy(attributeId = attributeId)
+    }
+
+    fun withSpecialityId(specialityId: SpecialityId?): CharacterFilters {
+        return copy(specialityId = specialityId)
+    }
+
+    fun withRarity(rarity: Rarity?): CharacterFilters {
+        return copy(rarity = rarity)
+    }
+
+    companion object {
+        fun create(
+            query: String? = null,
+            factionId: FactionId? = null,
+            attributeId: AttributeId? = null,
+            specialityId: SpecialityId? = null,
+            rarity: Rarity? = null,
+        ): CharacterFilters {
+            return CharacterFilters(
+                normalizeQuery(query),
+                factionId,
+                attributeId,
+                specialityId,
+                rarity
+            )
+        }
+
+        private fun normalizeQuery(query: String?): String? {
+            return query?.trim()
+        }
+    }
+}

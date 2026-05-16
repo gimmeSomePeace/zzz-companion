@@ -5,7 +5,7 @@ import java.net.URI
 /**
  * Уровень редкости
  *
- *
+ * @property title Название
  * @property imageUri URI изображения уровня редкости.
  */
 enum class Rarity(

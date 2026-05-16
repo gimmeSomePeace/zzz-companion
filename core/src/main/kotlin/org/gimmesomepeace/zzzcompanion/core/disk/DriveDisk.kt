@@ -17,7 +17,7 @@ import org.gimmesomepeace.zzzcompanion.core.diskset.DriveDiskSetId
  *  На дополнительные характеристики таких ограничений не накладывается.
  *
  *  @property id Уникальный идентификатор
- *  @property diskTypeId Идентификатор сета
+ *  @property driveDiskSetId Идентификатор сета
  *  @property allowedSlot Слот, к которому диск подходит
  *  @property mainStat Основная характеристика
  *  @property subStats Набор дополнительных характеристик
@@ -25,7 +25,7 @@ import org.gimmesomepeace.zzzcompanion.core.diskset.DriveDiskSetId
 
 class DriveDisk private constructor(
     val id: DriveDiskId,
-    val diskTypeId: DriveDiskSetId,
+    val driveDiskSetId: DriveDiskSetId,
 
     val allowedSlot: Slot,
 
@@ -35,7 +35,7 @@ class DriveDisk private constructor(
     companion object {
         fun create(
             id: DriveDiskId,
-            diskTypeId: DriveDiskSetId,
+            driveDiskSetId: DriveDiskSetId,
             allowedSlot: Slot,
             mainStat: MainStat,
             subStats: SubStatsSet,
@@ -43,7 +43,7 @@ class DriveDisk private constructor(
             require(allowedSlot.isAllowed(mainStat.stat)) {
                 "Stat (${mainStat.stat}) should be allowed when allowed slot is $allowedSlot"
             }
-            return DriveDisk(id, diskTypeId, allowedSlot, mainStat, subStats)
+            return DriveDisk(id, driveDiskSetId, allowedSlot, mainStat, subStats)
         }
     }
 }
