@@ -26,6 +26,6 @@ interface CharacterUserDataRepository {
      * Возвращает данные пользователя о персонажах по указанным идентификаторам.
      * Персонажи, отсутствующие у пользователя, не включаются в результат.
      */
-    fun getByIds(ids: List<CharacterId>): Map<CharacterId, CharacterUserData>
+    fun batchGet(ids: List<CharacterId>): Map<CharacterId, CharacterUserData>
     fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult
 }

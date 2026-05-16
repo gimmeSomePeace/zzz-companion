@@ -17,14 +17,14 @@ data class EquippedDisks private constructor(
         fun create(disks: Map<Slot, DriveDiskId> = emptyMap()) = EquippedDisks(disks)
     }
 
-    fun isEquipped(slot: Slot): Boolean = disks.containsKey(slot)
+    fun isFree(slot: Slot): Boolean = disks.containsKey(slot)
     fun getDisk(slot: Slot): DriveDiskId? = disks[slot]
 
     fun equip(slot: Slot, diskId: DriveDiskId): EquippedDisks = EquippedDisks(
         disks + (slot to diskId)
     )
 
-    fun unequip(slot: Slot): EquippedDisks = EquippedDisks(
+    fun setFree(slot: Slot): EquippedDisks = EquippedDisks(
         disks - slot
     )
 }

@@ -1,6 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.core.disk
 
 import org.gimmesomepeace.zzzcompanion.core.diskset.DriveDiskSetId
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 
 /**
  * Сущность драйв-диска.
@@ -22,7 +23,6 @@ import org.gimmesomepeace.zzzcompanion.core.diskset.DriveDiskSetId
  *  @property mainStat Основная характеристика
  *  @property subStats Набор дополнительных характеристик
  */
-
 class DriveDisk private constructor(
     val id: DriveDiskId,
     val driveDiskSetId: DriveDiskSetId,
@@ -31,6 +31,7 @@ class DriveDisk private constructor(
 
     val mainStat: MainStat,
     val subStats: SubStatsSet,
+    val rarity: Rarity
 ) {
     companion object {
         fun create(
@@ -39,11 +40,23 @@ class DriveDisk private constructor(
             allowedSlot: Slot,
             mainStat: MainStat,
             subStats: SubStatsSet,
+            rarity: Rarity
         ): DriveDisk {
             require(allowedSlot.isAllowed(mainStat.stat)) {
                 "Stat (${mainStat.stat}) should be allowed when allowed slot is $allowedSlot"
             }
-            return DriveDisk(id, driveDiskSetId, allowedSlot, mainStat, subStats)
+            require(mainStat.value.value <= rarity.toMaxLevelOfMainStat()) {
+                "Level of main stat is bigger than allowed when rarity is $rarity"
+            }
+            return DriveDisk(id, driveDiskSetId, allowedSlot, mainStat, subStats, rarity)
         }
+    }
+}
+
+fun Rarity.toMaxLevelOfMainStat(): Int {
+    return when (this) {
+        Rarity.S -> 15
+        Rarity.A -> 12
+        Rarity.B -> 9
     }
 }

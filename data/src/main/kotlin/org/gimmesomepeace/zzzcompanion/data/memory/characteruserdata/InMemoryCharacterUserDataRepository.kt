@@ -38,7 +38,7 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
 
     override fun getById(id: CharacterId): CharacterUserData? = userInfo.find { it.id == id }
 
-    override fun getByIds(ids: List<CharacterId>): Map<CharacterId, CharacterUserData> {
+    override fun batchGet(ids: List<CharacterId>): Map<CharacterId, CharacterUserData> {
         require(ids.size <= MAX_BATCH_SIZE) {
             "IDs size must be less or equal $MAX_BATCH_SIZE"
         }

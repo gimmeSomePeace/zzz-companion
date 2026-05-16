@@ -13,7 +13,7 @@ class GetCharactersPageUseCase(
 ) {
     operator fun invoke(cursor: String?, pageSize: PageSize, filters: CharacterFilters): Page<CharacterListItem> {
         val page = characterRepository.getPage(cursor, pageSize, filters)
-        val userDataMap = characterUserDataRepository.getByIds(page.items.map { it.id })
+        val userDataMap = characterUserDataRepository.batchGet(page.items.map { it.id })
 
         val items = page.items.map {
             CharacterListItem(
