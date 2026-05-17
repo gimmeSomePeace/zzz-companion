@@ -11,7 +11,6 @@ import org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata.InMemoryCha
 import org.gimmesomepeace.zzzcompanion.data.memory.faction.InMemoryFactionRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.speciality.InMemorySpecialityRepository
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.features.browser.CharactersStore
 import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
@@ -59,15 +58,11 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
         val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository)
         val getCharactersPageUseCase = GetCharactersPageUseCase(characterRepository, characterUserDataRepository)
 
-        val charactersStore = CharactersStore(
+        return CharactersListComponent(
+            componentContext = componentContext,
             getCharactersPageUseCase = getCharactersPageUseCase,
             addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
             refs = refs
-        )
-
-        return CharactersListComponent(
-            componentContext = componentContext,
-            charactersStore = charactersStore,
         )
     }
 }
