@@ -3,7 +3,7 @@ package org.gimmesomepeace.zzzcompanion.data.memory.character
 import org.gimmesomepeace.zzzcompanion.core.character.Character
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 
-fun List<Character>.applyFilters(filters: CharacterFilters) = this.filter {
+internal fun List<Character>.applyFilters(filters: CharacterFilters) = this.filter {
         (filters.query == null ||
                 filters.query!!.isBlank() ||
                 it.name.contains(filters.query!!, ignoreCase = true)) &&
