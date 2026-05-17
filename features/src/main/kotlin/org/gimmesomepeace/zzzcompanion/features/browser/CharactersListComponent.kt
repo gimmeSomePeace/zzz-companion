@@ -1,9 +1,9 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser
+package org.gimmesomepeace.zzzcompanion.features.browser
 
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.StateFlow
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersScreenState
 
 class CharactersListComponent(
     private val componentContext: ComponentContext,

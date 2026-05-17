@@ -4,8 +4,9 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import kotlinx.serialization.Serializable
-import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.factory.CharactersListComponentFactory
+import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.factory.CharactersListComponentFactory
+
 
 class RootComponent(
     componentContext: ComponentContext,

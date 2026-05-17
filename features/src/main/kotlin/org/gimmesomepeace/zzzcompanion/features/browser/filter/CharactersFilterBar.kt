@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.filter
+package org.gimmesomepeace.zzzcompanion.features.browser.filter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

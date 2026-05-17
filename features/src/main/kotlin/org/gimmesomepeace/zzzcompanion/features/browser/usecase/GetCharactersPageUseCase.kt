@@ -1,11 +1,11 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.usecase
+package org.gimmesomepeace.zzzcompanion.features.browser.usecase
 
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 
 class GetCharactersPageUseCase(
     private val characterRepository: CharacterRepository,

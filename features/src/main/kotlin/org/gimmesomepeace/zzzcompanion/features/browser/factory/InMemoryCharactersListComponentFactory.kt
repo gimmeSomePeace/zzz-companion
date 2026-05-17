@@ -1,11 +1,6 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.factory
+package org.gimmesomepeace.zzzcompanion.features.browser.factory
 
 import com.arkivanov.decompose.ComponentContext
-import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
-import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
-import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.shared.Page
@@ -15,6 +10,11 @@ import org.gimmesomepeace.zzzcompanion.data.memory.character.InMemoryCharacterRe
 import org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata.InMemoryCharacterUserDataRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.faction.InMemoryFactionRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.speciality.InMemorySpecialityRepository
+import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.CharactersStore
+import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
+import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
+import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 
 class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
     private fun <T> loadAllPages(loader: (String?) -> Page<T>): List<T> {

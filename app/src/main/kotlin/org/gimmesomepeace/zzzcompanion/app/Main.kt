@@ -9,7 +9,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import org.gimmesomepeace.zzzcompanion.app.features.browser.factory.InMemoryCharactersListComponentFactory
+import org.gimmesomepeace.zzzcompanion.features.browser.factory.InMemoryCharactersListComponentFactory
 
 fun main() {
     val lifecycle = LifecycleRegistry()

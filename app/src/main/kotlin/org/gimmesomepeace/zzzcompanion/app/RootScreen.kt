@@ -3,7 +3,7 @@ package org.gimmesomepeace.zzzcompanion.app
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import org.gimmesomepeace.zzzcompanion.app.features.browser.ui.CharactersScreen
+import org.gimmesomepeace.zzzcompanion.features.browser.ui.CharactersScreen
 
 @Composable
 fun RootScreen(component: RootComponent) {

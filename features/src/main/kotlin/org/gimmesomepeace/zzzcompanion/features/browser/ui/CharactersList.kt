@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.ui
+package org.gimmesomepeace.zzzcompanion.features.browser.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,8 +8,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 @Composable
 fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClick: (CharacterId) -> Unit) {
