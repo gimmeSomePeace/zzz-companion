@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
+    kotlin("plugin.serialization") version "2.3.20"
     alias(libs.plugins.composeCompiler)
 }
 
@@ -27,7 +28,11 @@ dependencies {
 
     implementation(libs.compose.components.resources)
 
+    // Сериализация
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+
     implementation("com.arkivanov.decompose:decompose:3.5.0")
+    implementation("com.arkivanov.decompose:extensions-compose:3.5.0")
 
     implementation("media.kamel:kamel-image:1.0.8")
     implementation("media.kamel:kamel-image-default:1.0.8")

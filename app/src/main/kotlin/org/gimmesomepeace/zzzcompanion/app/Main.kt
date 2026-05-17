@@ -9,7 +9,6 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
 import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
@@ -76,9 +75,9 @@ fun main() {
         refs = refs
     )
 
-    val component = CharactersListComponent(
+    val rootComponent = RootComponent(
         componentContext = context,
-        charactersStore = charactersStore
+        charactersStore = charactersStore,
     )
 
     application {
@@ -92,7 +91,7 @@ fun main() {
                 position = WindowPosition.Aligned(Alignment.Center)
             )
         ) {
-            App(component)
+            RootScreen(rootComponent)
         }
     }
 }
