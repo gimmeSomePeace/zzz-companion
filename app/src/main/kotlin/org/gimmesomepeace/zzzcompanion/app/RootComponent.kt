@@ -5,11 +5,11 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import kotlinx.serialization.Serializable
 import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.CharactersStore
+import org.gimmesomepeace.zzzcompanion.app.features.browser.factory.CharactersListComponentFactory
 
 class RootComponent(
     componentContext: ComponentContext,
-    val charactersStore: CharactersStore,
+    val charactersListComponentFactory: CharactersListComponentFactory,
 ): ComponentContext by componentContext {
     private val navigation = StackNavigation<Config>()
 
@@ -26,10 +26,7 @@ class RootComponent(
         componentContext: ComponentContext
     ): Child = when(config) {
         Config.CharactersList -> Child.CharactersList(
-            component = CharactersListComponent(
-                componentContext,
-                charactersStore = charactersStore
-            ),
+            charactersListComponentFactory.createComponent(componentContext)
         )
     }
 
