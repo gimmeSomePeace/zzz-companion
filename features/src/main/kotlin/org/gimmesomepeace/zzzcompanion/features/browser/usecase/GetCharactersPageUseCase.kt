@@ -7,7 +7,7 @@ import org.gimmesomepeace.zzzcompanion.core.shared.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 
-class GetCharactersPageUseCase(
+internal class GetCharactersPageUseCase(
     private val characterRepository: CharacterRepository,
     private val characterUserDataRepository: CharacterUserDataRepository,
 ) {

@@ -22,7 +22,7 @@ import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 
-class CharactersListComponent(
+class CharactersListComponent internal constructor(
     private val componentContext: ComponentContext,
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
@@ -46,7 +46,7 @@ class CharactersListComponent(
         cursor = page.nextCursor
     }
 
-    val uiState: StateFlow<CharactersScreenState> = combine(
+    internal val uiState: StateFlow<CharactersScreenState> = combine(
         _characters,
         _filters
     ) { characters, filters ->
@@ -111,7 +111,7 @@ class CharactersListComponent(
         )
     )
 
-    fun onIntent(intent: CharactersIntent) {
+    internal fun onIntent(intent: CharactersIntent) {
         when (intent) {
             is CharactersIntent.SetQuery -> {
                 if (_filters.value.query != intent.query) {

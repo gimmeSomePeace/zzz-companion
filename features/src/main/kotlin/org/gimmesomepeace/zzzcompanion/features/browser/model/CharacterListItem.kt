@@ -7,7 +7,7 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import java.net.URI
 
-data class CharacterListItem(
+internal data class CharacterListItem(
     val id: CharacterId,
     val name: String,
 

@@ -9,7 +9,7 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
-fun CharacterListItem.toUi(
+internal fun CharacterListItem.toUi(
     factionById: Map<FactionId, Faction>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,

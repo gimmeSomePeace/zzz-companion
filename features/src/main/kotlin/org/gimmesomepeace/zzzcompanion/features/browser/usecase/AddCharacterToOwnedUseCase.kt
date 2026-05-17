@@ -6,7 +6,7 @@ import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
 
-class AddCharacterToOwnedUseCase(
+internal class AddCharacterToOwnedUseCase(
     private val characterUserDataRepository: CharacterUserDataRepository,
 ) {
     operator fun invoke(characterId: CharacterId): AddCharacterUserDataResult {

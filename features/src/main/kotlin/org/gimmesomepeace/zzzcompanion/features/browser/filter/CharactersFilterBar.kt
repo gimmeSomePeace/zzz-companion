@@ -18,7 +18,7 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 @Composable
-fun CharactersFilterBar(
+internal fun CharactersFilterBar(
     searchQuery: String,
     selectedFaction: SelectOption<FactionId>,
     selectedRarity: SelectOption<Rarity>,

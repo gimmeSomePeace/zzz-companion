@@ -12,7 +12,7 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 @Composable
-fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClick: (CharacterId) -> Unit) {
+internal fun CharactersList(characters: List<CharacterListItemUi>, onMissingCharacterClick: (CharacterId) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
         modifier = Modifier.fillMaxSize(),

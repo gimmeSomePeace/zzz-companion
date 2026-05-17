@@ -15,7 +15,7 @@ import io.kamel.image.asyncPainterResource
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 @Composable
-fun ThumbCharacter(character: CharacterListItemUi) {
+internal fun ThumbCharacter(character: CharacterListItemUi) {
     Column {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(

@@ -7,7 +7,7 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import java.net.URI
 
-data class CharacterListItemUi(
+internal data class CharacterListItemUi(
     val id: CharacterId,
     val name: String,
 

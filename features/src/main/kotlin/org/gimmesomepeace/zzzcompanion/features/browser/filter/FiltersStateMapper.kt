@@ -9,7 +9,7 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import kotlin.collections.get
 
-fun FiltersStateUi.from(
+internal fun FiltersStateUi.from(
     filters: CharacterFilters,
     factionsById: Map<FactionId, Faction>,
     attributesById: Map<AttributeId, Attribute>,
