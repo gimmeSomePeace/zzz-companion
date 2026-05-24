@@ -11,7 +11,7 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.gimmesomepeace.zzzcompanion.features.browser.factory.InMemoryCharactersListComponentFactory
 
-fun main() {
+fun main() = application {
     val lifecycle = LifecycleRegistry()
     val context = DefaultComponentContext(lifecycle = lifecycle)
 
@@ -22,18 +22,16 @@ fun main() {
         charactersListComponentFactory = charactersListComponentFactory,
     )
 
-    application {
-        Window(
-            onCloseRequest = ::exitApplication,
-            title = "ZZZ Companion",
-            icon = painterResource("icon.ico"),
-            state = rememberWindowState(
-                width = 1200.dp,
-                height = 600.dp,
-                position = WindowPosition.Aligned(Alignment.Center)
-            )
-        ) {
-            RootScreen(rootComponent)
-        }
+    Window(
+        onCloseRequest = ::exitApplication,
+        title = "ZZZ Companion",
+        icon = painterResource("icon.ico"),
+        state = rememberWindowState(
+            width = 1200.dp,
+            height = 600.dp,
+            position = WindowPosition.Aligned(Alignment.Center)
+        )
+    ) {
+        RootScreen(rootComponent)
     }
 }

@@ -16,7 +16,7 @@ class RootComponent(
 
     val stack = childStack(
         source = navigation,
-        initialConfiguration = Config.CharactersList,
+        initialConfiguration = Config.CharactersListConfig,
         serializer = Config.serializer(),
         handleBackButton = true,
         childFactory = ::createChild
@@ -26,7 +26,7 @@ class RootComponent(
         config: Config,
         componentContext: ComponentContext
     ): Child = when(config) {
-        Config.CharactersList -> Child.CharactersList(
+        Config.CharactersListConfig -> Child.CharactersListChild(
             charactersListComponentFactory.createComponent(componentContext)
         )
     }
@@ -34,10 +34,10 @@ class RootComponent(
     @Serializable
     sealed class Config {
         @Serializable
-        object CharactersList : Config()
+        object CharactersListConfig : Config()
     }
 
     sealed class Child {
-        data class CharactersList(val component: CharactersListComponent) : Child()
+        data class CharactersListChild(val component: CharactersListComponent) : Child()
     }
 }

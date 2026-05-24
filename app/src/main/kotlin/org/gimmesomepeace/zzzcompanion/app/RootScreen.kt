@@ -10,6 +10,6 @@ fun RootScreen(component: RootComponent) {
     val stack by component.stack.subscribeAsState()
 
     when (val child = stack.active.instance) {
-        is RootComponent.Child.CharactersList -> CharactersScreen(child.component)
+        is RootComponent.Child.CharactersListChild -> CharactersScreen(child.component)
     }
 }
