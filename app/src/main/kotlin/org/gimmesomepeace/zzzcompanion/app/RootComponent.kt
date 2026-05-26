@@ -32,12 +32,12 @@ class RootComponent(
     }
 
     @Serializable
-    sealed class Config {
+    sealed interface Config {
         @Serializable
-        object CharactersListConfig : Config()
+        object CharactersListConfig : Config
     }
 
-    sealed class Child {
-        data class CharactersListChild(val component: CharactersListComponent) : Child()
+    sealed interface Child {
+        data class CharactersListChild(val component: CharactersListComponent) : Child
     }
 }
