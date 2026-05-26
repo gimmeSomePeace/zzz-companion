@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.ui
+package org.gimmesomepeace.zzzcompanion.features.browser.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,11 +15,11 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.gimmesomepeace.uikit.grayscale
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 @Composable
-fun MissingThumbCharacter(character: CharacterListItemUi, onClick: (CharacterId) -> Unit) {
+internal fun MissingThumbCharacter(character: CharacterListItemUi, onClick: (CharacterId) -> Unit) {
     Column(modifier = Modifier.clickable { onClick(character.id) }) {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(

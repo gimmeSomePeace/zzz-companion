@@ -1,5 +1,6 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser
+package org.gimmesomepeace.zzzcompanion.features.browser
 
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -10,24 +11,25 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import org.gimmesomepeace.uikit.select.SelectOption
 import org.gimmesomepeace.uikit.select.selectedOrAll
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItem
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersIntent
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharactersScreenState
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.ReferenceData
-import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.AddCharacterToOwnedUseCase
-import org.gimmesomepeace.zzzcompanion.app.features.browser.usecase.GetCharactersPageUseCase
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
-import kotlin.collections.emptyList
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersScreenState
+import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
+import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
+import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 
-class CharactersStore(
+class CharactersListComponent internal constructor(
+    private val componentContext: ComponentContext,
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
     private val refs: ReferenceData,
     private val pageSize: PageSize = PageSize(10),
-) {
+) : ComponentContext by componentContext {
+
     private val _filters: MutableStateFlow<CharacterFilters> = MutableStateFlow(
         CharacterFilters.create()
     )
@@ -44,7 +46,7 @@ class CharactersStore(
         cursor = page.nextCursor
     }
 
-    val state: StateFlow<CharactersScreenState> = combine(
+    internal val uiState: StateFlow<CharactersScreenState> = combine(
         _characters,
         _filters
     ) { characters, filters ->
@@ -109,7 +111,7 @@ class CharactersStore(
         )
     )
 
-    fun onIntent(intent: CharactersIntent) {
+    internal fun onIntent(intent: CharactersIntent) {
         when (intent) {
             is CharactersIntent.SetQuery -> {
                 if (_filters.value.query != intent.query) {

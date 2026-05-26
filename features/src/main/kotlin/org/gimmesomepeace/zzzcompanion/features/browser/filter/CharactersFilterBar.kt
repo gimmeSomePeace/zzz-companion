@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.filter
+package org.gimmesomepeace.zzzcompanion.features.browser.filter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 @Composable
-fun CharactersFilterBar(
+internal fun CharactersFilterBar(
     searchQuery: String,
     selectedFaction: SelectOption<FactionId>,
     selectedRarity: SelectOption<Rarity>,

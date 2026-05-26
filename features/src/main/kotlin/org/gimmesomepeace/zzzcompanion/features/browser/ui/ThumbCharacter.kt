@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.ui
+package org.gimmesomepeace.zzzcompanion.features.browser.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.gimmesomepeace.zzzcompanion.app.features.browser.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
 
 @Composable
-fun ThumbCharacter(character: CharacterListItemUi) {
+internal fun ThumbCharacter(character: CharacterListItemUi) {
     Column {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(

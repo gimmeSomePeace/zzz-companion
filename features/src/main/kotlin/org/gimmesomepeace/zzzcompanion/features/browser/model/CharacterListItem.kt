@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.model
+package org.gimmesomepeace.zzzcompanion.features.browser.model
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
@@ -7,7 +7,7 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import java.net.URI
 
-data class CharacterListItem(
+internal data class CharacterListItem(
     val id: CharacterId,
     val name: String,
 

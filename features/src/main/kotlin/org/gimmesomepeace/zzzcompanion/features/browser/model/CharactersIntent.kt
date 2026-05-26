@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.model
+package org.gimmesomepeace.zzzcompanion.features.browser.model
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
@@ -6,7 +6,7 @@ import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
-sealed interface CharactersIntent {
+internal sealed interface CharactersIntent {
     // filters bar
     data class SetQuery(val query: String) : CharactersIntent
     data class SetFaction(val factionId: FactionId?) : CharactersIntent

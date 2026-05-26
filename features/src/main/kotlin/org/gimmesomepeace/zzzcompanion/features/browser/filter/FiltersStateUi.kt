@@ -1,11 +1,11 @@
-package org.gimmesomepeace.zzzcompanion.app.features.browser.filter
+package org.gimmesomepeace.zzzcompanion.features.browser.filter
 
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 
-data class FiltersStateUi(
+internal data class FiltersStateUi(
     val query: String = "",
     val faction: Faction? = null,
     val attribute: Attribute? = null,
