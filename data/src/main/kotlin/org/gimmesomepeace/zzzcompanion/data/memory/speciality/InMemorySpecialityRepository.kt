@@ -1,22 +1,28 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.speciality
 
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityFilters
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
-import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityRepository
+import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityReaderRepository
+import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityWriterRepository
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.collections.plus
 import kotlin.math.min
 
 private const val MAX_PAGE_SIZE = 100
 
-class InMemorySpecialityRepository : SpecialityRepository {
+class InMemorySpecialityRepository :
+    SpecialityReaderRepository,
+    SpecialityWriterRepository
+{
 
-    private val specialities = listOf(
+    private var specialities = listOf(
         Speciality.create(
             SpecialityId(UUID.fromString("c108d8ae-7a2a-4e65-a8ed-56a721cba262")),
             "Anomaly",
@@ -68,5 +74,26 @@ class InMemorySpecialityRepository : SpecialityRepository {
         return specialities
             .filter { it.id in ids }
             .associateBy { it.id }
+    }
+
+    override suspend fun create(entity: Speciality) {
+        if (specialities.any { it.id == entity.id })
+            throw EntityAlreadyExistsException(Speciality::class, entity.id)
+        specialities += entity
+    }
+
+    override suspend fun update(entity: Speciality) {
+        val index = specialities.indexOfFirst { it.id == entity.id }
+        if (index == -1) throw EntityNotFoundException(Speciality::class, entity.id)
+
+        specialities = specialities.map { if (it.id == entity.id) entity else it }
+    }
+
+    override suspend fun delete(entity: Speciality) {
+        val sizeBefore = specialities.size
+        specialities = specialities.filter { it.id != entity.id }
+
+        if (specialities.size == sizeBefore)
+            throw EntityNotFoundException(Speciality::class, entity.id)
     }
 }

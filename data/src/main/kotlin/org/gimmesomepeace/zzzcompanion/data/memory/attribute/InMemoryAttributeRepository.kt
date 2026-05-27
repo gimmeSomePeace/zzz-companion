@@ -3,19 +3,25 @@ package org.gimmesomepeace.zzzcompanion.data.memory.attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeRepository
+import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeReaderRepository
+import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeWriterRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.collections.plus
 import kotlin.math.min
 
 private const val MAX_PAGE_SIZE = 100
 
-class InMemoryAttributeRepository : AttributeRepository {
-    private val attributes = listOf(
+class InMemoryAttributeRepository :
+    AttributeReaderRepository,
+    AttributeWriterRepository
+{
+    private var attributes = listOf(
         Attribute.create(
             AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
             "Physical",
@@ -64,5 +70,26 @@ class InMemoryAttributeRepository : AttributeRepository {
         return attributes
             .filter { it.id in ids }
             .associateBy { it.id }
+    }
+
+    override suspend fun create(entity: Attribute) {
+        if (attributes.any { it.id == entity.id })
+            throw EntityAlreadyExistsException(Attribute::class, entity.id)
+        attributes += entity
+    }
+
+    override suspend fun update(entity: Attribute) {
+        val index = attributes.indexOfFirst { it.id == entity.id }
+        if (index == -1) throw EntityNotFoundException(Attribute::class, entity.id)
+
+        attributes = attributes.map { if (it.id == entity.id) entity else it }
+    }
+
+    override suspend fun delete(entity: Attribute) {
+        val sizeBefore = attributes.size
+        attributes = attributes.filter { it.id != entity.id }
+
+        if (attributes.size == sizeBefore)
+            throw EntityNotFoundException(Attribute::class, entity.id)
     }
 }

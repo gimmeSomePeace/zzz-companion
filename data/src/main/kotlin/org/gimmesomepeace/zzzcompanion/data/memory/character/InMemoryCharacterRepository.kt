@@ -4,9 +4,11 @@ import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.Character
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
+import org.gimmesomepeace.zzzcompanion.core.character.repository.CharacterReaderRepository
+import org.gimmesomepeace.zzzcompanion.core.character.repository.CharacterWriterRepository
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
@@ -14,13 +16,17 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.collections.plus
 import kotlin.math.min
 
 private const val MAX_PAGE_SIZE = 100
 
-class InMemoryCharacterRepository : CharacterRepository {
+class InMemoryCharacterRepository :
+    CharacterReaderRepository,
+    CharacterWriterRepository
+{
 
-    private val characters = listOf(
+    private var characters = listOf(
         Character.create(
             CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
             "Korin",
@@ -69,5 +75,26 @@ class InMemoryCharacterRepository : CharacterRepository {
         return characters
             .filter { it.id in ids }
             .associateBy { it.id }
+    }
+
+    override suspend fun create(entity: Character) {
+        if (characters.any { it.id == entity.id })
+            throw EntityAlreadyExistsException(Character::class, entity.id)
+        characters += entity
+    }
+
+    override suspend fun update(entity: Character) {
+        val index = characters.indexOfFirst { it.id == entity.id }
+        if (index == -1) throw EntityNotFoundException(Character::class, entity.id)
+
+        characters = characters.map { if (it.id == entity.id) entity else it }
+    }
+
+    override suspend fun delete(entity: Character) {
+        val sizeBefore = characters.size
+        characters = characters.filter { it.id != entity.id }
+
+        if (characters.size == sizeBefore)
+            throw EntityNotFoundException(Character::class, entity.id)
     }
 }
