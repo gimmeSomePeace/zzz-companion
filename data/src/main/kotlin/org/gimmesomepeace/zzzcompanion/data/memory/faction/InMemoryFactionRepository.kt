@@ -12,8 +12,9 @@ import java.net.URI
 import java.util.UUID
 import kotlin.math.min
 
+private const val MAX_PAGE_SIZE = 100
+
 class InMemoryFactionRepository : FactionRepository {
-    override val maxPageSize = PageSize(100)
 
     private val factions = listOf(
         Faction.create(
@@ -41,7 +42,7 @@ class InMemoryFactionRepository : FactionRepository {
         cursor: String?,
         filters: FactionFilters?
     ): Page<Faction> {
-        val pageSizeClamped = PageSize(min(maxPageSize.value, pageSize.value))
+        val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) factions.applyFilters(filters) else factions
 
         return filteredItems.paginate(

@@ -12,8 +12,9 @@ import java.net.URI
 import java.util.UUID
 import kotlin.math.min
 
+private const val MAX_PAGE_SIZE = 100
+
 class InMemorySpecialityRepository : SpecialityRepository {
-    override val maxPageSize = PageSize(100)
 
     private val specialities = listOf(
         Speciality.create(
@@ -41,7 +42,7 @@ class InMemorySpecialityRepository : SpecialityRepository {
         cursor: String?,
         filters: SpecialityFilters?
     ): Page<Speciality> {
-        val pageSizeClamped = PageSize(min(maxPageSize.value, pageSize.value))
+        val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) specialities.applyFilters(filters) else specialities
 
         return filteredItems.paginate(

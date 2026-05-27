@@ -12,9 +12,9 @@ import java.net.URI
 import java.util.UUID
 import kotlin.math.min
 
-class InMemoryAttributeRepository : AttributeRepository {
-    override val maxPageSize = PageSize(100)
+private const val MAX_PAGE_SIZE = 100
 
+class InMemoryAttributeRepository : AttributeRepository {
     private val attributes = listOf(
         Attribute.create(
             AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
@@ -41,7 +41,7 @@ class InMemoryAttributeRepository : AttributeRepository {
         cursor: String?,
         filters: AttributeFilters?
     ): Page<Attribute> {
-        val pageSizeClamped = PageSize(min(maxPageSize.value, pageSize.value))
+        val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
 
         return filteredItems.paginate(

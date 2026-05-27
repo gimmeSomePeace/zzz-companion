@@ -16,8 +16,9 @@ import java.net.URI
 import java.util.UUID
 import kotlin.math.min
 
+private const val MAX_PAGE_SIZE = 100
+
 class InMemoryCharacterRepository : CharacterRepository {
-    override val maxPageSize = PageSize(100)
 
     private val characters = listOf(
         Character.create(
@@ -45,11 +46,7 @@ class InMemoryCharacterRepository : CharacterRepository {
         cursor: String?,
         filters: CharacterFilters?
     ): Page<Character> {
-        val pageSizeClamped = PageSize(min(
-                maxPageSize.value, pageSize.value,
-            )
-        )
-
+        val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) characters.applyFilters(filters) else characters
 
         return filteredItems.paginate(

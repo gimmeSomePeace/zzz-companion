@@ -7,8 +7,6 @@ package org.gimmesomepeace.zzzcompanion.core.shared.repository
  * @param F Тип набора фильтров.
  */
 interface PaginationRepository<T, F> {
-    val maxPageSize: PageSize
-
     /**
      * Возвращает страницу сущностей, применяя фильтры и cursor-based pagination.
      *
