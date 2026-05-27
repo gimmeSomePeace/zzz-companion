@@ -1,5 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.attribute
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
@@ -21,6 +23,8 @@ class InMemoryAttributeRepository :
     AttributeReaderRepository,
     AttributeWriterRepository
 {
+    private val mutex = Mutex()
+
     private var attributes = listOf(
         Attribute.create(
             AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
@@ -46,7 +50,7 @@ class InMemoryAttributeRepository :
         pageSize: PageSize,
         cursor: String?,
         filters: AttributeFilters?
-    ): Page<Attribute> {
+    ): Page<Attribute> = mutex.withLock {
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
 
@@ -58,34 +62,36 @@ class InMemoryAttributeRepository :
         }
     }
 
-    override suspend fun get(id: AttributeId): Attribute {
+    override suspend fun get(id: AttributeId): Attribute = mutex.withLock {
         return attributes.find { it.id == id } ?: throw EntityNotFoundException(Attribute::class, id.value)
     }
 
-    override suspend fun find(id: AttributeId): Attribute? {
+    override suspend fun find(id: AttributeId): Attribute? = mutex.withLock {
         return attributes.find { it.id == id }
     }
 
-    override suspend fun findByIds(ids: Collection<AttributeId>): Map<AttributeId, Attribute> {
+    override suspend fun findByIds(
+        ids: Collection<AttributeId>
+    ): Map<AttributeId, Attribute> = mutex.withLock {
         return attributes
             .filter { it.id in ids }
             .associateBy { it.id }
     }
 
-    override suspend fun create(entity: Attribute) {
+    override suspend fun create(entity: Attribute) = mutex.withLock {
         if (attributes.any { it.id == entity.id })
             throw EntityAlreadyExistsException(Attribute::class, entity.id)
         attributes += entity
     }
 
-    override suspend fun update(entity: Attribute) {
+    override suspend fun update(entity: Attribute) = mutex.withLock {
         val index = attributes.indexOfFirst { it.id == entity.id }
         if (index == -1) throw EntityNotFoundException(Attribute::class, entity.id)
 
         attributes = attributes.map { if (it.id == entity.id) entity else it }
     }
 
-    override suspend fun delete(entity: Attribute) {
+    override suspend fun delete(entity: Attribute) = mutex.withLock {
         val sizeBefore = attributes.size
         attributes = attributes.filter { it.id != entity.id }
 

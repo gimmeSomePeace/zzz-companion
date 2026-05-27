@@ -1,5 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.character
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.Character
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
@@ -25,6 +27,7 @@ class InMemoryCharacterRepository :
     CharacterReaderRepository,
     CharacterWriterRepository
 {
+    private val mutex = Mutex()
 
     private var characters = listOf(
         Character.create(
@@ -51,7 +54,7 @@ class InMemoryCharacterRepository :
         pageSize: PageSize,
         cursor: String?,
         filters: CharacterFilters?
-    ): Page<Character> {
+    ): Page<Character> = mutex.withLock {
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) characters.applyFilters(filters) else characters
 
@@ -63,34 +66,36 @@ class InMemoryCharacterRepository :
         }
     }
 
-    override suspend fun get(id: CharacterId): Character {
+    override suspend fun get(id: CharacterId): Character = mutex.withLock {
         return characters.find { it.id == id } ?: throw EntityNotFoundException(Character::class, id.value)
     }
 
-    override suspend fun find(id: CharacterId): Character? {
+    override suspend fun find(id: CharacterId): Character? = mutex.withLock {
         return characters.find { it.id == id }
     }
 
-    override suspend fun findByIds(ids: Collection<CharacterId>): Map<CharacterId, Character> {
+    override suspend fun findByIds(
+        ids: Collection<CharacterId>
+    ): Map<CharacterId, Character> = mutex.withLock {
         return characters
             .filter { it.id in ids }
             .associateBy { it.id }
     }
 
-    override suspend fun create(entity: Character) {
+    override suspend fun create(entity: Character) = mutex.withLock {
         if (characters.any { it.id == entity.id })
             throw EntityAlreadyExistsException(Character::class, entity.id)
         characters += entity
     }
 
-    override suspend fun update(entity: Character) {
+    override suspend fun update(entity: Character) = mutex.withLock {
         val index = characters.indexOfFirst { it.id == entity.id }
         if (index == -1) throw EntityNotFoundException(Character::class, entity.id)
 
         characters = characters.map { if (it.id == entity.id) entity else it }
     }
 
-    override suspend fun delete(entity: Character) {
+    override suspend fun delete(entity: Character) = mutex.withLock {
         val sizeBefore = characters.size
         characters = characters.filter { it.id != entity.id }
 
