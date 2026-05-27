@@ -16,10 +16,10 @@ class EntityNotFoundException(
 /**
  * Исключение, выбрасываемое при попытке создать сущность с уже существующим идентификатором.
  *
- * @param entity Название сущности.
+ * @param entity Тип сущности.
  * @param id Идентификатор сущности.
  */
 class EntityAlreadyExistsException(
-    entity: String,
+    entity: KClass<*>,
     id: Any
-) : Exception("Entity $entity with id=$id already exists")
+) : Exception("Entity ${entity.simpleName ?: entity.qualifiedName} with id=$id already exists")

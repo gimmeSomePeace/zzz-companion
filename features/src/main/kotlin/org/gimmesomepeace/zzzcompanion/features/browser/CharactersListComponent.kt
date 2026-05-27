@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 import org.gimmesomepeace.uikit.select.SelectOption
 import org.gimmesomepeace.uikit.select.selectedOrAll
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
@@ -160,15 +160,14 @@ class CharactersListComponent internal constructor(
                 }
             }
             is CharactersIntent.AddCharacter -> {
-                val result = addCharacterToOwnedUseCase(intent.characterId)
-                if (result == AddCharacterUserDataResult.ADDED) {
-                    _characters.value = _characters.value.map {
-                        if (it.id == intent.characterId) {
-                            it.copy(isOwned = true)
-                        } else {
-                            it
+                scope.launch {
+                    try {
+                        addCharacterToOwnedUseCase(intent.characterId)
+                        _characters.value = _characters.value.map {
+                            if (it.id == intent.characterId) it.copy(isOwned = true)
+                            else it
                         }
-                    }
+                    } catch (_: EntityAlreadyExistsException) {}
                 }
             }
         }
