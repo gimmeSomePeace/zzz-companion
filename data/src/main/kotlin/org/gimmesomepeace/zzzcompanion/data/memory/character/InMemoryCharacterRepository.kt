@@ -7,6 +7,7 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
@@ -36,7 +37,11 @@ class InMemoryCharacterRepository : CharacterRepository {
         )
     )
 
-    override fun getPage(cursor: String?, pageSize: PageSize, filters: CharacterFilters?): Page<Character> {
+    override suspend fun getPage(
+        pageSize: PageSize,
+        cursor: String?,
+        filters: CharacterFilters?
+    ): Page<Character> {
         val filteredItems = if (filters != null) characters.applyFilters(filters) else characters
 
         return filteredItems.paginate(
@@ -45,5 +50,19 @@ class InMemoryCharacterRepository : CharacterRepository {
         ) { character ->
             character.id.value.toString()
         }
+    }
+
+    override suspend fun get(id: CharacterId): Character {
+        return characters.find { it.id == id } ?: throw EntityNotFoundException(Character::class, id.value)
+    }
+
+    override suspend fun find(id: CharacterId): Character? {
+        return characters.find { it.id == id }
+    }
+
+    override suspend fun findByIds(ids: Collection<CharacterId>): Map<CharacterId, Character> {
+        return characters
+            .filter { it.id in ids }
+            .associateBy { it.id }
     }
 }

@@ -1,9 +1,11 @@
 package org.gimmesomepeace.zzzcompanion.features.browser.factory
 
 import com.arkivanov.decompose.ComponentContext
+import kotlinx.coroutines.runBlocking
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.data.memory.attribute.InMemoryAttributeRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.character.InMemoryCharacterRepository
@@ -16,7 +18,7 @@ import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOw
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 
 class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
-    private fun <T> loadAllPages(loader: (String?) -> Page<T>): List<T> {
+    private suspend fun <T> loadAllPages(loader: suspend (String?) -> Page<T>): List<T> {
         val result = mutableListOf<T>()
         var cursor: String? = null
         do {
@@ -35,14 +37,23 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
         val specialityRepository = InMemorySpecialityRepository()
         val characterUserDataRepository = InMemoryCharacterUserDataRepository()
 
-        val factions: List<Faction> = loadAllPages { cursor ->
-            factionRepository.getPage(cursor)
+        val factions: List<Faction> = runBlocking {
+            loadAllPages { cursor ->
+                factionRepository.getPage(
+                    PageSize(10), cursor, null)
+            }
         }
-        val attributes: List<Attribute> = loadAllPages { cursor ->
-            attributeRepository.getPage(cursor)
+
+        val attributes: List<Attribute> = runBlocking {
+            loadAllPages { cursor ->
+                attributeRepository.getPage(PageSize(10), cursor, null)
+            }
         }
-        val specialities: List<Speciality> = loadAllPages { cursor ->
-            specialityRepository.getPage(cursor)
+
+        val specialities: List<Speciality> = runBlocking {
+            loadAllPages { cursor ->
+                specialityRepository.getPage(PageSize(10), cursor, null)
+            }
         }
 
         val refs = ReferenceData(

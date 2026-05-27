@@ -1,5 +1,6 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.speciality
 
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
@@ -32,7 +33,11 @@ class InMemorySpecialityRepository : SpecialityRepository {
         )
     )
 
-    override fun getPage(cursor: String?, pageSize: PageSize, filters: SpecialityFilters?): Page<Speciality> {
+    override suspend fun getPage(
+        pageSize: PageSize,
+        cursor: String?,
+        filters: SpecialityFilters?
+    ): Page<Speciality> {
         val filteredItems = if (filters != null) specialities.applyFilters(filters) else specialities
 
         return filteredItems.paginate(
@@ -41,5 +46,22 @@ class InMemorySpecialityRepository : SpecialityRepository {
         ) { speciality ->
             speciality.id.value.toString()
         }
+    }
+
+    override suspend fun get(id: SpecialityId): Speciality {
+        return specialities.find { it.id == id } ?: throw EntityNotFoundException(
+            Speciality::class,
+            id.value
+        )
+    }
+
+    override suspend fun find(id: SpecialityId): Speciality? {
+        return specialities.find { it.id == id }
+    }
+
+    override suspend fun findByIds(ids: Collection<SpecialityId>): Map<SpecialityId, Speciality> {
+        return specialities
+            .filter { it.id in ids }
+            .associateBy { it.id }
     }
 }

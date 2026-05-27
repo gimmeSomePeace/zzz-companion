@@ -1,15 +1,17 @@
 package org.gimmesomepeace.zzzcompanion.core.shared.repository
 
+import kotlin.reflect.KClass
+
 /**
  * Исключение, выбрасываемое при отсутствии сущности с указанным идентификатором.
  *
- * @param entity Название сущности.
+ * @param entity Тип сущности.
  * @param id Идентификатор сущности.
  */
 class EntityNotFoundException(
-    entity: String,
+    entity: KClass<*>,
     id: Any
-) : NoSuchElementException("Entity $entity with id=$id not found")
+) : NoSuchElementException("Entity ${entity.simpleName ?: entity.qualifiedName} with id=$id not found")
 
 /**
  * Исключение, выбрасываемое при попытке создать сущность с уже существующим идентификатором.

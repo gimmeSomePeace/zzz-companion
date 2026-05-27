@@ -4,6 +4,7 @@ import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
@@ -32,7 +33,11 @@ class InMemoryAttributeRepository : AttributeRepository {
         )
     )
 
-    override fun getPage(cursor: String?, pageSize: PageSize, filters: AttributeFilters?): Page<Attribute> {
+    override suspend fun getPage(
+        pageSize: PageSize,
+        cursor: String?,
+        filters: AttributeFilters?
+    ): Page<Attribute> {
         val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
 
         return filteredItems.paginate(
@@ -41,5 +46,19 @@ class InMemoryAttributeRepository : AttributeRepository {
         ) { attribute ->
             attribute.id.value.toString()
         }
+    }
+
+    override suspend fun get(id: AttributeId): Attribute {
+        return attributes.find { it.id == id } ?: throw EntityNotFoundException(Attribute::class, id.value)
+    }
+
+    override suspend fun find(id: AttributeId): Attribute? {
+        return attributes.find { it.id == id }
+    }
+
+    override suspend fun findByIds(ids: Collection<AttributeId>): Map<AttributeId, Attribute> {
+        return attributes
+            .filter { it.id in ids }
+            .associateBy { it.id }
     }
 }

@@ -4,6 +4,7 @@ import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionFilters
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
@@ -32,7 +33,11 @@ class InMemoryFactionRepository : FactionRepository {
         )
     )
 
-    override fun getPage(cursor: String?, pageSize: PageSize, filters: FactionFilters?): Page<Faction> {
+    override suspend fun getPage(
+        pageSize: PageSize,
+        cursor: String?,
+        filters: FactionFilters?
+    ): Page<Faction> {
         val filteredItems = if (filters != null) factions.applyFilters(filters) else factions
 
         return filteredItems.paginate(
@@ -41,5 +46,22 @@ class InMemoryFactionRepository : FactionRepository {
         ) { character ->
             character.id.value.toString()
         }
+    }
+
+    override suspend fun get(id: FactionId): Faction {
+        return factions.find { it.id == id } ?: throw EntityNotFoundException(
+            Faction::class,
+            id.value
+        )
+    }
+
+    override suspend fun find(id: FactionId): Faction? {
+        return factions.find { it.id == id }
+    }
+
+    override suspend fun findByIds(ids: Collection<FactionId>): Map<FactionId, Faction> {
+        return factions
+            .filter { it.id in ids }
+            .associateBy { it.id }
     }
 }
