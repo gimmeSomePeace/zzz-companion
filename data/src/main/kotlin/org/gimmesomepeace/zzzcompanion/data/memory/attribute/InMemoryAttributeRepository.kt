@@ -10,8 +10,11 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.math.min
 
 class InMemoryAttributeRepository : AttributeRepository {
+    override val maxPageSize = PageSize(100)
+
     private val attributes = listOf(
         Attribute.create(
             AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
@@ -38,11 +41,12 @@ class InMemoryAttributeRepository : AttributeRepository {
         cursor: String?,
         filters: AttributeFilters?
     ): Page<Attribute> {
+        val pageSizeClamped = PageSize(min(maxPageSize.value, pageSize.value))
         val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
 
         return filteredItems.paginate(
             cursor = cursor,
-            pageSize = pageSize
+            pageSize = pageSizeClamped
         ) { attribute ->
             attribute.id.value.toString()
         }

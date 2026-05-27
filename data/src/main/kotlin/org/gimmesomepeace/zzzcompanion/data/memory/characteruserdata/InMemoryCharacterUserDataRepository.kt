@@ -17,23 +17,6 @@ class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
         )
     )
 
-    private companion object {
-        const val MAX_BATCH_SIZE = 100
-    }
-
-//    override fun getByPage(cursor: String?, pageSize: PageSize): Page<CharacterUserData> {
-//        require(pageSize.value <= MAX_BATCH_SIZE) {
-//            "Page size must be between 0 and $MAX_BATCH_SIZE"
-//        }
-//
-//        return userInfo.paginate(
-//            cursor,
-//            pageSize
-//        ) {
-//            it.id.value.toString()
-//        }
-//    }
-
     override fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult =
         if (userInfo.any { it.id == characterUserData.id }) {
             AddCharacterUserDataResult.ALREADY_EXISTS

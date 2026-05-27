@@ -10,8 +10,11 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityRepository
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.math.min
 
 class InMemorySpecialityRepository : SpecialityRepository {
+    override val maxPageSize = PageSize(100)
+
     private val specialities = listOf(
         Speciality.create(
             SpecialityId(UUID.fromString("c108d8ae-7a2a-4e65-a8ed-56a721cba262")),
@@ -38,11 +41,12 @@ class InMemorySpecialityRepository : SpecialityRepository {
         cursor: String?,
         filters: SpecialityFilters?
     ): Page<Speciality> {
+        val pageSizeClamped = PageSize(min(maxPageSize.value, pageSize.value))
         val filteredItems = if (filters != null) specialities.applyFilters(filters) else specialities
 
         return filteredItems.paginate(
             cursor = cursor,
-            pageSize = pageSize
+            pageSize = pageSizeClamped
         ) { speciality ->
             speciality.id.value.toString()
         }

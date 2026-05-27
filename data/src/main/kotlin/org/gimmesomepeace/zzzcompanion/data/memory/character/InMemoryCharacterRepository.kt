@@ -14,8 +14,11 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.math.min
 
 class InMemoryCharacterRepository : CharacterRepository {
+    override val maxPageSize = PageSize(100)
+
     private val characters = listOf(
         Character.create(
             CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
@@ -42,11 +45,16 @@ class InMemoryCharacterRepository : CharacterRepository {
         cursor: String?,
         filters: CharacterFilters?
     ): Page<Character> {
+        val pageSizeClamped = PageSize(min(
+                maxPageSize.value, pageSize.value,
+            )
+        )
+
         val filteredItems = if (filters != null) characters.applyFilters(filters) else characters
 
         return filteredItems.paginate(
             cursor = cursor,
-            pageSize = pageSize
+            pageSize = pageSizeClamped,
         ) { character ->
             character.id.value.toString()
         }

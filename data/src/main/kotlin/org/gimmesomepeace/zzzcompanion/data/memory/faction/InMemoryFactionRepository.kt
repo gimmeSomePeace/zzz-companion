@@ -10,8 +10,11 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID
+import kotlin.math.min
 
 class InMemoryFactionRepository : FactionRepository {
+    override val maxPageSize = PageSize(100)
+
     private val factions = listOf(
         Faction.create(
             FactionId(UUID.fromString("f0a2b3ed-beda-4975-aa25-d9c1146ade00")),
@@ -38,11 +41,12 @@ class InMemoryFactionRepository : FactionRepository {
         cursor: String?,
         filters: FactionFilters?
     ): Page<Faction> {
+        val pageSizeClamped = PageSize(min(maxPageSize.value, pageSize.value))
         val filteredItems = if (filters != null) factions.applyFilters(filters) else factions
 
         return filteredItems.paginate(
             cursor = cursor,
-            pageSize = pageSize
+            pageSize = pageSizeClamped
         ) { character ->
             character.id.value.toString()
         }
