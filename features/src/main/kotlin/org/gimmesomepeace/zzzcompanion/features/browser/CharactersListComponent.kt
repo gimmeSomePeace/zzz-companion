@@ -14,7 +14,7 @@ import org.gimmesomepeace.uikit.select.selectedOrAll
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersScreenState

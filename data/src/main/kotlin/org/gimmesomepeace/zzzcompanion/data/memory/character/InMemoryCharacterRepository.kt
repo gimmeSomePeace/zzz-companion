@@ -7,8 +7,8 @@ import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI

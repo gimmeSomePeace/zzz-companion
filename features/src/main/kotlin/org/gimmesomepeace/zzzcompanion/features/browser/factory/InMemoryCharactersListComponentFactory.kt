@@ -3,7 +3,7 @@ package org.gimmesomepeace.zzzcompanion.features.browser.factory
 import com.arkivanov.decompose.ComponentContext
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.data.memory.attribute.InMemoryAttributeRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.character.InMemoryCharacterRepository

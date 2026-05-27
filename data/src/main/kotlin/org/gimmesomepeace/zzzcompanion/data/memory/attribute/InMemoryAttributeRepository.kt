@@ -4,8 +4,8 @@ import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeRepository
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
 import java.net.URI
 import java.util.UUID

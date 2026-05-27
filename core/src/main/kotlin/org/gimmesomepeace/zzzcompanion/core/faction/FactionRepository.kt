@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.core.faction
 
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 
 interface FactionRepository {
     /**

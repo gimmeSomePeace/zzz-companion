@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.speciality
 
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityFilters
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId

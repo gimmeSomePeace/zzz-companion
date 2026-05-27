@@ -3,8 +3,8 @@ package org.gimmesomepeace.zzzcompanion.features.browser.usecase
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 
 internal class GetCharactersPageUseCase(

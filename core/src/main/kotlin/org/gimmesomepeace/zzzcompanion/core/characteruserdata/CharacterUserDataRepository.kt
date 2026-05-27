@@ -1,8 +1,8 @@
 package org.gimmesomepeace.zzzcompanion.core.characteruserdata
 
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 
 enum class AddCharacterUserDataResult {
     ADDED,

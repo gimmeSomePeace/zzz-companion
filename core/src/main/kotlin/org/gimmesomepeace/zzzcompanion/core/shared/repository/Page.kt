@@ -1,4 +1,4 @@
-package org.gimmesomepeace.zzzcompanion.core.shared
+package org.gimmesomepeace.zzzcompanion.core.shared.repository
 
 /**
  * Страница данных при курсорной пагинации.

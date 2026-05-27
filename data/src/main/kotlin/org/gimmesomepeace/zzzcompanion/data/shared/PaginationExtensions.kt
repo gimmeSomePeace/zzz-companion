@@ -1,7 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.data.shared
 
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 
 fun <T> Iterable<T>.paginate(cursor: String?, pageSize: PageSize, idSelector: (T) -> String): Page<T> {
     val itemsWithExtra = this
