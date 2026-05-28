@@ -1,7 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.attribute
 
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
@@ -12,45 +10,27 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundExce
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
-import java.net.URI
-import java.util.UUID
-import kotlin.collections.plus
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.DeleteResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryStorage
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InsertResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.UpdateResult
 import kotlin.math.min
 
 private const val MAX_PAGE_SIZE = 100
 
-class InMemoryAttributeRepository :
+class InMemoryAttributeRepository(
+    private val storage: InMemoryStorage<AttributeId, Attribute>,
+) :
     AttributeReaderRepository,
     AttributeWriterRepository
 {
-    private val mutex = Mutex()
-
-    private var attributes = listOf(
-        Attribute.create(
-            AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
-            "Physical",
-            URI(
-                "https://static.wikia.nocookie.net/" +
-                    "zenless-zone-zero/images/c/ce/Icon_Physical.png/" +
-                    "revision/latest/scale-to-width-down/32?cb=20251231181902"
-            )
-        ),
-        Attribute.create(
-            AttributeId(UUID.fromString("59c71ade-975d-4cfd-b782-96560a5d6620")),
-            "Ice",
-            URI(
-                "https://static.wikia.nocookie.net/" +
-                    "zenless-zone-zero/images/5/52/Icon_Ice.png/" +
-                    "revision/latest/scale-to-width-down/32?cb=20251231181955"
-            )
-        )
-    )
-
     override suspend fun getPage(
         pageSize: PageSize,
         cursor: String?,
         filters: AttributeFilters?
-    ): Page<Attribute> = mutex.withLock {
+    ): Page<Attribute> {
+        val attributes = storage.getAll()
+
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
 
@@ -62,40 +42,34 @@ class InMemoryAttributeRepository :
         }
     }
 
-    override suspend fun get(id: AttributeId): Attribute = mutex.withLock {
-        return attributes.find { it.id == id } ?: throw EntityNotFoundException(Attribute::class, id.value)
+    override suspend fun get(id: AttributeId): Attribute {
+        return storage.get(id) ?: throw EntityNotFoundException(Attribute::class, id.value)
     }
 
-    override suspend fun find(id: AttributeId): Attribute? = mutex.withLock {
-        return attributes.find { it.id == id }
+    override suspend fun find(id: AttributeId): Attribute? {
+        return storage.get(id)
     }
 
     override suspend fun findByIds(
         ids: Collection<AttributeId>
-    ): Map<AttributeId, Attribute> = mutex.withLock {
-        return attributes
+    ): Map<AttributeId, Attribute> {
+        return storage.getAll()
             .filter { it.id in ids }
             .associateBy { it.id }
     }
 
-    override suspend fun create(entity: Attribute) = mutex.withLock {
-        if (attributes.any { it.id == entity.id })
+    override suspend fun create(entity: Attribute) {
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
             throw EntityAlreadyExistsException(Attribute::class, entity.id)
-        attributes += entity
     }
 
-    override suspend fun update(entity: Attribute) = mutex.withLock {
-        val index = attributes.indexOfFirst { it.id == entity.id }
-        if (index == -1) throw EntityNotFoundException(Attribute::class, entity.id)
-
-        attributes = attributes.map { if (it.id == entity.id) entity else it }
+    override suspend fun update(entity: Attribute) {
+        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+            throw EntityNotFoundException(Attribute::class, entity.id)
     }
 
-    override suspend fun delete(entity: Attribute) = mutex.withLock {
-        val sizeBefore = attributes.size
-        attributes = attributes.filter { it.id != entity.id }
-
-        if (attributes.size == sizeBefore)
+    override suspend fun delete(entity: Attribute) {
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
             throw EntityNotFoundException(Attribute::class, entity.id)
     }
 }

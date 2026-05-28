@@ -42,5 +42,4 @@ class InMemoryListStorage<ID, E>(
         items.removeAt(entityPosition)
         return DeleteResult.SUCCESS
     }
-
 }

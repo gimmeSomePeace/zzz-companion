@@ -1,62 +1,50 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata
 
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
-import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
-import java.util.UUID
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.DeleteResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryStorage
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InsertResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.UpdateResult
 
-class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
-    private val mutex = Mutex()
+class InMemoryCharacterUserDataRepository(
+    private val storage: InMemoryStorage<CharacterId, CharacterUserData>
+) : CharacterUserDataRepository {
 
-    private var userInfo = listOf(
-        CharacterUserData.create(
-            CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
-            EquippedDisks.create()
-        )
-    )
-
-    override suspend fun get(id: CharacterId): CharacterUserData = mutex.withLock {
-        return userInfo.find { it.id == id } ?: throw EntityNotFoundException(
+    override suspend fun get(id: CharacterId): CharacterUserData {
+        return storage.get(id) ?: throw EntityNotFoundException(
             CharacterUserData::class,
             id.value
         )
     }
 
-    override suspend fun find(id: CharacterId): CharacterUserData? = mutex.withLock {
-        return userInfo.find { it.id == id }
+    override suspend fun find(id: CharacterId): CharacterUserData? {
+        return storage.get(id)
     }
 
     override suspend fun findByIds(
         ids: Collection<CharacterId>
-    ): Map<CharacterId, CharacterUserData> = mutex.withLock {
-        return userInfo
+    ): Map<CharacterId, CharacterUserData> {
+        return storage.getAll()
             .filter { it.id in ids }
             .associateBy { it.id }
     }
 
-    override suspend fun create(entity: CharacterUserData) = mutex.withLock {
-        if (userInfo.any { it.id == entity.id })
+    override suspend fun create(entity: CharacterUserData) {
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
             throw EntityAlreadyExistsException(CharacterUserData::class, entity.id)
-        userInfo += entity
     }
 
-    override suspend fun update(entity: CharacterUserData) = mutex.withLock {
-        val index = userInfo.indexOfFirst { it.id == entity.id }
-        if (index == -1) throw EntityNotFoundException(CharacterUserData::class, entity.id)
-
-        userInfo = userInfo.map { if (it.id == entity.id) entity else it }
+    override suspend fun update(entity: CharacterUserData) {
+        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+            throw EntityNotFoundException(CharacterUserData::class, entity.id)
     }
 
-    override suspend fun delete(entity: CharacterUserData) = mutex.withLock {
-        val sizeBefore = userInfo.size
-        userInfo = userInfo.filter { it.id != entity.id }
-
-        if (userInfo.size == sizeBefore)
+    override suspend fun delete(entity: CharacterUserData) {
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
             throw EntityNotFoundException(CharacterUserData::class, entity.id)
     }
 }
