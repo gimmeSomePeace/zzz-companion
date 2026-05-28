@@ -29,12 +29,13 @@ class InMemorySpecialityRepository(
         cursor: String?,
         filters: SpecialityFilters?
     ): Page<Speciality> {
-        val specialities = storage.getAll()
+        val specialities = storage.list(
+            filter = filters?.toPredicate(),
+            sort = {a, b -> a.id.value.compareTo(b.id.value) }
+        )
 
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
-        val filteredItems = if (filters != null) specialities.applyFilters(filters) else specialities
-
-        return filteredItems.paginate(
+        return specialities.paginate(
             cursor = cursor,
             pageSize = pageSizeClamped
         ) { speciality ->
@@ -56,7 +57,7 @@ class InMemorySpecialityRepository(
     override suspend fun findByIds(
         ids: Collection<SpecialityId>
     ): Map<SpecialityId, Speciality> {
-        return storage.getAll()
+        return storage.list()
             .filter { it.id in ids }
             .associateBy { it.id }
     }

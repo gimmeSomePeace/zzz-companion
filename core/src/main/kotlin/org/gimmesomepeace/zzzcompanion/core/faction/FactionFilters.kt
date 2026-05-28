@@ -12,11 +12,12 @@ data class FactionFilters private constructor(
 ) {
     companion object {
         fun create(query: String? = null): FactionFilters {
-            return FactionFilters(query = normalizeQuery(query))
+            val normalized = query?.trim()?.takeIf { it.isNotEmpty() }
+            return FactionFilters(query = normalized)
         }
+    }
 
-        private fun normalizeQuery(query: String?): String? {
-            return query?.trim()
-        }
+    fun toPredicate(): (Faction) -> Boolean = { faction ->
+        query?.let { faction.name.contains(it, ignoreCase = true) } ?: true
     }
 }

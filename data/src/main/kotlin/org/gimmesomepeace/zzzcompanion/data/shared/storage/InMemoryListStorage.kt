@@ -14,10 +14,13 @@ class InMemoryListStorage<ID, E>(
         return items.find { idSelector(it) == id }
     }
 
-    override suspend fun getAll(): List<E> = mutex.withLock {
-        return items
+    override suspend fun list(
+        filter: ((E) -> Boolean)?,
+        sort: Comparator<E>?
+    ): List<E> = mutex.withLock {
+        val filtered = items.filter { filter?.invoke(it) ?: true }
+        return if (sort != null) filtered.sortedWith(sort) else filtered
     }
-
     override suspend fun insert(entity: E): InsertResult = mutex.withLock {
         val entityId = idSelector(entity)
         if (items.any {idSelector(it) == entityId}) return InsertResult.ALREADY_EXISTS

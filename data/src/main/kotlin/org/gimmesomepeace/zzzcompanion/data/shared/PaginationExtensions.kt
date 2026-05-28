@@ -5,7 +5,6 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 
 fun <T> Iterable<T>.paginate(cursor: String?, pageSize: PageSize, idSelector: (T) -> String): Page<T> {
     val itemsWithExtra = this
-        .sortedBy { idSelector(it) }
         .filter { cursor == null || idSelector(it) > cursor }
         .take(pageSize.value + 1)
     val hasMore = itemsWithExtra.size > pageSize.value

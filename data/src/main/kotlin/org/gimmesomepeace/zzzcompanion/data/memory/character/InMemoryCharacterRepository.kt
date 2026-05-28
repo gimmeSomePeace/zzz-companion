@@ -29,12 +29,13 @@ class InMemoryCharacterRepository(
         cursor: String?,
         filters: CharacterFilters?
     ): Page<Character> {
-        val characters = storage.getAll()
+        val characters = storage.list(
+            filter = filters?.toPredicate(),
+            sort = {a, b -> a.id.value.compareTo(b.id.value) }
+        )
 
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
-        val filteredItems = if (filters != null) characters.applyFilters(filters) else characters
-
-        return filteredItems.paginate(
+        return characters.paginate(
             cursor = cursor,
             pageSize = pageSizeClamped,
         ) { character ->
@@ -53,7 +54,7 @@ class InMemoryCharacterRepository(
     override suspend fun findByIds(
         ids: Collection<CharacterId>
     ): Map<CharacterId, Character> {
-        return storage.getAll()
+        return storage.list()
             .filter { it.id in ids }
             .associateBy { it.id }
     }

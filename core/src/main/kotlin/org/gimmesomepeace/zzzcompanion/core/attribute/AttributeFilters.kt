@@ -12,11 +12,12 @@ data class AttributeFilters private constructor(
 ) {
     companion object {
         fun create(query: String? = null): AttributeFilters {
-            return AttributeFilters(query = normalizeQuery(query))
+            val normalizedQuery = query?.trim()?.takeIf { it.isNotEmpty() }
+            return AttributeFilters(query = normalizedQuery)
         }
+    }
 
-        private fun normalizeQuery(query: String?): String? {
-            return query?.trim()
-        }
+    fun toPredicate(): (Attribute) -> Boolean = { attribute ->
+        query?.let { attribute.name.contains(it, ignoreCase = true) } ?: true
     }
 }

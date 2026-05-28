@@ -29,12 +29,13 @@ class InMemoryFactionRepository(
         cursor: String?,
         filters: FactionFilters?
     ): Page<Faction> {
-        val factions = storage.getAll()
+        val factions = storage.list(
+            filter = filters?.toPredicate(),
+            sort = {a, b -> a.id.value.compareTo(b.id.value) }
+        )
 
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
-        val filteredItems = if (filters != null) factions.applyFilters(filters) else factions
-
-        return filteredItems.paginate(
+        return factions.paginate(
             cursor = cursor,
             pageSize = pageSizeClamped
         ) { character ->
@@ -53,7 +54,7 @@ class InMemoryFactionRepository(
     override suspend fun findByIds(
         ids: Collection<FactionId>
     ): Map<FactionId, Faction> {
-        return storage.getAll()
+        return storage.list()
             .filter { it.id in ids }
             .associateBy { it.id }
     }

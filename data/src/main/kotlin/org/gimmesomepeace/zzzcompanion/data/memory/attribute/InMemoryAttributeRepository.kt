@@ -29,12 +29,14 @@ class InMemoryAttributeRepository(
         cursor: String?,
         filters: AttributeFilters?
     ): Page<Attribute> {
-        val attributes = storage.getAll()
+        val attributes = storage.list(
+            filter = filters?.toPredicate(),
+            sort = {a, b -> a.id.value.compareTo(b.id.value) }
+        )
 
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
-        val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
 
-        return filteredItems.paginate(
+        return attributes.paginate(
             cursor = cursor,
             pageSize = pageSizeClamped
         ) { attribute ->
@@ -53,7 +55,7 @@ class InMemoryAttributeRepository(
     override suspend fun findByIds(
         ids: Collection<AttributeId>
     ): Map<AttributeId, Attribute> {
-        return storage.getAll()
+        return storage.list()
             .filter { it.id in ids }
             .associateBy { it.id }
     }

@@ -17,7 +17,10 @@ enum class DeleteResult {
 
 interface InMemoryStorage<ID, E> {
     suspend fun get(id: ID): E?
-    suspend fun getAll(): List<E>
+    suspend fun list(
+        filter: ((E) -> Boolean)? = null,
+        sort: Comparator<E>? = null
+    ): List<E>
     suspend fun insert(entity: E): InsertResult
     suspend fun update(entity: E): UpdateResult
     suspend fun delete(id: ID): DeleteResult

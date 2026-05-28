@@ -28,7 +28,7 @@ class InMemoryCharacterUserDataRepository(
     override suspend fun findByIds(
         ids: Collection<CharacterId>
     ): Map<CharacterId, CharacterUserData> {
-        return storage.getAll()
+        return storage.list()
             .filter { it.id in ids }
             .associateBy { it.id }
     }
