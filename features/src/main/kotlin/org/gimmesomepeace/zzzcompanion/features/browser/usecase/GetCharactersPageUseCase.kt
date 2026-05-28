@@ -1,19 +1,19 @@
 package org.gimmesomepeace.zzzcompanion.features.browser.usecase
 
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterRepository
+import org.gimmesomepeace.zzzcompanion.core.character.repository.CharacterReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 
 internal class GetCharactersPageUseCase(
-    private val characterRepository: CharacterRepository,
+    private val characterRepository: CharacterReaderRepository,
     private val characterUserDataRepository: CharacterUserDataRepository,
 ) {
-    operator fun invoke(cursor: String?, pageSize: PageSize, filters: CharacterFilters): Page<CharacterListItem> {
-        val page = characterRepository.getPage(cursor, pageSize, filters)
-        val userDataMap = characterUserDataRepository.batchGet(page.items.map { it.id })
+    suspend operator fun invoke(cursor: String?, pageSize: PageSize, filters: CharacterFilters): Page<CharacterListItem> {
+        val page = characterRepository.getPage(pageSize, cursor, filters)
+        val userDataMap = characterUserDataRepository.findByIds(page.items.map { it.id })
 
         val items = page.items.map {
             CharacterListItem(

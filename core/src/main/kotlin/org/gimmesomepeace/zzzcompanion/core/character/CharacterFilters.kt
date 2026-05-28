@@ -51,17 +51,26 @@ data class CharacterFilters private constructor(
             specialityId: SpecialityId? = null,
             rarity: Rarity? = null,
         ): CharacterFilters {
+            val normalized = normalizeQuery(query)
             return CharacterFilters(
-                normalizeQuery(query),
-                factionId,
-                attributeId,
-                specialityId,
-                rarity
+                query = normalized,
+                factionId = factionId,
+                attributeId = attributeId,
+                specialityId = specialityId,
+                rarity = rarity
             )
         }
 
         private fun normalizeQuery(query: String?): String? {
-            return query?.trim()
+            return query?.trim()?.takeIf { it.isNotEmpty() }
         }
+    }
+
+    fun toPredicate(): (Character) -> Boolean = { character ->
+        (query == null || character.name.contains(query, ignoreCase = true)) &&
+        (factionId == null || character.factionId == factionId) &&
+        (attributeId == null || character.attributeId == attributeId) &&
+        (specialityId == null || character.specialityId == specialityId) &&
+        (rarity == null || rarity == character.rarity)
     }
 }

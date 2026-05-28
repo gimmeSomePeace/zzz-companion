@@ -3,43 +3,74 @@ package org.gimmesomepeace.zzzcompanion.data.memory.faction
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionFilters
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.faction.FactionRepository
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.faction.repository.FactionReaderRepository
+import org.gimmesomepeace.zzzcompanion.core.faction.repository.FactionWriterRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
-import java.net.URI
-import java.util.UUID
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.DeleteResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryStorage
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InsertResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.UpdateResult
+import kotlin.math.min
 
-class InMemoryFactionRepository : FactionRepository {
-    private val factions = listOf(
-        Faction.create(
-            FactionId(UUID.fromString("f0a2b3ed-beda-4975-aa25-d9c1146ade00")),
-            "Victoria Housekeeping Co.",
-            URI(
-                "https://static.wikia.nocookie.net/" +
-                    "zenless-zone-zero/images/a/a4/Faction_Victoria_Housekeeping_Co._Icon.png/" +
-                    "revision/latest?cb=20240915104752"
-            )
-        ),
-        Faction.create(
-            FactionId(UUID.fromString("021583e1-1f01-488a-a842-bb2195e4cd6e")),
-            "Spook Shack",
-            URI(
-                "https://static.wikia.nocookie.net/" +
-                    "zenless-zone-zero/images/1/18/Faction_Spook_Shack_Icon.png/" +
-                    "revision/latest?cb=20250608103142"
-            )
+private const val MAX_PAGE_SIZE = 100
+
+class InMemoryFactionRepository(
+    private val storage: InMemoryStorage<FactionId, Faction>
+) :
+    FactionReaderRepository,
+    FactionWriterRepository
+{
+    override suspend fun getPage(
+        pageSize: PageSize,
+        cursor: String?,
+        filters: FactionFilters?
+    ): Page<Faction> {
+        val factions = storage.list(
+            filter = filters?.toPredicate(),
+            sort = {a, b -> a.id.value.compareTo(b.id.value) }
         )
-    )
 
-    override fun getPage(cursor: String?, pageSize: PageSize, filters: FactionFilters?): Page<Faction> {
-        val filteredItems = if (filters != null) factions.applyFilters(filters) else factions
-
-        return filteredItems.paginate(
+        val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
+        return factions.paginate(
             cursor = cursor,
-            pageSize = pageSize
+            pageSize = pageSizeClamped
         ) { character ->
             character.id.value.toString()
         }
+    }
+
+    override suspend fun get(id: FactionId): Faction {
+        return storage.get(id) ?: throw EntityNotFoundException(Faction::class, id.value)
+    }
+
+    override suspend fun find(id: FactionId): Faction? {
+        return storage.get(id)
+    }
+
+    override suspend fun findByIds(
+        ids: Collection<FactionId>
+    ): Map<FactionId, Faction> {
+        return storage.list()
+            .filter { it.id in ids }
+            .associateBy { it.id }
+    }
+
+    override suspend fun create(entity: Faction) {
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
+            throw EntityAlreadyExistsException(Faction::class, entity.id)
+    }
+
+    override suspend fun update(entity: Faction) {
+        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+            throw EntityNotFoundException(Faction::class, entity.id)
+    }
+
+    override suspend fun delete(entity: Faction) {
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
+            throw EntityNotFoundException(Faction::class, entity.id)
     }
 }

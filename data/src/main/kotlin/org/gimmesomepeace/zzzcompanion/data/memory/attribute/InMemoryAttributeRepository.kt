@@ -3,43 +3,75 @@ package org.gimmesomepeace.zzzcompanion.data.memory.attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeFilters
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeRepository
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
+import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeReaderRepository
+import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeWriterRepository
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.Page
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.data.shared.paginate
-import java.net.URI
-import java.util.UUID
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.DeleteResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryStorage
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InsertResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.UpdateResult
+import kotlin.math.min
 
-class InMemoryAttributeRepository : AttributeRepository {
-    private val attributes = listOf(
-        Attribute.create(
-            AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
-            "Physical",
-            URI(
-                "https://static.wikia.nocookie.net/" +
-                    "zenless-zone-zero/images/c/ce/Icon_Physical.png/" +
-                    "revision/latest/scale-to-width-down/32?cb=20251231181902"
-            )
-        ),
-        Attribute.create(
-            AttributeId(UUID.fromString("59c71ade-975d-4cfd-b782-96560a5d6620")),
-            "Ice",
-            URI(
-                "https://static.wikia.nocookie.net/" +
-                    "zenless-zone-zero/images/5/52/Icon_Ice.png/" +
-                    "revision/latest/scale-to-width-down/32?cb=20251231181955"
-            )
+private const val MAX_PAGE_SIZE = 100
+
+class InMemoryAttributeRepository(
+    private val storage: InMemoryStorage<AttributeId, Attribute>,
+) :
+    AttributeReaderRepository,
+    AttributeWriterRepository
+{
+    override suspend fun getPage(
+        pageSize: PageSize,
+        cursor: String?,
+        filters: AttributeFilters?
+    ): Page<Attribute> {
+        val attributes = storage.list(
+            filter = filters?.toPredicate(),
+            sort = {a, b -> a.id.value.compareTo(b.id.value) }
         )
-    )
 
-    override fun getPage(cursor: String?, pageSize: PageSize, filters: AttributeFilters?): Page<Attribute> {
-        val filteredItems = if (filters != null) attributes.applyFilters(filters) else attributes
+        val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
 
-        return filteredItems.paginate(
+        return attributes.paginate(
             cursor = cursor,
-            pageSize = pageSize
+            pageSize = pageSizeClamped
         ) { attribute ->
             attribute.id.value.toString()
         }
+    }
+
+    override suspend fun get(id: AttributeId): Attribute {
+        return storage.get(id) ?: throw EntityNotFoundException(Attribute::class, id.value)
+    }
+
+    override suspend fun find(id: AttributeId): Attribute? {
+        return storage.get(id)
+    }
+
+    override suspend fun findByIds(
+        ids: Collection<AttributeId>
+    ): Map<AttributeId, Attribute> {
+        return storage.list()
+            .filter { it.id in ids }
+            .associateBy { it.id }
+    }
+
+    override suspend fun create(entity: Attribute) {
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
+            throw EntityAlreadyExistsException(Attribute::class, entity.id)
+    }
+
+    override suspend fun update(entity: Attribute) {
+        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+            throw EntityNotFoundException(Attribute::class, entity.id)
+    }
+
+    override suspend fun delete(entity: Attribute) {
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
+            throw EntityNotFoundException(Attribute::class, entity.id)
     }
 }

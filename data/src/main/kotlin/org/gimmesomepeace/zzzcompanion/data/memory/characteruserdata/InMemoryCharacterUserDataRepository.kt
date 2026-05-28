@@ -1,59 +1,50 @@
 package org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata
 
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.characteruserdata.AddCharacterUserDataResult
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
-import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
-import org.gimmesomepeace.zzzcompanion.core.shared.Page
-import org.gimmesomepeace.zzzcompanion.core.shared.PageSize
-import org.gimmesomepeace.zzzcompanion.data.shared.paginate
-import java.util.UUID
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityNotFoundException
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.DeleteResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryStorage
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.InsertResult
+import org.gimmesomepeace.zzzcompanion.data.shared.storage.UpdateResult
 
-class InMemoryCharacterUserDataRepository : CharacterUserDataRepository {
+class InMemoryCharacterUserDataRepository(
+    private val storage: InMemoryStorage<CharacterId, CharacterUserData>
+) : CharacterUserDataRepository {
 
-    private var userInfo = listOf(
-        CharacterUserData.create(
-            CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
-            EquippedDisks.create()
+    override suspend fun get(id: CharacterId): CharacterUserData {
+        return storage.get(id) ?: throw EntityNotFoundException(
+            CharacterUserData::class,
+            id.value
         )
-    )
-
-    private companion object {
-        const val MAX_BATCH_SIZE = 100
     }
 
-    override fun getByPage(cursor: String?, pageSize: PageSize): Page<CharacterUserData> {
-        require(pageSize.value <= MAX_BATCH_SIZE) {
-            "Page size must be between 0 and $MAX_BATCH_SIZE"
-        }
-
-        return userInfo.paginate(
-            cursor,
-            pageSize
-        ) {
-            it.id.value.toString()
-        }
+    override suspend fun find(id: CharacterId): CharacterUserData? {
+        return storage.get(id)
     }
 
-    override fun getById(id: CharacterId): CharacterUserData? = userInfo.find { it.id == id }
-
-    override fun batchGet(ids: List<CharacterId>): Map<CharacterId, CharacterUserData> {
-        require(ids.size <= MAX_BATCH_SIZE) {
-            "IDs size must be less or equal $MAX_BATCH_SIZE"
-        }
-
-        return userInfo
+    override suspend fun findByIds(
+        ids: Collection<CharacterId>
+    ): Map<CharacterId, CharacterUserData> {
+        return storage.list()
             .filter { it.id in ids }
             .associateBy { it.id }
     }
 
-    override fun addIfNotExists(characterUserData: CharacterUserData): AddCharacterUserDataResult =
-        if (userInfo.any { it.id == characterUserData.id }) {
-            AddCharacterUserDataResult.ALREADY_EXISTS
-        }
-        else {
-            userInfo = userInfo.plus(characterUserData)
-            AddCharacterUserDataResult.ADDED
-        }
+    override suspend fun create(entity: CharacterUserData) {
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
+            throw EntityAlreadyExistsException(CharacterUserData::class, entity.id)
+    }
+
+    override suspend fun update(entity: CharacterUserData) {
+        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+            throw EntityNotFoundException(CharacterUserData::class, entity.id)
+    }
+
+    override suspend fun delete(entity: CharacterUserData) {
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
+            throw EntityNotFoundException(CharacterUserData::class, entity.id)
+    }
 }

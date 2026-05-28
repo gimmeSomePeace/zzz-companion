@@ -12,11 +12,12 @@ data class SpecialityFilters private constructor(
 ) {
     companion object {
         fun create(query: String? = null): SpecialityFilters {
-            return SpecialityFilters(query = normalizeQuery(query))
+            val normalized = query?.trim()?.takeIf { it.isNotEmpty() }
+            return SpecialityFilters(query = normalized)
         }
+    }
 
-        private fun normalizeQuery(query: String?): String? {
-            return query?.trim()
-        }
+    fun toPredicate(): (Speciality) -> Boolean = { speciality ->
+        query?.let { speciality.name.contains(it, ignoreCase = true) } ?: true
     }
 }
