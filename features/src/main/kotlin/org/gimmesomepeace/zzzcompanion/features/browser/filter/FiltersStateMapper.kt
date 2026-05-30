@@ -9,17 +9,17 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import kotlin.collections.get
 
-internal fun FiltersStateUi.from(
+internal fun SelectedFilters.from(
     filters: CharacterFilters,
     factionsById: Map<FactionId, Faction>,
     attributesById: Map<AttributeId, Attribute>,
     specialitiesById: Map<SpecialityId, Speciality>,
-): FiltersStateUi {
+): SelectedFilters {
     val faction = factionsById[filters.factionId]
     val attribute = attributesById[filters.attributeId]
     val speciality = specialitiesById[filters.specialityId]
 
-    return FiltersStateUi(
+    return SelectedFilters(
         query = query,
         faction = faction,
         attribute = attribute,

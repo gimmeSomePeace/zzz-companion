@@ -7,7 +7,6 @@ import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 internal data class CharactersScreenState(
-    val characters: List<CharacterListItemUi>,
 
     val factionOptions: List<SelectOption<FactionId>>,
     val selectedFactionOption: SelectOption<FactionId>,

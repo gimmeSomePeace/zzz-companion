@@ -16,10 +16,8 @@ import org.gimmesomepeace.uikit.select.SelectOption
 import org.gimmesomepeace.uikit.select.selectedOrAll
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
-import org.gimmesomepeace.zzzcompanion.core.shared.repository.EntityAlreadyExistsException
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
-import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersIntent
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersScreenState
 import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
@@ -33,10 +31,6 @@ class CharactersListComponent internal constructor(
     private val pageSize: PageSize = PageSize(10),
 ) : ComponentContext by componentContext {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-
-    private val _filters: MutableStateFlow<CharacterFilters> = MutableStateFlow(
-        CharacterFilters.create()
-    )
     private val _characters: MutableStateFlow<List<CharacterListItem>> = MutableStateFlow(emptyList())
     private var cursor: String? = null
 
@@ -50,7 +44,7 @@ class CharactersListComponent internal constructor(
 
     private fun updatePage() {
         scope.launch {
-            val page = getCharactersPageUseCase(null, pageSize, _filters.value)
+            val page = getCharactersPageUseCase(cursor, pageSize, _filters.value)
 
             _characters.value = page.items
             cursor = page.nextCursor
@@ -70,9 +64,6 @@ class CharactersListComponent internal constructor(
             )
         }
 
-        val factionOptions = listOf(SelectOption.All) + refs.factions.map {
-            SelectOption.Item(it.id, it.name, it.imageUri)
-        }
 
         val selectedFactionOption = factionOptions.selectedOrAll(filters.factionId)
 
@@ -121,55 +112,4 @@ class CharactersListComponent internal constructor(
             selectedSpecialityOption = SelectOption.All
         )
     )
-
-    internal fun onIntent(intent: CharactersIntent) {
-        when (intent) {
-            is CharactersIntent.SetQuery -> {
-                if (_filters.value.query != intent.query) {
-                    _filters.value = _filters.value.withQuery(query = intent.query)
-                    cursor = null
-                    updatePage()
-                }
-            }
-            is CharactersIntent.SetFaction -> {
-                if (_filters.value.factionId != intent.factionId) {
-                    _filters.value = _filters.value.withFactionId(factionId = intent.factionId)
-                    cursor = null
-                    updatePage()
-                }
-            }
-            is CharactersIntent.SetAttribute -> {
-                if (_filters.value.attributeId != intent.attributeId) {
-                    _filters.value = _filters.value.withAttributeId(attributeId = intent.attributeId)
-                    cursor = null
-                    updatePage()
-                }
-            }
-            is CharactersIntent.SetSpeciality -> {
-                if (_filters.value.specialityId != intent.specialityId) {
-                    _filters.value = _filters.value.withSpecialityId(specialityId = intent.specialityId)
-                    cursor = null
-                    updatePage()
-                }
-            }
-            is CharactersIntent.SetRarity -> {
-                if (_filters.value.rarity != intent.rarity) {
-                    _filters.value = _filters.value.withRarity(rarity = intent.rarity)
-                    cursor = null
-                    updatePage()
-                }
-            }
-            is CharactersIntent.AddCharacter -> {
-                scope.launch {
-                    try {
-                        addCharacterToOwnedUseCase(intent.characterId)
-                        _characters.value = _characters.value.map {
-                            if (it.id == intent.characterId) it.copy(isOwned = true)
-                            else it
-                        }
-                    } catch (_: EntityAlreadyExistsException) {}
-                }
-            }
-        }
-    }
 }
