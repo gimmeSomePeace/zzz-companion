@@ -8,68 +8,69 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.flow.debounce
 import org.gimmesomepeace.uikit.select.LabeledSelect
-import org.gimmesomepeace.uikit.select.SelectOption
-import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
-import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
-import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 @Composable
 internal fun CharactersFilterBar(
-    searchQuery: String,
-    selectedFaction: SelectOption<FactionId>,
-    selectedRarity: SelectOption<Rarity>,
-    selectedAttribute: SelectOption<AttributeId>,
-    selectedSpeciality: SelectOption<SpecialityId>,
-    onSearchQueryChanged: (String) -> Unit,
-    onFactionChanged: (factionId: FactionId?) -> Unit,
-    onAttributeChanged: (attributeId: AttributeId?) -> Unit,
-    onSpecialityChanged: (specialityId: SpecialityId?) -> Unit,
-    onRarityChanged: (rarity: Rarity?) -> Unit,
-    factions: List<SelectOption<FactionId>>,
-    attributes: List<SelectOption<AttributeId>>,
-    specialities: List<SelectOption<SpecialityId>>,
-    rarities: List<SelectOption<Rarity>>,
+    component: FilterComponent,
 ) {
+    val state by component.state.collectAsState()
+    var localQuery by remember { mutableStateOf("") }
+
+    LaunchedEffect(localQuery) {
+        snapshotFlow { localQuery }
+            .debounce(300)
+            .collect {
+                component.onIntent(FilterIntent.SetQuery(it))
+            }
+    }
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         LabeledSelect(
             "Rarity",
-            rarities,
-            selectedRarity,
-            onRarityChanged,
+            state.rarities,
+            state.selectedRarity,
+            { component.onIntent(FilterIntent.SetRarity(it)) },
             modifier = Modifier.weight(1f)
         )
         LabeledSelect(
             "Faction",
-            factions,
-            selectedFaction,
-            onFactionChanged,
+            state.factions,
+            state.selectedFaction,
+            { component.onIntent(FilterIntent.SetFaction(it)) },
             modifier = Modifier.weight(1f)
         )
         LabeledSelect(
             "Attribute",
-            attributes,
-            selectedAttribute,
-            onAttributeChanged,
+            state.attributes,
+            state.selectedAttribute,
+            { component.onIntent(FilterIntent.SetAttribute(it)) },
             modifier = Modifier.weight(1f)
         )
         LabeledSelect(
             "Speciality",
-            specialities,
-            selectedSpeciality,
-            onSpecialityChanged,
+            state.specialities,
+            state.selectedSpeciality,
+            { component.onIntent(FilterIntent.SetSpeciality(it)) },
             modifier = Modifier.weight(1f)
         )
         Box(Modifier.weight(2f)) {
             TextField(
-                value = searchQuery,
-                onValueChange = onSearchQueryChanged,
+                value = localQuery,
+                onValueChange = { localQuery = it },
                 placeholder = { Text("Search...") },
                 modifier = Modifier
                     .fillMaxWidth()

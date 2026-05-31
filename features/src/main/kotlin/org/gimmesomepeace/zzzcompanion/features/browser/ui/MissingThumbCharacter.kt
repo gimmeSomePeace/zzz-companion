@@ -1,6 +1,5 @@
 package org.gimmesomepeace.zzzcompanion.features.browser.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,12 +14,11 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.gimmesomepeace.uikit.grayscale
-import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
-import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 
 @Composable
-internal fun MissingThumbCharacter(character: CharacterListItemUi, onClick: (CharacterId) -> Unit) {
-    Column(modifier = Modifier.clickable { onClick(character.id) }) {
+internal fun MissingThumbCharacter(character: CharacterListItem) {
+    Column {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(
                 resource = asyncPainterResource(data = character.imageUrl),
@@ -30,7 +28,7 @@ internal fun MissingThumbCharacter(character: CharacterListItemUi, onClick: (Cha
             )
 
             KamelImage(
-                resource = asyncPainterResource(data = character.speciality?.imageUri ?: ""),
+                resource = asyncPainterResource(data = character.speciality.imageUri),
                 contentDescription = "Изображение специализации",
                 modifier = Modifier
                     .size(24.dp)
@@ -40,7 +38,7 @@ internal fun MissingThumbCharacter(character: CharacterListItemUi, onClick: (Cha
             )
 
             KamelImage(
-                resource = asyncPainterResource(data = character.attribute?.imageUri ?: ""),
+                resource = asyncPainterResource(data = character.attribute.imageUri),
                 contentDescription = "Изображение атрибута",
                 modifier = Modifier
                     .size(24.dp)

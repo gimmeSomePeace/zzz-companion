@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItemUi
+import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 
 @Composable
-internal fun ThumbCharacter(character: CharacterListItemUi) {
+internal fun ThumbCharacter(character: CharacterListItem) {
     Column {
         Box(modifier = Modifier.size(120.dp)) {
             KamelImage(

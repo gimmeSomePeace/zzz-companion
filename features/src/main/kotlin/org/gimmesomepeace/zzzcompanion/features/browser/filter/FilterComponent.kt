@@ -3,13 +3,16 @@ package org.gimmesomepeace.zzzcompanion.features.browser.filter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.gimmesomepeace.uikit.select.SelectOption
 import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.faction.repository.FactionReaderRepository
+import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityReaderRepository
 import org.gimmesomepeace.zzzcompanion.features.shared.loadAllPages
@@ -50,7 +53,11 @@ internal class FilterComponent(
                 it is SelectOption.Item && it.value == filters.rarity
             } ?: SelectOption.All,
         )
-    }
+    }.stateIn(
+        scope = scope,
+        started = SharingStarted.Eagerly,
+        initialValue = FilterState()
+    )
 
     init {
         selectedFilters.onEach(onFiltersChange).launchIn(scope)
@@ -69,10 +76,14 @@ internal class FilterComponent(
             val specialityOptions = listOf(SelectOption.All) + specialities.await().map {
                 SelectOption.Item(it.id, it.name, it.imageUri)
             }
+            val rarityOptions = listOf(SelectOption.All) + Rarity.entries.map {
+                SelectOption.Item(it, it.title, it.imageUri)
+            }
             filterOptions.value = filterOptions.value.copy(
                 factions = factionOptions,
                 attributes = attributesOptions,
-                specialities = specialityOptions
+                specialities = specialityOptions,
+                rarities = rarityOptions,
             )
         }
     }

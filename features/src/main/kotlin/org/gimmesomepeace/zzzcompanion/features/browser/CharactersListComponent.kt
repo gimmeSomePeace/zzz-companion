@@ -7,19 +7,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.gimmesomepeace.uikit.select.SelectOption
-import org.gimmesomepeace.uikit.select.selectedOrAll
+import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.faction.repository.FactionReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
+import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityReaderRepository
+import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.filter.SelectedFilters
+import org.gimmesomepeace.zzzcompanion.features.browser.grid.GridComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
-import org.gimmesomepeace.zzzcompanion.features.browser.model.CharactersScreenState
-import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 
@@ -27,12 +24,40 @@ class CharactersListComponent internal constructor(
     private val componentContext: ComponentContext,
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
-    private val refs: ReferenceData,
     private val pageSize: PageSize = PageSize(10),
+
+    private val attributeRepository: AttributeReaderRepository,
+    private val specialityRepository: SpecialityReaderRepository,
+    private val factionRepository: FactionReaderRepository
 ) : ComponentContext by componentContext {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
     private val _characters: MutableStateFlow<List<CharacterListItem>> = MutableStateFlow(emptyList())
     private var cursor: String? = null
+
+    internal val filterComponent = FilterComponent(
+        attributeRepository = attributeRepository,
+        specialityRepository = specialityRepository,
+        factionRepository = factionRepository,
+        onFiltersChange = { filters ->
+            updatePage(filters)
+        },
+        scope = scope
+    )
+
+    internal val gridComponent = GridComponent(
+        onItemClicked = ::onCharacterClicked,
+        items = _characters,
+        scope = scope,
+    )
+
+    private fun onCharacterClicked(character: CharacterListItem) {
+        if (!character.isOwned) scope.launch {
+            addCharacterToOwnedUseCase.invoke(character.id)
+            updatePage()
+        }
+        else println("Character $character")
+    }
 
     init {
         lifecycle.doOnDestroy {
@@ -42,74 +67,18 @@ class CharactersListComponent internal constructor(
         updatePage()
     }
 
-    private fun updatePage() {
+    private fun updatePage(filters: SelectedFilters? = null) {
         scope.launch {
-            val page = getCharactersPageUseCase(cursor, pageSize, _filters.value)
+            val page = getCharactersPageUseCase(cursor, pageSize, CharacterFilters.create(
+                query = filters?.query,
+                factionId = filters?.faction,
+                attributeId = filters?.attribute,
+                specialityId = filters?.speciality,
+                rarity = filters?.rarity
+            ))
 
             _characters.value = page.items
             cursor = page.nextCursor
         }
     }
-
-    internal val uiState: StateFlow<CharactersScreenState> = combine(
-        _characters,
-        _filters
-    ) { characters, filters ->
-
-        val characterItems = characters.map {
-            it.toUi(
-                factionById = refs.factionsById,
-                specialitiesById = refs.specialitiesById,
-                attributesById = refs.attributesById
-            )
-        }
-
-
-        val selectedFactionOption = factionOptions.selectedOrAll(filters.factionId)
-
-        val attributeOptions = listOf(SelectOption.All) + refs.attributes.map {
-            SelectOption.Item(it.id, it.name, it.imageUri)
-        }
-        val selectedAttributeOption = attributeOptions.selectedOrAll(filters.attributeId)
-
-        val specialityOptions = listOf(SelectOption.All) + refs.specialities.map {
-            SelectOption.Item(it.id, it.name, it.imageUri)
-        }
-        val selectedSpecialityOption = specialityOptions.selectedOrAll(filters.specialityId)
-
-        val rarityOptions = listOf(SelectOption.All) + Rarity.entries.map {
-            SelectOption.Item(it, it.title, it.imageUri)
-        }
-        val selectedRarityOption = rarityOptions.selectedOrAll(filters.rarity)
-
-        CharactersScreenState(
-            characters = characterItems,
-
-            factionOptions = factionOptions,
-            selectedFactionOption = selectedFactionOption,
-
-            attributeOptions = attributeOptions,
-            selectedAttributeOption = selectedAttributeOption,
-
-            specialityOptions = specialityOptions,
-            selectedSpecialityOption = selectedSpecialityOption,
-
-            rarityOptions = rarityOptions,
-            selectedRarityOption = selectedRarityOption
-        )
-    }.stateIn(
-        scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
-        SharingStarted.Eagerly,
-        CharactersScreenState(
-            characters = emptyList(),
-            factionOptions = emptyList(),
-            attributeOptions = emptyList(),
-            rarityOptions = emptyList(),
-            specialityOptions = emptyList(),
-            selectedFactionOption = SelectOption.All,
-            selectedAttributeOption = SelectOption.All,
-            selectedRarityOption = SelectOption.All,
-            selectedSpecialityOption = SelectOption.All
-        )
-    )
 }

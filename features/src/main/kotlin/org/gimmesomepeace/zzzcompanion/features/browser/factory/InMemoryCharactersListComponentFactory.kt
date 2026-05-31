@@ -5,20 +5,21 @@ import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.Character
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterId
-import org.gimmesomepeace.zzzcompanion.core.character.repository.CharacterReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserData
-import org.gimmesomepeace.zzzcompanion.core.characteruserdata.CharacterUserDataRepository
 import org.gimmesomepeace.zzzcompanion.core.characteruserdata.EquippedDisks
 import org.gimmesomepeace.zzzcompanion.core.faction.Faction
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
+import org.gimmesomepeace.zzzcompanion.data.memory.attribute.InMemoryAttributeRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.character.InMemoryCharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata.InMemoryCharacterUserDataRepository
+import org.gimmesomepeace.zzzcompanion.data.memory.faction.InMemoryFactionRepository
+import org.gimmesomepeace.zzzcompanion.data.memory.speciality.InMemorySpecialityRepository
 import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryListStorage
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
-import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 import java.net.URI
@@ -28,36 +29,36 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
 
     override fun createComponent(componentContext: ComponentContext): CharactersListComponent {
 
+        val factionRepository = getFactionRepository()
+        val attributesRepository = getAttributesRepository()
+        val specialitiesRepository = getSpecialitiesRepository()
         val characterRepository = getCharacterRepository()
         val characterUserDataRepository = getCharacterUserDataRepository()
 
-        val factions = getFactions()
-        val attributes = getAttributes()
-        val specialities = getSpecialities()
-
-        val refs = ReferenceData(
-            factions = factions,
-            attributes = attributes,
-            specialities = specialities,
-
-            factionsById = factions.associateBy { it.id },
-            attributesById = attributes.associateBy { it.id },
-            specialitiesById = specialities.associateBy { it.id }
-        )
-
         val addCharacterToOwnedUseCase = AddCharacterToOwnedUseCase(characterUserDataRepository)
-        val getCharactersPageUseCase = GetCharactersPageUseCase(characterRepository, characterUserDataRepository)
+        val getCharactersPageUseCase = GetCharactersPageUseCase(
+            specialityRepository = specialitiesRepository,
+            factionRepository = factionRepository,
+            attributeRepository = attributesRepository,
+            characterRepository = characterRepository,
+
+            characterUserDataRepository = characterUserDataRepository,
+        )
 
         return CharactersListComponent(
             componentContext = componentContext,
             getCharactersPageUseCase = getCharactersPageUseCase,
             addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
-            refs = refs
+            pageSize = PageSize(10),
+
+            factionRepository = factionRepository,
+            specialityRepository = specialitiesRepository,
+            attributeRepository = attributesRepository,
         )
     }
 
-    private fun getSpecialities(): List<Speciality> {
-        return listOf(
+    private fun getSpecialitiesRepository(): InMemorySpecialityRepository {
+        val specialities = listOf(
             Speciality.create(
                 SpecialityId(UUID.fromString("c108d8ae-7a2a-4e65-a8ed-56a721cba262")),
                 "Anomaly",
@@ -77,10 +78,18 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
                 )
             )
         )
+
+        val storage = InMemoryListStorage(
+            initialItems = specialities,
+            idSelector = { it.id }
+        )
+        return InMemorySpecialityRepository(
+            storage = storage,
+        )
     }
 
-    private fun getFactions(): List<Faction> {
-        return listOf(
+    private fun getFactionRepository(): InMemoryFactionRepository {
+        val factions = listOf(
             Faction.create(
                 FactionId(UUID.fromString("f0a2b3ed-beda-4975-aa25-d9c1146ade00")),
                 "Victoria Housekeeping Co.",
@@ -100,42 +109,33 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
                 )
             )
         )
+
+        val storage = InMemoryListStorage(
+            initialItems = factions,
+            idSelector = { it.id }
+        )
+        return InMemoryFactionRepository(
+            storage = storage
+        )
     }
 
-    private fun getCharacterUserData(): List<CharacterUserData> {
-        return listOf(
+    private fun getCharacterUserDataRepository(): InMemoryCharacterUserDataRepository {
+        val characterUserData = listOf(
             CharacterUserData.create(
                 CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
                 EquippedDisks.create()
             )
         )
-    }
 
-    private fun getCharacters(): List<Character> {
-        return listOf(
-            Character.create(
-                CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
-                "Korin",
-                FactionId(UUID.fromString("f0a2b3ed-beda-4975-aa25-d9c1146ade00")),
-                AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
-                SpecialityId(UUID.fromString("c108d8ae-7a2a-4e65-a8ed-56a721cba262")),
-                Rarity.S,
-                URI("https://sunderarmor.com/ZZZ/Character/thumb_corin.png")
-            ),
-            Character.create(
-                CharacterId(UUID.fromString("c9faa28a-e555-4aa6-a219-6ac331644c0e")),
-                "Alice Thymefield",
-                FactionId(UUID.fromString("021583e1-1f01-488a-a842-bb2195e4cd6e")),
-                AttributeId(UUID.fromString("59c71ade-975d-4cfd-b782-96560a5d6620")),
-                SpecialityId(UUID.fromString("fcf982b1-67b6-4bbb-ba6f-b7d1ecab206c")),
-                Rarity.A,
-                URI("https://sunderarmor.com/ZZZ/Character/thumb_alice.png")
-            )
+        val storage = InMemoryListStorage(
+            initialItems = characterUserData,
+            idSelector = { it.id },
         )
+        return InMemoryCharacterUserDataRepository(storage = storage)
     }
 
-    private fun getAttributes(): List<Attribute> {
-        return listOf(
+    private fun getAttributesRepository(): InMemoryAttributeRepository {
+        val attributes = listOf(
             Attribute.create(
                 AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
                 "Physical",
@@ -155,19 +155,39 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
                 )
             )
         )
+
+        val storage = InMemoryListStorage(
+            initialItems = attributes,
+            idSelector = { it.id }
+        )
+        return InMemoryAttributeRepository(storage = storage)
     }
 
-    private fun getCharacterRepository(): CharacterReaderRepository {
-        val storage = InMemoryListStorage(getCharacters()) {
+    private fun getCharacterRepository(): InMemoryCharacterRepository {
+        val characters = listOf(
+            Character.create(
+                CharacterId(UUID.fromString("0f902410-e39f-440b-a0ba-4c485d3039cc")),
+                "Korin",
+                FactionId(UUID.fromString("f0a2b3ed-beda-4975-aa25-d9c1146ade00")),
+                AttributeId(UUID.fromString("bd4779b3-36df-4280-81a8-59d77b8940ec")),
+                SpecialityId(UUID.fromString("c108d8ae-7a2a-4e65-a8ed-56a721cba262")),
+                Rarity.S,
+                URI("https://sunderarmor.com/ZZZ/Character/thumb_corin.png")
+            ),
+            Character.create(
+                CharacterId(UUID.fromString("c9faa28a-e555-4aa6-a219-6ac331644c0e")),
+                "Alice Thymefield",
+                FactionId(UUID.fromString("021583e1-1f01-488a-a842-bb2195e4cd6e")),
+                AttributeId(UUID.fromString("59c71ade-975d-4cfd-b782-96560a5d6620")),
+                SpecialityId(UUID.fromString("fcf982b1-67b6-4bbb-ba6f-b7d1ecab206c")),
+                Rarity.A,
+                URI("https://sunderarmor.com/ZZZ/Character/thumb_alice.png")
+            )
+        )
+
+        val storage = InMemoryListStorage(characters) {
             it.id
         }
         return InMemoryCharacterRepository(storage)
-    }
-
-    private fun getCharacterUserDataRepository(): CharacterUserDataRepository {
-        val storage = InMemoryListStorage(getCharacterUserData()) {
-            it.id
-        }
-        return InMemoryCharacterUserDataRepository(storage)
     }
 }
