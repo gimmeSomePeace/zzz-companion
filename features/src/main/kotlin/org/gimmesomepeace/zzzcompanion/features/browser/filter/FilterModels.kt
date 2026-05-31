@@ -12,3 +12,7 @@ internal sealed interface FilterIntent {
     data class SetAttribute(val attributeId: AttributeId?) : FilterIntent
     data class SetRarity(val rarity: Rarity?) : FilterIntent
 }
+
+internal sealed interface FilterEvent {
+    data class FilterChanged(val filters: SelectedFilters) : FilterEvent
+}

@@ -16,6 +16,7 @@ import org.gimmesomepeace.zzzcompanion.core.faction.repository.FactionReaderRepo
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityReaderRepository
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterEvent
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.SelectedFilters
 import org.gimmesomepeace.zzzcompanion.features.browser.grid.GridComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.grid.GridEvent
@@ -56,12 +57,18 @@ class CharactersListComponent internal constructor(
         }
     }
 
+    private fun handleFilterEvent(event: FilterEvent) {
+        when (event) {
+            is FilterEvent.FilterChanged -> updatePage(filters = event.filters)
+        }
+    }
+
     private fun onCharacterClicked(character: CharacterListItem) {
         if (!character.isOwned) scope.launch {
             addCharacterToOwnedUseCase.invoke(character.id)
             updatePage()
         }
-        else println("Character $character")
+        else println("Character $character clicked")
     }
 
     init {
@@ -69,8 +76,8 @@ class CharactersListComponent internal constructor(
             scope.cancel()
         }
 
-        filterComponent.selectedFilters
-            .onEach(::updatePage)
+        filterComponent.events
+            .onEach(::handleFilterEvent)
             .launchIn(scope)
 
         gridComponent.events

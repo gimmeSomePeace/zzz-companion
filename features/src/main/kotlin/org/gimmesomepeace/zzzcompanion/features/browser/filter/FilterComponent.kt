@@ -2,9 +2,13 @@ package org.gimmesomepeace.zzzcompanion.features.browser.filter
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.gimmesomepeace.uikit.select.SelectOption
@@ -22,8 +26,11 @@ internal class FilterComponent(
     factionRepository: FactionReaderRepository,
     scope: CoroutineScope,
 ) {
-    val selectedFilters = MutableStateFlow(SelectedFilters())
+    private val selectedFilters = MutableStateFlow(SelectedFilters())
     private val filterOptions = MutableStateFlow(FilterOptionsState())
+
+    private val _events = MutableSharedFlow<FilterEvent>()
+    val events = _events.asSharedFlow()
 
     val state = combine(
         selectedFilters,
@@ -57,6 +64,10 @@ internal class FilterComponent(
     )
 
     init {
+        selectedFilters.onEach { newFilters ->
+            _events.emit(FilterEvent.FilterChanged(newFilters))
+        }.launchIn(scope)
+
         scope.launch {
             val factions = async { loadAllPages(factionRepository, PageSize(100)) }
             val attributes = async { loadAllPages(attributeRepository, PageSize(100)) }
