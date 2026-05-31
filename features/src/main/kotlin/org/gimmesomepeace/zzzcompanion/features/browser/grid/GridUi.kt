@@ -32,7 +32,7 @@ internal fun <T> GridUi(
             key = { idSelector(it) }
         ) {
             Box(modifier = Modifier.clickable {
-                component.onIntent(GridIntent.ItemClicked(it))
+                component.onIntent(GridIntent.ItemClickedIntent(it))
             } ) {
                 itemCard(it)
             }

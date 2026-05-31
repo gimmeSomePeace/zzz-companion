@@ -18,6 +18,7 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityRead
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.SelectedFilters
 import org.gimmesomepeace.zzzcompanion.features.browser.grid.GridComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.grid.GridEvent
 import org.gimmesomepeace.zzzcompanion.features.browser.model.CharacterListItem
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
@@ -45,10 +46,15 @@ class CharactersListComponent internal constructor(
     )
 
     internal val gridComponent = GridComponent(
-        onItemClicked = ::onCharacterClicked,
         items = _characters,
         scope = scope,
     )
+
+    private fun handleGridEvent(event: GridEvent<CharacterListItem>) {
+        when (event) {
+            is GridEvent.ItemClickedEvent -> onCharacterClicked(event.item)
+        }
+    }
 
     private fun onCharacterClicked(character: CharacterListItem) {
         if (!character.isOwned) scope.launch {
@@ -65,6 +71,10 @@ class CharactersListComponent internal constructor(
 
         filterComponent.selectedFilters
             .onEach(::updatePage)
+            .launchIn(scope)
+
+        gridComponent.events
+            .onEach(::handleGridEvent)
             .launchIn(scope)
     }
 
