@@ -7,6 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
@@ -39,9 +41,6 @@ class CharactersListComponent internal constructor(
         attributeRepository = attributeRepository,
         specialityRepository = specialityRepository,
         factionRepository = factionRepository,
-        onFiltersChange = { filters ->
-            updatePage(filters)
-        },
         scope = scope
     )
 
@@ -64,7 +63,9 @@ class CharactersListComponent internal constructor(
             scope.cancel()
         }
 
-        updatePage()
+        filterComponent.selectedFilters
+            .onEach(::updatePage)
+            .launchIn(scope)
     }
 
     private fun updatePage(filters: SelectedFilters? = null) {

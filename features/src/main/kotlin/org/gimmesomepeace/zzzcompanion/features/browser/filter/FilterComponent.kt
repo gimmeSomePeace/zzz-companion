@@ -5,8 +5,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.gimmesomepeace.uikit.select.SelectOption
@@ -22,10 +20,9 @@ internal class FilterComponent(
     attributeRepository: AttributeReaderRepository,
     specialityRepository: SpecialityReaderRepository,
     factionRepository: FactionReaderRepository,
-    onFiltersChange: (SelectedFilters) -> Unit,
     scope: CoroutineScope,
 ) {
-    private val selectedFilters = MutableStateFlow(SelectedFilters())
+    val selectedFilters = MutableStateFlow(SelectedFilters())
     private val filterOptions = MutableStateFlow(FilterOptionsState())
 
     val state = combine(
@@ -60,8 +57,6 @@ internal class FilterComponent(
     )
 
     init {
-        selectedFilters.onEach(onFiltersChange).launchIn(scope)
-
         scope.launch {
             val factions = async { loadAllPages(factionRepository, PageSize(100)) }
             val attributes = async { loadAllPages(attributeRepository, PageSize(100)) }
