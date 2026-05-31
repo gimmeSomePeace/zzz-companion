@@ -3,10 +3,10 @@ package org.gimmesomepeace.zzzcompanion.core.shared.repository
 /**
  * Интерфейс репозитория для операций чтения.
  *
- * @param T Тип сущности.
  * @param ID Тип идентификатора сущности.
+ * @param E Тип сущности.
  */
-interface ReaderRepository<T, ID: Any> {
+interface ReaderRepository<ID: Any, E> {
     /**
      * Возвращает сущность по указанному идентификатору.
      *
@@ -14,7 +14,7 @@ interface ReaderRepository<T, ID: Any> {
      * @return Найденная сущность.
      * @throws EntityNotFoundException если сущность с указанным идентификатором не существует.
      */
-    suspend fun get(id: ID): T
+    suspend fun get(id: ID): E
 
     /**
      * Возвращает сущность по его идентификатору или null, если сущность не была найдена.
@@ -22,7 +22,7 @@ interface ReaderRepository<T, ID: Any> {
      * @param id Идентификатор сущности.
      * @return Найденная сущность или null.
      */
-    suspend fun find(id: ID): T?
+    suspend fun find(id: ID): E?
 
     /**
      * Возвращает сущности с указанными идентификаторами.
@@ -33,5 +33,5 @@ interface ReaderRepository<T, ID: Any> {
      * @param ids Идентификаторы сущностей.
      * @return Отображение идентификаторов в найденные сущности.
      */
-    suspend fun findByIds(ids: Collection<ID>): Map<ID, T>
+    suspend fun findByIds(ids: Collection<ID>): Map<ID, E>
 }

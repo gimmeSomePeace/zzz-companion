@@ -1,6 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.features.browser.factory
 
 import com.arkivanov.decompose.ComponentContext
+import kotlinx.coroutines.runBlocking
 import org.gimmesomepeace.zzzcompanion.core.attribute.Attribute
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.character.Character
@@ -16,7 +17,6 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.Speciality
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import org.gimmesomepeace.zzzcompanion.data.memory.character.InMemoryCharacterRepository
 import org.gimmesomepeace.zzzcompanion.data.memory.characteruserdata.InMemoryCharacterUserDataRepository
-import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryListStorage
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.model.ReferenceData
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
@@ -158,16 +158,18 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
     }
 
     private fun getCharacterRepository(): CharacterReaderRepository {
-        val storage = InMemoryListStorage(getCharacters()) {
-            it.id
+        val repository = InMemoryCharacterRepository()
+        for (character in getCharacters()) runBlocking {
+            repository.create(character)
         }
-        return InMemoryCharacterRepository(storage)
+        return repository
     }
 
     private fun getCharacterUserDataRepository(): CharacterUserDataRepository {
-        val storage = InMemoryListStorage(getCharacterUserData()) {
-            it.id
+        val repository = InMemoryCharacterUserDataRepository()
+        for (userInfo in getCharacterUserData()) runBlocking {
+            repository.create(userInfo)
         }
-        return InMemoryCharacterUserDataRepository(storage)
+        return repository
     }
 }

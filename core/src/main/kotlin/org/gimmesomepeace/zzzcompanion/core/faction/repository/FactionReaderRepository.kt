@@ -7,5 +7,5 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.PaginationReposito
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.ReaderRepository
 
 interface FactionReaderRepository:
-    ReaderRepository<Faction, FactionId>,
+    ReaderRepository<FactionId, Faction>,
     PaginationRepository<Faction, FactionFilters>

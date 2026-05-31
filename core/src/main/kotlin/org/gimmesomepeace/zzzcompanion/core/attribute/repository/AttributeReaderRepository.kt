@@ -7,5 +7,5 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.PaginationReposito
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.ReaderRepository
 
 interface AttributeReaderRepository:
-    ReaderRepository<Attribute, AttributeId>,
+    ReaderRepository<AttributeId, Attribute>,
     PaginationRepository<Attribute, AttributeFilters>

@@ -1,5 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.core.attribute
 
+import org.gimmesomepeace.zzzcompanion.core.shared.Filter
+
 /**
  * Набор параметров, по которым выполняется фильтрация атрибутов.
  *
@@ -9,7 +11,7 @@ package org.gimmesomepeace.zzzcompanion.core.attribute
 @ConsistentCopyVisibility
 data class AttributeFilters private constructor(
     val query: String? = null,
-) {
+) : Filter<Attribute> {
     companion object {
         fun create(query: String? = null): AttributeFilters {
             val normalizedQuery = query?.trim()?.takeIf { it.isNotEmpty() }
@@ -17,7 +19,7 @@ data class AttributeFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Attribute) -> Boolean = { attribute ->
+    override fun toPredicate(): (Attribute) -> Boolean = { attribute ->
         query?.let { attribute.name.contains(it, ignoreCase = true) } ?: true
     }
 }

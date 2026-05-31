@@ -5,5 +5,5 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.ReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.WriterRepository
 
 interface CharacterUserDataRepository:
-    ReaderRepository<CharacterUserData, CharacterId>,
+    ReaderRepository<CharacterId, CharacterUserData>,
     WriterRepository<CharacterUserData>

@@ -1,5 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.core.faction
 
+import org.gimmesomepeace.zzzcompanion.core.shared.Filter
+
 /**
  * Набор параметров, по которым выполняется фильтрация фракций.
  *
@@ -9,7 +11,7 @@ package org.gimmesomepeace.zzzcompanion.core.faction
 @ConsistentCopyVisibility
 data class FactionFilters private constructor(
     val query: String? = null,
-) {
+) : Filter<Faction> {
     companion object {
         fun create(query: String? = null): FactionFilters {
             val normalized = query?.trim()?.takeIf { it.isNotEmpty() }
@@ -17,7 +19,7 @@ data class FactionFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Faction) -> Boolean = { faction ->
+    override fun toPredicate(): (Faction) -> Boolean = { faction ->
         query?.let { faction.name.contains(it, ignoreCase = true) } ?: true
     }
 }

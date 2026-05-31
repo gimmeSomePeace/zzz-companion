@@ -7,5 +7,5 @@ import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityFilters
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 interface SpecialityReaderRepository:
-    ReaderRepository<Speciality, SpecialityId>,
+    ReaderRepository<SpecialityId, Speciality>,
     PaginationRepository<Speciality, SpecialityFilters>

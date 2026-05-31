@@ -7,5 +7,5 @@ import org.gimmesomepeace.zzzcompanion.core.shared.repository.PaginationReposito
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.ReaderRepository
 
 interface CharacterReaderRepository:
-    ReaderRepository<Character, CharacterId>,
+    ReaderRepository<CharacterId, Character>,
     PaginationRepository<Character, CharacterFilters>

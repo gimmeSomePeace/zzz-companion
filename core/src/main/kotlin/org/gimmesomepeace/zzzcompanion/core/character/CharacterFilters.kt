@@ -3,6 +3,7 @@ package org.gimmesomepeace.zzzcompanion.core.character
 import org.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import org.gimmesomepeace.zzzcompanion.core.faction.FactionId
 import org.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import org.gimmesomepeace.zzzcompanion.core.shared.Filter
 import org.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 /**
@@ -22,7 +23,7 @@ data class CharacterFilters private constructor(
     val attributeId: AttributeId? = null,
     val specialityId: SpecialityId? = null,
     val rarity: Rarity? = null,
-) {
+) : Filter<Character> {
     fun withQuery(query: String?): CharacterFilters {
         return copy(query = normalizeQuery(query))
     }
@@ -66,7 +67,7 @@ data class CharacterFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Character) -> Boolean = { character ->
+    override fun toPredicate(): (Character) -> Boolean = { character ->
         (query == null || character.name.contains(query, ignoreCase = true)) &&
         (factionId == null || character.factionId == factionId) &&
         (attributeId == null || character.attributeId == attributeId) &&

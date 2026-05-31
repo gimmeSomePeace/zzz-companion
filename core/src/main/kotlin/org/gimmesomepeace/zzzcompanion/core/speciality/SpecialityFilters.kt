@@ -1,5 +1,7 @@
 package org.gimmesomepeace.zzzcompanion.core.speciality
 
+import org.gimmesomepeace.zzzcompanion.core.shared.Filter
+
 /**
  * Набор параметров, по которым выполняется фильтрация специализаций.
  *
@@ -9,7 +11,7 @@ package org.gimmesomepeace.zzzcompanion.core.speciality
 @ConsistentCopyVisibility
 data class SpecialityFilters private constructor(
     val query: String? = null,
-) {
+) : Filter<Speciality> {
     companion object {
         fun create(query: String? = null): SpecialityFilters {
             val normalized = query?.trim()?.takeIf { it.isNotEmpty() }
@@ -17,7 +19,7 @@ data class SpecialityFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Speciality) -> Boolean = { speciality ->
+    override fun toPredicate(): (Speciality) -> Boolean = { speciality ->
         query?.let { speciality.name.contains(it, ignoreCase = true) } ?: true
     }
 }
