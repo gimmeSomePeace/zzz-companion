@@ -10,11 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import org.gimmesomepeace.zzzcompanion.core.attribute.repository.AttributeReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
-import org.gimmesomepeace.zzzcompanion.core.faction.repository.FactionReaderRepository
 import org.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
-import org.gimmesomepeace.zzzcompanion.core.speciality.repository.SpecialityReaderRepository
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterEvent
 import org.gimmesomepeace.zzzcompanion.features.browser.filter.SelectedFilters
@@ -30,22 +27,14 @@ class CharactersListComponent internal constructor(
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
     private val pageSize: PageSize = PageSize(10),
 
-    private val attributeRepository: AttributeReaderRepository,
-    private val specialityRepository: SpecialityReaderRepository,
-    private val factionRepository: FactionReaderRepository
+    createFilterComponent: (scope: CoroutineScope) -> FilterComponent,
 ) : ComponentContext by componentContext {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val _characters: MutableStateFlow<List<CharacterListItem>> = MutableStateFlow(emptyList())
     private var cursor: String? = null
 
-    internal val filterComponent = FilterComponent(
-        attributeRepository = attributeRepository,
-        specialityRepository = specialityRepository,
-        factionRepository = factionRepository,
-        scope = scope
-    )
-
+    internal val filterComponent = createFilterComponent(scope)
     internal val gridComponent = GridComponent(
         items = _characters,
         scope = scope,
@@ -75,6 +64,8 @@ class CharactersListComponent internal constructor(
         lifecycle.doOnDestroy {
             scope.cancel()
         }
+
+        updatePage()
 
         filterComponent.events
             .onEach(::handleFilterEvent)

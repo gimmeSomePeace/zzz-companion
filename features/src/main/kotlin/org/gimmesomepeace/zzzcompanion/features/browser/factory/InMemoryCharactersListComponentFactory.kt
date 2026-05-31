@@ -20,6 +20,7 @@ import org.gimmesomepeace.zzzcompanion.data.memory.faction.InMemoryFactionReposi
 import org.gimmesomepeace.zzzcompanion.data.memory.speciality.InMemorySpecialityRepository
 import org.gimmesomepeace.zzzcompanion.data.shared.storage.InMemoryListStorage
 import org.gimmesomepeace.zzzcompanion.features.browser.CharactersListComponent
+import org.gimmesomepeace.zzzcompanion.features.browser.filter.FilterComponent
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.AddCharacterToOwnedUseCase
 import org.gimmesomepeace.zzzcompanion.features.browser.usecase.GetCharactersPageUseCase
 import java.net.URI
@@ -51,9 +52,14 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
             addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
             pageSize = PageSize(10),
 
-            factionRepository = factionRepository,
-            specialityRepository = specialitiesRepository,
-            attributeRepository = attributesRepository,
+            createFilterComponent = {scope ->
+                FilterComponent(
+                    attributeRepository = attributesRepository,
+                    specialityRepository = specialitiesRepository,
+                    factionRepository = factionRepository,
+                    scope = scope,
+                )
+            },
         )
     }
 
