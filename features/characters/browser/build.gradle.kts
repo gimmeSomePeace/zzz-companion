@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version "2.3.20"
     id("org.jetbrains.compose")
     alias(libs.plugins.composeCompiler)
 }
@@ -13,9 +13,10 @@ repositories {
 }
 
 dependencies {
-    implementation(projects.data)
     implementation(projects.core)
-    implementation(projects.uiKit)
+    implementation(projects.data)
+    implementation(projects.features.characters.catalog)
+    implementation(projects.features.characters.filters)
 
     // Compose
     implementation(libs.compose.runtime)
@@ -30,8 +31,7 @@ dependencies {
     implementation("com.arkivanov.decompose:decompose:3.5.0")
     implementation("com.arkivanov.decompose:extensions-compose:3.5.0")
 
-    implementation("media.kamel:kamel-image:1.0.8")
-    implementation("media.kamel:kamel-image-default:1.0.8")
+    implementation(libs.kotlinx.coroutinesSwing)
 
     testImplementation(kotlin("test"))
 }

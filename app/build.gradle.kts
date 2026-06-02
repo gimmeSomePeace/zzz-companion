@@ -5,14 +5,14 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-group = "org.gimmesomepeace"
+group = "me.gimmesomepeace"
 version = "unspecified"
 
 dependencies {
     implementation(projects.data)
     implementation(projects.core)
     implementation(projects.uiKit)
-    implementation(projects.features)
+    implementation(projects.features.characters.browser)
 
     // Подгружаем библиотеки для отображения UI в текущей ОС (skiko, к примеру)
     implementation(compose.desktop.currentOs)

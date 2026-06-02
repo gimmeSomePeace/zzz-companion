@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-group = "org.gimmesomepeace"
+group = "me.gimmesomepeace"
 version = "unspecified"
 
 dependencies {

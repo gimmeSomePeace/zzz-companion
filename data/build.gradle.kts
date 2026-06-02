@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "org.gimmesomepeace"
+group = "me.gimmesomepeace"
 version = "1.0.0"
 
 dependencies {
