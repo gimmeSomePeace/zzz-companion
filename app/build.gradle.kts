@@ -29,6 +29,11 @@ dependencies {
 
     implementation(libs.compose.components.resources)
 
+    // Logger
+    implementation(libs.slf4j)
+    implementation(libs.logback)
+    implementation(libs.logstash)
+
     // Сериализация
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 

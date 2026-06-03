@@ -1,0 +1,4 @@
+<configuration>
+    <property name="PROFILE" value="${env.PROFILE:-${PROFILE:-dev}}"/>
+    <include resource="logback/logback-${PROFILE}.xml"/>
+</configuration>
