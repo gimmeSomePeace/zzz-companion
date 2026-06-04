@@ -34,7 +34,7 @@ dependencies {
     implementation(libs.kotlinx.coroutinesSwing)
 
     // Logging
-    implementation(libs.slf4j)
+    implementation(libs.kotlin.logging)
 
     testImplementation(kotlin("test"))
 }

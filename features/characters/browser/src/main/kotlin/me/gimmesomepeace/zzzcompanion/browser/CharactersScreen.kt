@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import me.gimmesomepeace.zzzcompanion.filters.ui.FiltersBar
 import me.gimmesomepeace.zzzcompanion.catalog.ui.grid.CharactersGridView
 
-
 @Composable
 fun CharactersScreen(component: CharactersBrowserComponent) {
     val state = component.state.collectAsState().value

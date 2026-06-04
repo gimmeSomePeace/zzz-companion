@@ -30,7 +30,7 @@ dependencies {
     implementation(libs.compose.components.resources)
 
     // Logger
-    implementation(libs.slf4j)
+    implementation(libs.kotlin.logging)
     implementation(libs.logback)
     implementation(libs.logstash)
 

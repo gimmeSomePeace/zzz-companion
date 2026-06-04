@@ -6,14 +6,12 @@ import com.arkivanov.decompose.router.stack.childStack
 import kotlinx.serialization.Serializable
 import me.gimmesomepeace.zzzcompanion.browser.CharactersBrowserComponent
 import me.gimmesomepeace.zzzcompanion.browser.factory.CharactersListComponentFactory
-import org.slf4j.LoggerFactory
 
 class RootComponent(
     componentContext: ComponentContext,
     val charactersListComponentFactory: CharactersListComponentFactory,
 ): ComponentContext by componentContext {
     private val navigation = StackNavigation<Config>()
-    private val logger = LoggerFactory.getLogger(RootComponent::class.java)
 
     val stack = childStack(
         source = navigation,

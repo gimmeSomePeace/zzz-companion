@@ -2,6 +2,7 @@ package me.gimmesomepeace.zzzcompanion.browser
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,7 +22,6 @@ import me.gimmesomepeace.zzzcompanion.catalog.CharactersCatalogState
 import me.gimmesomepeace.zzzcompanion.browser.usecase.AddCharacterToOwnedUseCase
 import me.gimmesomepeace.zzzcompanion.browser.usecase.GetCharactersPageUseCase
 import me.gimmesomepeace.zzzcompanion.catalog.CharacterCatalogItem
-import org.slf4j.LoggerFactory
 
 class CharactersBrowserComponent internal constructor(
     private val componentContext: ComponentContext,
@@ -35,7 +35,7 @@ class CharactersBrowserComponent internal constructor(
         onFiltersChanged: (SelectedFilters) -> Unit
     ) -> FilterComponent,
 ) : ComponentContext by componentContext {
-    private val logger = LoggerFactory.getLogger(CharactersBrowserComponent::class.java)
+    private val logger = KotlinLogging.logger {}
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val _characters: MutableStateFlow<List<CharacterCatalogItem>> = MutableStateFlow(emptyList())
@@ -56,10 +56,10 @@ class CharactersBrowserComponent internal constructor(
     )
 
     init {
-        logger.info("Created")
+        logger.info { "Created" }
 
         lifecycle.doOnDestroy {
-            logger.info("Destroyed")
+            logger.info { "Destroyed" }
             scope.cancel()
         }
 
@@ -67,7 +67,7 @@ class CharactersBrowserComponent internal constructor(
     }
 
     private fun updatePage(filters: SelectedFilters? = null) {
-        logger.info("Loading characters page. cursor = {}, filters = {}", cursor, filters)
+        logger.info { "Loading characters page. cursor = $cursor, filters = $filters" }
 
         scope.launch {
             val page = getCharactersPageUseCase(cursor, pageSize, CharacterFilters.create(
@@ -77,7 +77,7 @@ class CharactersBrowserComponent internal constructor(
                 specialityId = filters?.speciality,
                 rarity = filters?.rarity
             ))
-            logger.info("Loaded {} characters, next cursor = {}", page.items.size, page.nextCursor)
+            logger.info {"Loaded ${page.items.size} characters, next cursor = ${page.nextCursor}" }
 
             _characters.value = page.items
             cursor = page.nextCursor
@@ -85,19 +85,19 @@ class CharactersBrowserComponent internal constructor(
     }
 
     fun onCharactersCatalogIntent(intent: CharactersCatalogIntent) {
-        logger.debug("Intent received: {}", intent)
+        logger.debug { "Intent received: $intent" }
 
         when (intent) {
             is CharactersCatalogIntent.GoToCharacterDetails -> {
-                logger.info("Navigate to character details: {}", intent.id)
+                logger.info { "Navigate to character details: ${intent.id}" }
                 goToCharacterDetails(intent.id)
             }
             is CharactersCatalogIntent.AddCharacterToOwned -> {
-                logger.info("Add character to owned: {}", intent.id)
+                logger.info {"Add character to owned: ${intent.id}" }
 
                 scope.launch {
                     addCharacterToOwnedUseCase(intent.id)
-                    logger.debug("Added character to owned: {}", intent.id)
+                    logger.debug { "Added character to owned: ${intent.id}" }
 
                     _characters.value = _characters.value.map {
                         if (it.isOwned) it else it.copy(isOwned = true)
