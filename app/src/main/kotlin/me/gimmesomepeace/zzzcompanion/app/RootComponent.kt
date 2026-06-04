@@ -10,28 +10,32 @@ import me.gimmesomepeace.zzzcompanion.browser.factory.CharactersListComponentFac
 class RootComponent(
     componentContext: ComponentContext,
     val charactersListComponentFactory: CharactersListComponentFactory,
-): ComponentContext by componentContext {
+) : ComponentContext by componentContext {
     private val navigation = StackNavigation<Config>()
 
-    val stack = childStack(
-        source = navigation,
-        initialConfiguration = Config.CharactersListConfig,
-        serializer = Config.serializer(),
-        handleBackButton = true,
-        childFactory = ::createChild
-    )
+    val stack =
+        childStack(
+            source = navigation,
+            initialConfiguration = Config.CharactersListConfig,
+            serializer = Config.serializer(),
+            handleBackButton = true,
+            childFactory = ::createChild,
+        )
 
     private fun createChild(
         config: Config,
-        componentContext: ComponentContext
-    ): Child = when(config) {
-        Config.CharactersListConfig -> Child.CharactersListChild(
-            charactersListComponentFactory.createComponent(
-                componentContext,
-                goToCharacterDetails = {}
-            )
-        )
-    }
+        componentContext: ComponentContext,
+    ): Child =
+        when (config) {
+            Config.CharactersListConfig -> {
+                Child.CharactersListChild(
+                    charactersListComponentFactory.createComponent(
+                        componentContext,
+                        goToCharacterDetails = {},
+                    ),
+                )
+            }
+        }
 
     @Serializable
     sealed interface Config {
@@ -40,6 +44,8 @@ class RootComponent(
     }
 
     sealed interface Child {
-        data class CharactersListChild(val component: CharactersBrowserComponent) : Child
+        data class CharactersListChild(
+            val component: CharactersBrowserComponent,
+        ) : Child
     }
 }

@@ -1,8 +1,12 @@
 package me.gimmesomepeace.zzzcompanion.core.disk
 
 @JvmInline
-value class SubStatValue(val value: Int) {
-    init { require(value in 0..5) }
+value class SubStatValue(
+    val value: Int,
+) {
+    init {
+        require(value in 0..5)
+    }
 }
 
 /**

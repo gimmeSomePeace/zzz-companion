@@ -30,12 +30,10 @@ import java.net.URI
 data class Character private constructor(
     val id: CharacterId,
     val name: String,
-
     val factionId: FactionId,
     val attributeId: AttributeId,
     val specialityId: SpecialityId,
     val rarity: Rarity,
-
     val imageUri: URI,
 ) {
     companion object {
@@ -58,7 +56,7 @@ data class Character private constructor(
                 attributeId = attributeId,
                 specialityId = specialityId,
                 rarity = rarity,
-                imageUri = imageUri
+                imageUri = imageUri,
             )
         }
     }

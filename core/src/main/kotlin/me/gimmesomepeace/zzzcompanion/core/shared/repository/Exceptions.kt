@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
  */
 class EntityNotFoundException(
     entity: KClass<*>,
-    id: Any
+    id: Any,
 ) : NoSuchElementException("Entity ${entity.simpleName ?: entity.qualifiedName} with id=$id not found")
 
 /**
@@ -21,5 +21,5 @@ class EntityNotFoundException(
  */
 class EntityAlreadyExistsException(
     entity: KClass<*>,
-    id: Any
+    id: Any,
 ) : Exception("Entity ${entity.simpleName ?: entity.qualifiedName} with id=$id already exists")

@@ -17,7 +17,12 @@ class SubStatsSet private constructor(
     val stat4: SubStat? = null,
 ) {
     companion object {
-        fun create(stat1: SubStat, stat2: SubStat, stat3: SubStat, stat4: SubStat?): SubStatsSet {
+        fun create(
+            stat1: SubStat,
+            stat2: SubStat,
+            stat3: SubStat,
+            stat4: SubStat?,
+        ): SubStatsSet {
             val statValueSum =
                 stat1.level.value +
                     stat2.level.value +

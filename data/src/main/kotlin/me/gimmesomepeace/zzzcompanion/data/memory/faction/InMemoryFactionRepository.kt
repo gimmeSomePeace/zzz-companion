@@ -19,58 +19,55 @@ import kotlin.math.min
 private const val MAX_PAGE_SIZE = 100
 
 class InMemoryFactionRepository(
-    private val storage: InMemoryStorage<FactionId, Faction>
-) :
-    FactionReaderRepository,
-    FactionWriterRepository
-{
+    private val storage: InMemoryStorage<FactionId, Faction>,
+) : FactionReaderRepository,
+    FactionWriterRepository {
     override suspend fun getPage(
         pageSize: PageSize,
         cursor: String?,
-        filters: FactionFilters?
+        filters: FactionFilters?,
     ): Page<Faction> {
-        val factions = storage.list(
-            filter = filters?.toPredicate(),
-            sort = {a, b -> a.id.value.compareTo(b.id.value) }
-        )
+        val factions =
+            storage.list(
+                filter = filters?.toPredicate(),
+                sort = { a, b -> a.id.value.compareTo(b.id.value) },
+            )
 
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         return factions.paginate(
             cursor = cursor,
-            pageSize = pageSizeClamped
+            pageSize = pageSizeClamped,
         ) { character ->
             character.id.value.toString()
         }
     }
 
-    override suspend fun get(id: FactionId): Faction {
-        return storage.get(id) ?: throw EntityNotFoundException(Faction::class, id.value)
-    }
+    override suspend fun get(id: FactionId): Faction =
+        storage.get(id) ?: throw EntityNotFoundException(Faction::class, id.value)
 
-    override suspend fun find(id: FactionId): Faction? {
-        return storage.get(id)
-    }
+    override suspend fun find(id: FactionId): Faction? = storage.get(id)
 
-    override suspend fun findByIds(
-        ids: Collection<FactionId>
-    ): Map<FactionId, Faction> {
-        return storage.list()
+    override suspend fun findByIds(ids: Collection<FactionId>): Map<FactionId, Faction> =
+        storage
+            .list()
             .filter { it.id in ids }
             .associateBy { it.id }
-    }
 
     override suspend fun create(entity: Faction) {
-        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS) {
             throw EntityAlreadyExistsException(Faction::class, entity.id)
+        }
     }
 
     override suspend fun update(entity: Faction) {
-        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+        if (storage.update(entity) == UpdateResult.NOT_FOUND) {
             throw EntityNotFoundException(Faction::class, entity.id)
+        }
     }
 
     override suspend fun delete(entity: Faction) {
-        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND) {
             throw EntityNotFoundException(Faction::class, entity.id)
+        }
     }
 }

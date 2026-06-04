@@ -1,8 +1,12 @@
 package me.gimmesomepeace.zzzcompanion.core.disk
 
 @JvmInline
-value class MainStatValue(val value: Int) {
-    init { require(value in 0..15) }
+value class MainStatValue(
+    val value: Int,
+) {
+    init {
+        require(value in 0..15)
+    }
 }
 
 /**

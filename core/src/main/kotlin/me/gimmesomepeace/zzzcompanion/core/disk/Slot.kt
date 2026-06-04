@@ -3,7 +3,9 @@ package me.gimmesomepeace.zzzcompanion.core.disk
 /**
  * Слот драйв-диска с набором основных характеристик, разрешенных для этого слота.
  */
-enum class Slot(private val allowed: Set<Stat>) {
+enum class Slot(
+    private val allowed: Set<Stat>,
+) {
     S1(setOf(Stat.HP)),
     S2(setOf(Stat.ATTACK)),
     S3(setOf(Stat.DEFENSE)),

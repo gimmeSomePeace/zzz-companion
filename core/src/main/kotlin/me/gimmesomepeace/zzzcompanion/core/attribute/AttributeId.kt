@@ -3,4 +3,6 @@ package me.gimmesomepeace.zzzcompanion.core.attribute
 import java.util.UUID
 
 @JvmInline
-value class AttributeId(val value: UUID)
+value class AttributeId(
+    val value: UUID,
+)

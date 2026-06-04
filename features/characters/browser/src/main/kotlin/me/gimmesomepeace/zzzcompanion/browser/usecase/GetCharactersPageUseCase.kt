@@ -17,23 +17,27 @@ internal class GetCharactersPageUseCase(
     private val specialityRepository: SpecialityReaderRepository,
     private val characterUserDataRepository: CharacterUserDataRepository,
 ) {
-    suspend operator fun invoke(cursor: String?, pageSize: PageSize, filters: CharacterFilters): Page<CharacterCatalogItem> {
+    suspend operator fun invoke(
+        cursor: String?,
+        pageSize: PageSize,
+        filters: CharacterFilters,
+    ): Page<CharacterCatalogItem> {
         val page = characterRepository.getPage(pageSize, cursor, filters)
         val userDataMap = characterUserDataRepository.findByIds(page.items.map { it.id })
 
-        val items = page.items.map {
-            CharacterCatalogItem(
-                id = it.id,
-                name = it.name,
-                faction = factionRepository.get(it.factionId),
-                attribute = attributeRepository.get(it.attributeId),
-                speciality = specialityRepository.get(it.specialityId),
-                rarity = it.rarity,
-                imageUrl = it.imageUri,
-
-                isOwned = userDataMap.containsKey(it.id)
-            )
-        }
+        val items =
+            page.items.map {
+                CharacterCatalogItem(
+                    id = it.id,
+                    name = it.name,
+                    faction = factionRepository.get(it.factionId),
+                    attribute = attributeRepository.get(it.attributeId),
+                    speciality = specialityRepository.get(it.specialityId),
+                    rarity = it.rarity,
+                    imageUrl = it.imageUri,
+                    isOwned = userDataMap.containsKey(it.id),
+                )
+            }
         return Page(items, page.nextCursor)
     }
 }

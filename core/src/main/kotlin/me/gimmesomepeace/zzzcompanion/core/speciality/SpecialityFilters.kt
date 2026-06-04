@@ -17,7 +17,8 @@ data class SpecialityFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Speciality) -> Boolean = { speciality ->
-        query?.let { speciality.name.contains(it, ignoreCase = true) } ?: true
-    }
+    fun toPredicate(): (Speciality) -> Boolean =
+        { speciality ->
+            query?.let { speciality.name.contains(it, ignoreCase = true) } ?: true
+        }
 }

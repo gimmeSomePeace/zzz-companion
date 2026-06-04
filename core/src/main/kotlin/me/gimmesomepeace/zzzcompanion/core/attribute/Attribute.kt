@@ -19,7 +19,11 @@ data class Attribute private constructor(
     val imageUri: URI,
 ) {
     companion object {
-        fun create(id: AttributeId, name: String, imageUri: URI): Attribute {
+        fun create(
+            id: AttributeId,
+            name: String,
+            imageUri: URI,
+        ): Attribute {
             val trimmedName = name.trim()
 
             require(trimmedName.isNotBlank()) { "Name must not be blank" }

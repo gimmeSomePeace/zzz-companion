@@ -17,7 +17,8 @@ data class AttributeFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Attribute) -> Boolean = { attribute ->
-        query?.let { attribute.name.contains(it, ignoreCase = true) } ?: true
-    }
+    fun toPredicate(): (Attribute) -> Boolean =
+        { attribute ->
+            query?.let { attribute.name.contains(it, ignoreCase = true) } ?: true
+        }
 }

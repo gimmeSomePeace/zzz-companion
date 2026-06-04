@@ -1,6 +1,8 @@
 package me.gimmesomepeace.zzzcompanion.core.diskset
 
-import java.util.*
+import java.util.UUID
 
 @JvmInline
-value class DriveDiskSetId(val value: UUID)
+value class DriveDiskSetId(
+    val value: UUID,
+)

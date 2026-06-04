@@ -13,9 +13,23 @@ plugins {
     // Kotlin
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.kotlinJvm) apply false
+
+    alias(libs.plugins.spotless)
 }
 
 repositories {
     google()
     mavenCentral()
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        ktlint()
+    }
+
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        ktlint()
+    }
 }

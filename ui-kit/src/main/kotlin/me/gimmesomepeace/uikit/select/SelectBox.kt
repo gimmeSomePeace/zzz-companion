@@ -17,23 +17,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun <T> SelectBox(options: List<SelectOption<T>>, selectedOption: SelectOption<T>, onOptionSelected: (T?) -> Unit) {
+fun <T> SelectBox(
+    options: List<SelectOption<T>>,
+    selectedOption: SelectOption<T>,
+    onOptionSelected: (T?) -> Unit,
+) {
     var expanded by remember { mutableStateOf(false) }
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { expanded = true }
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable { expanded = true },
     ) {
         Box(
             modifier = Modifier.fillMaxWidth().height(50.dp).padding(5.dp),
-            contentAlignment = Alignment.CenterStart
+            contentAlignment = Alignment.CenterStart,
         ) {
             SelectItem(selectedOption.title, selectedOption.imageUrl)
         }
 
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
         ) {
             options.forEach { item ->
                 DropdownMenuItem(
@@ -41,7 +46,7 @@ fun <T> SelectBox(options: List<SelectOption<T>>, selectedOption: SelectOption<T
                     onClick = {
                         onOptionSelected(item.toValueOrNull())
                         expanded = false
-                    }
+                    },
                 )
             }
         }

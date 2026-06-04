@@ -21,25 +21,27 @@ internal fun ThumbCharacter(character: CharacterCatalogItem) {
             KamelImage(
                 resource = asyncPainterResource(data = character.imageUrl),
                 contentDescription = "Аватар персонажа",
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             )
 
             KamelImage(
                 resource = asyncPainterResource(data = character.speciality.imageUri),
                 contentDescription = "Изображение специализации",
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.TopEnd)
-                    .offset(x = (-4).dp, y = 4.dp)
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .align(Alignment.TopEnd)
+                        .offset(x = (-4).dp, y = 4.dp),
             )
 
             KamelImage(
                 resource = asyncPainterResource(data = character.attribute.imageUri),
                 contentDescription = "Изображение атрибута",
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.TopEnd)
-                    .offset(x = (-28).dp, y = 4.dp)
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .align(Alignment.TopEnd)
+                        .offset(x = (-28).dp, y = 4.dp),
             )
         }
         Text(character.name)

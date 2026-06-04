@@ -4,6 +4,6 @@ import me.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import me.gimmesomepeace.zzzcompanion.core.shared.repository.ReaderRepository
 import me.gimmesomepeace.zzzcompanion.core.shared.repository.WriterRepository
 
-interface CharacterUserDataRepository:
+interface CharacterUserDataRepository :
     ReaderRepository<CharacterUserData, CharacterId>,
     WriterRepository<CharacterUserData>

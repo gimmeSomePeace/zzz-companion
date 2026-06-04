@@ -7,21 +7,25 @@ enum class InsertResult {
 
 enum class UpdateResult {
     SUCCESS,
-    NOT_FOUND
+    NOT_FOUND,
 }
 
 enum class DeleteResult {
     SUCCESS,
-    NOT_FOUND
+    NOT_FOUND,
 }
 
 interface InMemoryStorage<ID, E> {
     suspend fun get(id: ID): E?
+
     suspend fun list(
         filter: ((E) -> Boolean)? = null,
-        sort: Comparator<E>? = null
+        sort: Comparator<E>? = null,
     ): List<E>
+
     suspend fun insert(entity: E): InsertResult
+
     suspend fun update(entity: E): UpdateResult
+
     suspend fun delete(id: ID): DeleteResult
 }

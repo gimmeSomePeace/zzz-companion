@@ -16,7 +16,11 @@ data class DriveDiskSet private constructor(
     val imageUri: URI,
 ) {
     companion object {
-        fun create(id: DriveDiskSetId, name: String, imageUri: URI): DriveDiskSet {
+        fun create(
+            id: DriveDiskSetId,
+            name: String,
+            imageUri: URI,
+        ): DriveDiskSet {
             require(!name.isBlank()) { "Name must not be blank." }
             return DriveDiskSet(id, name, imageUri)
         }

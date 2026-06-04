@@ -23,9 +23,7 @@ import me.gimmesomepeace.zzzcompanion.filters.FilterComponent
 import me.gimmesomepeace.zzzcompanion.filters.FiltersIntent
 
 @Composable
-fun FiltersBar(
-    component: FilterComponent,
-) {
+fun FiltersBar(component: FilterComponent) {
     val state by component.state.collectAsState()
     var localQuery by remember { mutableStateOf("") }
 
@@ -39,45 +37,46 @@ fun FiltersBar(
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         LabeledSelect(
             "Rarity",
             state.rarities,
             state.selectedRarity,
             { component.onIntent(FiltersIntent.SetRarity(it)) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         LabeledSelect(
             "Faction",
             state.factions,
             state.selectedFaction,
             { component.onIntent(FiltersIntent.SetFaction(it)) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         LabeledSelect(
             "Attribute",
             state.attributes,
             state.selectedAttribute,
             { component.onIntent(FiltersIntent.SetAttribute(it)) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         LabeledSelect(
             "Speciality",
             state.specialities,
             state.selectedSpeciality,
             { component.onIntent(FiltersIntent.SetSpeciality(it)) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         Box(Modifier.weight(2f)) {
             TextField(
                 value = localQuery,
                 onValueChange = { localQuery = it },
                 placeholder = { Text("Search...") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                singleLine = true
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                singleLine = true,
             )
         }
     }

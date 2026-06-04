@@ -12,8 +12,8 @@ internal class AddCharacterToOwnedUseCase(
         characterUserDataRepository.create(
             CharacterUserData.create(
                 id = characterId,
-                EquippedDisks.create()
-            )
+                EquippedDisks.create(),
+            ),
         )
     }
 }

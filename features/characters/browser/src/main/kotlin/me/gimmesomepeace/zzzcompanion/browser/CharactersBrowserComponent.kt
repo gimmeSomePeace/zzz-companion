@@ -12,16 +12,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.gimmesomepeace.zzzcompanion.browser.usecase.AddCharacterToOwnedUseCase
+import me.gimmesomepeace.zzzcompanion.browser.usecase.GetCharactersPageUseCase
+import me.gimmesomepeace.zzzcompanion.catalog.CharacterCatalogItem
+import me.gimmesomepeace.zzzcompanion.catalog.CharactersCatalogIntent
+import me.gimmesomepeace.zzzcompanion.catalog.CharactersCatalogState
 import me.gimmesomepeace.zzzcompanion.core.character.CharacterFilters
 import me.gimmesomepeace.zzzcompanion.core.character.CharacterId
 import me.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import me.gimmesomepeace.zzzcompanion.filters.FilterComponent
 import me.gimmesomepeace.zzzcompanion.filters.model.SelectedFilters
-import me.gimmesomepeace.zzzcompanion.catalog.CharactersCatalogIntent
-import me.gimmesomepeace.zzzcompanion.catalog.CharactersCatalogState
-import me.gimmesomepeace.zzzcompanion.browser.usecase.AddCharacterToOwnedUseCase
-import me.gimmesomepeace.zzzcompanion.browser.usecase.GetCharactersPageUseCase
-import me.gimmesomepeace.zzzcompanion.catalog.CharacterCatalogItem
 
 class CharactersBrowserComponent internal constructor(
     private val componentContext: ComponentContext,
@@ -29,31 +29,33 @@ class CharactersBrowserComponent internal constructor(
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
     private val pageSize: PageSize = PageSize(10),
     private val goToCharacterDetails: (CharacterId) -> Unit,
-
     createFilterComponent: (
         scope: CoroutineScope,
-        onFiltersChanged: (SelectedFilters) -> Unit
+        onFiltersChanged: (SelectedFilters) -> Unit,
     ) -> FilterComponent,
 ) : ComponentContext by componentContext {
     private val logger = KotlinLogging.logger {}
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
-    private val _characters: MutableStateFlow<List<CharacterCatalogItem>> = MutableStateFlow(emptyList())
+    private val characters: MutableStateFlow<List<CharacterCatalogItem>> = MutableStateFlow(emptyList())
     private var cursor: String? = null
 
-    internal val filterComponent = createFilterComponent(
-        scope,
-    ) { filters ->
-        updatePage(filters)
-    }
+    internal val filterComponent =
+        createFilterComponent(
+            scope,
+        ) { filters ->
+            updatePage(filters)
+        }
 
-    internal val state = _characters.map {
-        CharactersBrowserState(CharactersCatalogState(it))
-    }.stateIn(
-        scope = scope,
-        started = SharingStarted.Lazily,
-        initialValue = CharactersBrowserState(),
-    )
+    internal val state =
+        characters
+            .map {
+                CharactersBrowserState(CharactersCatalogState(it))
+            }.stateIn(
+                scope = scope,
+                started = SharingStarted.Lazily,
+                initialValue = CharactersBrowserState(),
+            )
 
     init {
         logger.info { "Created" }
@@ -70,16 +72,21 @@ class CharactersBrowserComponent internal constructor(
         logger.info { "Loading characters page. cursor = $cursor, filters = $filters" }
 
         scope.launch {
-            val page = getCharactersPageUseCase(cursor, pageSize, CharacterFilters.create(
-                query = filters?.query,
-                factionId = filters?.faction,
-                attributeId = filters?.attribute,
-                specialityId = filters?.speciality,
-                rarity = filters?.rarity
-            ))
-            logger.info {"Loaded ${page.items.size} characters, next cursor = ${page.nextCursor}" }
+            val page =
+                getCharactersPageUseCase(
+                    cursor,
+                    pageSize,
+                    CharacterFilters.create(
+                        query = filters?.query,
+                        factionId = filters?.faction,
+                        attributeId = filters?.attribute,
+                        specialityId = filters?.speciality,
+                        rarity = filters?.rarity,
+                    ),
+                )
+            logger.info { "Loaded ${page.items.size} characters, next cursor = ${page.nextCursor}" }
 
-            _characters.value = page.items
+            characters.value = page.items
             cursor = page.nextCursor
         }
     }
@@ -92,16 +99,18 @@ class CharactersBrowserComponent internal constructor(
                 logger.info { "Navigate to character details: ${intent.id}" }
                 goToCharacterDetails(intent.id)
             }
+
             is CharactersCatalogIntent.AddCharacterToOwned -> {
-                logger.info {"Add character to owned: ${intent.id}" }
+                logger.info { "Add character to owned: ${intent.id}" }
 
                 scope.launch {
                     addCharacterToOwnedUseCase(intent.id)
                     logger.debug { "Added character to owned: ${intent.id}" }
 
-                    _characters.value = _characters.value.map {
-                        if (it.isOwned) it else it.copy(isOwned = true)
-                    }
+                    characters.value =
+                        characters.value.map {
+                            if (it.isOwned) it else it.copy(isOwned = true)
+                        }
                 }
             }
         }

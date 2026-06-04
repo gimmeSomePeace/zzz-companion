@@ -16,24 +16,33 @@ import me.gimmesomepeace.zzzcompanion.catalog.CharactersCatalogState
 @Composable
 fun CharactersGridView(
     state: CharactersCatalogState,
-    onIntent: (CharactersCatalogIntent) -> Unit
+    onIntent: (CharactersCatalogIntent) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(
             items = state.items,
-            key = { it.id }
+            key = { it.id },
         ) {
-            Box(modifier = Modifier.clickable {
-                if (it.isOwned) onIntent(CharactersCatalogIntent.GoToCharacterDetails(it.id))
-                else onIntent(CharactersCatalogIntent.AddCharacterToOwned(it.id))
-            } ) {
-                if (it.isOwned) ThumbCharacter(it)
-                else MissingThumbCharacter(it)
+            Box(
+                modifier =
+                    Modifier.clickable {
+                        if (it.isOwned) {
+                            onIntent(CharactersCatalogIntent.GoToCharacterDetails(it.id))
+                        } else {
+                            onIntent(CharactersCatalogIntent.AddCharacterToOwned(it.id))
+                        }
+                    },
+            ) {
+                if (it.isOwned) {
+                    ThumbCharacter(it)
+                } else {
+                    MissingThumbCharacter(it)
+                }
             }
         }
     }

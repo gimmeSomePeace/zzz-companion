@@ -19,20 +19,19 @@ import kotlin.math.min
 private const val MAX_PAGE_SIZE = 100
 
 class InMemoryCharacterRepository(
-    private val storage: InMemoryStorage<CharacterId, Character>
-) :
-    CharacterReaderRepository,
-    CharacterWriterRepository
-{
+    private val storage: InMemoryStorage<CharacterId, Character>,
+) : CharacterReaderRepository,
+    CharacterWriterRepository {
     override suspend fun getPage(
         pageSize: PageSize,
         cursor: String?,
-        filters: CharacterFilters?
+        filters: CharacterFilters?,
     ): Page<Character> {
-        val characters = storage.list(
-            filter = filters?.toPredicate(),
-            sort = {a, b -> a.id.value.compareTo(b.id.value) }
-        )
+        val characters =
+            storage.list(
+                filter = filters?.toPredicate(),
+                sort = { a, b -> a.id.value.compareTo(b.id.value) },
+            )
 
         val pageSizeClamped = PageSize(min(pageSize.value, MAX_PAGE_SIZE))
         return characters.paginate(
@@ -43,21 +42,16 @@ class InMemoryCharacterRepository(
         }
     }
 
-    override suspend fun get(id: CharacterId): Character {
-        return storage.get(id) ?: throw EntityNotFoundException(Character::class, id.value)
-    }
+    override suspend fun get(id: CharacterId): Character =
+        storage.get(id) ?: throw EntityNotFoundException(Character::class, id.value)
 
-    override suspend fun find(id: CharacterId): Character? {
-        return storage.get(id)
-    }
+    override suspend fun find(id: CharacterId): Character? = storage.get(id)
 
-    override suspend fun findByIds(
-        ids: Collection<CharacterId>
-    ): Map<CharacterId, Character> {
-        return storage.list()
+    override suspend fun findByIds(ids: Collection<CharacterId>): Map<CharacterId, Character> =
+        storage
+            .list()
             .filter { it.id in ids }
             .associateBy { it.id }
-    }
 
     override suspend fun create(entity: Character) {
         if (storage.insert(entity) == InsertResult.ALREADY_EXISTS) {

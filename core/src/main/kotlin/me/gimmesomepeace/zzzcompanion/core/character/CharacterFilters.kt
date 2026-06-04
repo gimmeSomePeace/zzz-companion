@@ -23,25 +23,15 @@ data class CharacterFilters private constructor(
     val specialityId: SpecialityId? = null,
     val rarity: Rarity? = null,
 ) {
-    fun withQuery(query: String?): CharacterFilters {
-        return copy(query = normalizeQuery(query))
-    }
+    fun withQuery(query: String?): CharacterFilters = copy(query = normalizeQuery(query))
 
-    fun withFactionId(factionId: FactionId?): CharacterFilters {
-        return copy(factionId = factionId)
-    }
+    fun withFactionId(factionId: FactionId?): CharacterFilters = copy(factionId = factionId)
 
-    fun withAttributeId(attributeId: AttributeId?): CharacterFilters {
-        return copy(attributeId = attributeId)
-    }
+    fun withAttributeId(attributeId: AttributeId?): CharacterFilters = copy(attributeId = attributeId)
 
-    fun withSpecialityId(specialityId: SpecialityId?): CharacterFilters {
-        return copy(specialityId = specialityId)
-    }
+    fun withSpecialityId(specialityId: SpecialityId?): CharacterFilters = copy(specialityId = specialityId)
 
-    fun withRarity(rarity: Rarity?): CharacterFilters {
-        return copy(rarity = rarity)
-    }
+    fun withRarity(rarity: Rarity?): CharacterFilters = copy(rarity = rarity)
 
     companion object {
         fun create(
@@ -57,20 +47,19 @@ data class CharacterFilters private constructor(
                 factionId = factionId,
                 attributeId = attributeId,
                 specialityId = specialityId,
-                rarity = rarity
+                rarity = rarity,
             )
         }
 
-        private fun normalizeQuery(query: String?): String? {
-            return query?.trim()?.takeIf { it.isNotEmpty() }
-        }
+        private fun normalizeQuery(query: String?): String? = query?.trim()?.takeIf { it.isNotEmpty() }
     }
 
-    fun toPredicate(): (Character) -> Boolean = { character ->
-        (query == null || character.name.contains(query, ignoreCase = true)) &&
-        (factionId == null || character.factionId == factionId) &&
-        (attributeId == null || character.attributeId == attributeId) &&
-        (specialityId == null || character.specialityId == specialityId) &&
-        (rarity == null || rarity == character.rarity)
-    }
+    fun toPredicate(): (Character) -> Boolean =
+        { character ->
+            (query == null || character.name.contains(query, ignoreCase = true)) &&
+                (factionId == null || character.factionId == factionId) &&
+                (attributeId == null || character.attributeId == attributeId) &&
+                (specialityId == null || character.specialityId == specialityId) &&
+                (rarity == null || rarity == character.rarity)
+        }
 }

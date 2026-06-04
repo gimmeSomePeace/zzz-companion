@@ -16,7 +16,11 @@ data class Faction private constructor(
     val imageUri: URI,
 ) {
     companion object {
-        fun create(id: FactionId, name: String, imageUri: URI): Faction {
+        fun create(
+            id: FactionId,
+            name: String,
+            imageUri: URI,
+        ): Faction {
             val trimmedName = name.trim()
 
             require(trimmedName.isNotBlank()) { "Name must not be blank" }

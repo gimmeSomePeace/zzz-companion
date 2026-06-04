@@ -21,6 +21,6 @@ interface PaginationRepository<T, F> {
     suspend fun getPage(
         pageSize: PageSize,
         cursor: String?,
-        filters: F?
+        filters: F?,
     ): Page<T>
 }

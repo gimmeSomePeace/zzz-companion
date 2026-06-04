@@ -10,12 +10,10 @@ import java.net.URI
 data class CharacterCatalogItem(
     val id: CharacterId,
     val name: String,
-
     val faction: Faction,
     val attribute: Attribute,
     val speciality: Speciality,
     val rarity: Rarity,
-
     val imageUrl: URI,
     val isOwned: Boolean,
 )

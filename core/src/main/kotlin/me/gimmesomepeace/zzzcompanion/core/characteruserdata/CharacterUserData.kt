@@ -16,8 +16,9 @@ data class CharacterUserData private constructor(
     val equippedDisks: EquippedDisks,
 ) {
     companion object {
-        fun create(id: CharacterId, equippedDisks: EquippedDisks): CharacterUserData {
-            return CharacterUserData(id, equippedDisks)
-        }
+        fun create(
+            id: CharacterId,
+            equippedDisks: EquippedDisks,
+        ): CharacterUserData = CharacterUserData(id, equippedDisks)
     }
 }

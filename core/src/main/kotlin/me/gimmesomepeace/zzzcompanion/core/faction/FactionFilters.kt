@@ -17,7 +17,8 @@ data class FactionFilters private constructor(
         }
     }
 
-    fun toPredicate(): (Faction) -> Boolean = { faction ->
-        query?.let { faction.name.contains(it, ignoreCase = true) } ?: true
-    }
+    fun toPredicate(): (Faction) -> Boolean =
+        { faction ->
+            query?.let { faction.name.contains(it, ignoreCase = true) } ?: true
+        }
 }

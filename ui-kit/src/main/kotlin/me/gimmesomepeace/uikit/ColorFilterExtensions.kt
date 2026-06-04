@@ -39,13 +39,30 @@ fun ColorFilter.Companion.grayscale(): ColorFilter {
      *
      *  Источник: https://en.wikipedia.org/wiki/Grayscale
      */
-    val matrix = ColorMatrix(
-        floatArrayOf(
-            0.299f, 0.587f, 0.114f, 0f, 0f,
-            0.299f, 0.587f, 0.114f, 0f, 0f,
-            0.299f, 0.587f, 0.114f, 0f, 0f,
-            0f, 0f, 0f, 1f, 0f
+    val matrix =
+        ColorMatrix(
+            floatArrayOf(
+                0.299f,
+                0.587f,
+                0.114f,
+                0f,
+                0f,
+                0.299f,
+                0.587f,
+                0.114f,
+                0f,
+                0f,
+                0.299f,
+                0.587f,
+                0.114f,
+                0f,
+                0f,
+                0f,
+                0f,
+                0f,
+                1f,
+                0f,
+            ),
         )
-    )
     return ColorFilter.colorMatrix(matrix)
 }

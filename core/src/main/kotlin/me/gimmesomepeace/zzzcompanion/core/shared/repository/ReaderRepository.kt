@@ -6,7 +6,7 @@ package me.gimmesomepeace.zzzcompanion.core.shared.repository
  * @param T Тип сущности.
  * @param ID Тип идентификатора сущности.
  */
-interface ReaderRepository<T, ID: Any> {
+interface ReaderRepository<T, ID : Any> {
     /**
      * Возвращает сущность по указанному идентификатору.
      *

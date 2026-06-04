@@ -9,17 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.gimmesomepeace.zzzcompanion.filters.ui.FiltersBar
 import me.gimmesomepeace.zzzcompanion.catalog.ui.grid.CharactersGridView
+import me.gimmesomepeace.zzzcompanion.filters.ui.FiltersBar
 
 @Composable
 fun CharactersScreen(component: CharactersBrowserComponent) {
     val state = component.state.collectAsState().value
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         FiltersBar(component.filterComponent)
 
@@ -27,7 +28,7 @@ fun CharactersScreen(component: CharactersBrowserComponent) {
 
         CharactersGridView(
             state = state.grid,
-            onIntent = component::onCharactersCatalogIntent
+            onIntent = component::onCharactersCatalogIntent,
         )
     }
 }

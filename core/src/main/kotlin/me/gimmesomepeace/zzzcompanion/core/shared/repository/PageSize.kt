@@ -1,7 +1,9 @@
 package me.gimmesomepeace.zzzcompanion.core.shared.repository
 
 @JvmInline
-value class PageSize(val value: Int) {
+value class PageSize(
+    val value: Int,
+) {
     init {
         require(value > 0) { "Page size must be greater than 0" }
     }

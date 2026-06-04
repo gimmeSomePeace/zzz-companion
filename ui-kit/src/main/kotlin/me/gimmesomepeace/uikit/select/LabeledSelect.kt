@@ -19,7 +19,7 @@ fun <T> LabeledSelect(
         SelectBox(
             options = options,
             selectedOption = selectedOption,
-            onOptionSelected = onOptionSelected
+            onOptionSelected = onOptionSelected,
         )
     }
 }

@@ -31,8 +31,8 @@ dependencies {
 
     // Logger
     implementation(libs.kotlin.logging)
-    implementation(libs.logback)
-    implementation(libs.logstash)
+    runtimeOnly(libs.logback)
+    runtimeOnly(libs.logstash)
 
     // Сериализация
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")

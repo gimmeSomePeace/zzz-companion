@@ -26,12 +26,10 @@ import me.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 class DriveDisk private constructor(
     val id: DriveDiskId,
     val driveDiskSetId: DriveDiskSetId,
-
     val allowedSlot: Slot,
-
     val mainStat: MainStat,
     val subStats: SubStatsSet,
-    val rarity: Rarity
+    val rarity: Rarity,
 ) {
     companion object {
         fun create(
@@ -40,7 +38,7 @@ class DriveDisk private constructor(
             allowedSlot: Slot,
             mainStat: MainStat,
             subStats: SubStatsSet,
-            rarity: Rarity
+            rarity: Rarity,
         ): DriveDisk {
             require(allowedSlot.isAllowed(mainStat.stat)) {
                 "Stat (${mainStat.stat}) should be allowed when allowed slot is $allowedSlot"
@@ -53,10 +51,9 @@ class DriveDisk private constructor(
     }
 }
 
-fun Rarity.toMaxLevelOfMainStat(): Int {
-    return when (this) {
+fun Rarity.toMaxLevelOfMainStat(): Int =
+    when (this) {
         Rarity.S -> 15
         Rarity.A -> 12
         Rarity.B -> 9
     }
-}

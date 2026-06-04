@@ -24,27 +24,29 @@ internal fun MissingThumbCharacter(character: CharacterCatalogItem) {
                 resource = asyncPainterResource(data = character.imageUrl),
                 contentDescription = "Аватар персонажа",
                 modifier = Modifier.fillMaxSize(),
-                colorFilter = ColorFilter.grayscale()
+                colorFilter = ColorFilter.grayscale(),
             )
 
             KamelImage(
                 resource = asyncPainterResource(data = character.speciality.imageUri),
                 contentDescription = "Изображение специализации",
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.TopEnd)
-                    .offset(x = (-4).dp, y = 4.dp),
-                colorFilter = ColorFilter.grayscale()
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .align(Alignment.TopEnd)
+                        .offset(x = (-4).dp, y = 4.dp),
+                colorFilter = ColorFilter.grayscale(),
             )
 
             KamelImage(
                 resource = asyncPainterResource(data = character.attribute.imageUri),
                 contentDescription = "Изображение атрибута",
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.TopEnd)
-                    .offset(x = (-28).dp, y = 4.dp),
-                colorFilter = ColorFilter.grayscale()
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .align(Alignment.TopEnd)
+                        .offset(x = (-28).dp, y = 4.dp),
+                colorFilter = ColorFilter.grayscale(),
             )
         }
         Text(character.name)

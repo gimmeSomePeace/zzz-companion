@@ -11,40 +11,37 @@ import me.gimmesomepeace.zzzcompanion.data.shared.storage.InsertResult
 import me.gimmesomepeace.zzzcompanion.data.shared.storage.UpdateResult
 
 class InMemoryCharacterUserDataRepository(
-    private val storage: InMemoryStorage<CharacterId, CharacterUserData>
+    private val storage: InMemoryStorage<CharacterId, CharacterUserData>,
 ) : CharacterUserDataRepository {
-
-    override suspend fun get(id: CharacterId): CharacterUserData {
-        return storage.get(id) ?: throw EntityNotFoundException(
+    override suspend fun get(id: CharacterId): CharacterUserData =
+        storage.get(id) ?: throw EntityNotFoundException(
             CharacterUserData::class,
-            id.value
+            id.value,
         )
-    }
 
-    override suspend fun find(id: CharacterId): CharacterUserData? {
-        return storage.get(id)
-    }
+    override suspend fun find(id: CharacterId): CharacterUserData? = storage.get(id)
 
-    override suspend fun findByIds(
-        ids: Collection<CharacterId>
-    ): Map<CharacterId, CharacterUserData> {
-        return storage.list()
+    override suspend fun findByIds(ids: Collection<CharacterId>): Map<CharacterId, CharacterUserData> =
+        storage
+            .list()
             .filter { it.id in ids }
             .associateBy { it.id }
-    }
 
     override suspend fun create(entity: CharacterUserData) {
-        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS)
+        if (storage.insert(entity) == InsertResult.ALREADY_EXISTS) {
             throw EntityAlreadyExistsException(CharacterUserData::class, entity.id)
+        }
     }
 
     override suspend fun update(entity: CharacterUserData) {
-        if (storage.update(entity) == UpdateResult.NOT_FOUND)
+        if (storage.update(entity) == UpdateResult.NOT_FOUND) {
             throw EntityNotFoundException(CharacterUserData::class, entity.id)
+        }
     }
 
     override suspend fun delete(entity: CharacterUserData) {
-        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND)
+        if (storage.delete(entity.id) == DeleteResult.NOT_FOUND) {
             throw EntityNotFoundException(CharacterUserData::class, entity.id)
+        }
     }
 }

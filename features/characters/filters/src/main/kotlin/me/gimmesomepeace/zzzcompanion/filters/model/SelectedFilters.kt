@@ -2,8 +2,8 @@ package me.gimmesomepeace.zzzcompanion.filters.model
 
 import me.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import me.gimmesomepeace.zzzcompanion.core.faction.FactionId
-import me.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 import me.gimmesomepeace.zzzcompanion.core.rarity.Rarity
+import me.gimmesomepeace.zzzcompanion.core.speciality.SpecialityId
 
 data class SelectedFilters(
     val query: String = "",

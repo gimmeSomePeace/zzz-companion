@@ -6,6 +6,6 @@ import me.gimmesomepeace.zzzcompanion.core.attribute.AttributeId
 import me.gimmesomepeace.zzzcompanion.core.shared.repository.PaginationRepository
 import me.gimmesomepeace.zzzcompanion.core.shared.repository.ReaderRepository
 
-interface AttributeReaderRepository:
+interface AttributeReaderRepository :
     ReaderRepository<Attribute, AttributeId>,
     PaginationRepository<Attribute, AttributeFilters>
