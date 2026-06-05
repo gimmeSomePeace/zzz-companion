@@ -7,21 +7,35 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - name: Клонирование репозитория
+        uses: actions/checkout@v6
+
+      - name: Настройка JVM
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v6
-      - run: ./gradlew spotlessCheck
+
+      - name: Настройка Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Проверка форматирования
+        run: ./gradlew spotlessCheck
 
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - name: Клонирование репозитория
+        uses: actions/checkout@v6
+
+      - name: Настройка JVM
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v6
-      - run: ./gradlew build
+
+      - name: Настройка Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Сборка
+        run: ./gradlew build
