@@ -22,6 +22,8 @@ import me.gimmesomepeace.uikit.select.LabeledSelect
 import me.gimmesomepeace.zzzcompanion.filters.FilterComponent
 import me.gimmesomepeace.zzzcompanion.filters.FiltersIntent
 
+private const val DEBOUNCE_TIME_IN_MILLIS = 300L
+
 @Composable
 fun FiltersBar(component: FilterComponent) {
     val state by component.state.collectAsState()
@@ -29,7 +31,7 @@ fun FiltersBar(component: FilterComponent) {
 
     LaunchedEffect(localQuery) {
         snapshotFlow { localQuery }
-            .debounce(300)
+            .debounce(DEBOUNCE_TIME_IN_MILLIS)
             .collect {
                 component.onIntent(FiltersIntent.SetQuery(it))
             }

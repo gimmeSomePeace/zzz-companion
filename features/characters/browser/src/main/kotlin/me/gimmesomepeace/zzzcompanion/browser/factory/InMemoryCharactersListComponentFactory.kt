@@ -26,6 +26,8 @@ import me.gimmesomepeace.zzzcompanion.filters.FilterComponent
 import java.net.URI
 import java.util.UUID
 
+private const val DEFAULT_PAGE_SIZE = 20
+
 class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
     override fun createComponent(
         componentContext: ComponentContext,
@@ -51,7 +53,7 @@ class InMemoryCharactersListComponentFactory : CharactersListComponentFactory {
             componentContext = componentContext,
             getCharactersPageUseCase = getCharactersPageUseCase,
             addCharacterToOwnedUseCase = addCharacterToOwnedUseCase,
-            pageSize = PageSize(10),
+            pageSize = PageSize(DEFAULT_PAGE_SIZE),
             goToCharacterDetails = goToCharacterDetails,
             createFilterComponent = { scope, onFiltersChanged ->
                 FilterComponent(

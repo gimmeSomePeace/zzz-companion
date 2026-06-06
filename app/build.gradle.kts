@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "2.3.20"
     alias(libs.plugins.composeCompiler)
+
+    alias(libs.plugins.detekt)
 }
 
 group = "me.gimmesomepeace"

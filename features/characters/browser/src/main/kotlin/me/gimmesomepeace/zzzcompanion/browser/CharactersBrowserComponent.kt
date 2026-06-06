@@ -23,11 +23,13 @@ import me.gimmesomepeace.zzzcompanion.core.shared.repository.PageSize
 import me.gimmesomepeace.zzzcompanion.filters.FilterComponent
 import me.gimmesomepeace.zzzcompanion.filters.model.SelectedFilters
 
+private const val DEFAULT_PAGE_SIZE = 20
+
 class CharactersBrowserComponent internal constructor(
     private val componentContext: ComponentContext,
     private val getCharactersPageUseCase: GetCharactersPageUseCase,
     private val addCharacterToOwnedUseCase: AddCharacterToOwnedUseCase,
-    private val pageSize: PageSize = PageSize(10),
+    private val pageSize: PageSize = PageSize(DEFAULT_PAGE_SIZE),
     private val goToCharacterDetails: (CharacterId) -> Unit,
     createFilterComponent: (
         scope: CoroutineScope,

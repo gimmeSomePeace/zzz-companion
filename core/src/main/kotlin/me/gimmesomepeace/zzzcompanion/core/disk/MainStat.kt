@@ -1,11 +1,14 @@
 package me.gimmesomepeace.zzzcompanion.core.disk
 
+private const val MIN_MAIN_STAT_VALUE = 0
+private const val MAX_MAIN_STAT_VALUE = 15
+
 @JvmInline
 value class MainStatValue(
     val value: Int,
 ) {
     init {
-        require(value in 0..15)
+        require(value in MIN_MAIN_STAT_VALUE..MAX_MAIN_STAT_VALUE)
     }
 }
 

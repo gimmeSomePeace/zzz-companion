@@ -3,10 +3,10 @@ package me.gimmesomepeace.zzzcompanion.core.speciality
 import java.net.URI
 
 /**
- * Специализация (например: защита, разрушение, аномалия и т.д.)
+ * Специализация (например: защита, разрушение, аномалия и т.д.).
  *
- * @property id Уникальный идентификатор
- * @property name Имя
+ * @property id Уникальный идентификатор.
+ * @property name Наименование.
  * @property imageUri URI изображения эмблемы специализации.
  */
 @ConsistentCopyVisibility
@@ -16,6 +16,13 @@ data class Speciality private constructor(
     val imageUri: URI,
 ) {
     companion object {
+        /**
+         * Создает специализацию, проверяя инварианты.
+         *
+         * @param id Идентификатор специализации.
+         * @param name Наименование.
+         * @param imageUri URI изображения.
+         */
         fun create(
             id: SpecialityId,
             name: String,

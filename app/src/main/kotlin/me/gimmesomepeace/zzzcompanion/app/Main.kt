@@ -11,6 +11,9 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import me.gimmesomepeace.zzzcompanion.browser.factory.InMemoryCharactersListComponentFactory
 
+/**
+ * Входная точка для десктопного приложения.
+ */
 fun main() =
     application {
         val lifecycle = LifecycleRegistry()

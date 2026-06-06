@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicFunction:InMemoryStorage.kt:InMemoryStorage$suspend fun delete: DeleteResult</ID>
+    <ID>UndocumentedPublicFunction:InMemoryStorage.kt:InMemoryStorage$suspend fun get: E?</ID>
+    <ID>UndocumentedPublicFunction:InMemoryStorage.kt:InMemoryStorage$suspend fun insert: InsertResult</ID>
+    <ID>UndocumentedPublicFunction:InMemoryStorage.kt:InMemoryStorage$suspend fun list: List&lt;E&gt;</ID>
+    <ID>UndocumentedPublicFunction:InMemoryStorage.kt:InMemoryStorage$suspend fun update: UpdateResult</ID>
+    <ID>UndocumentedPublicFunction:PaginationExtensions.kt:fun &lt;T&gt; Iterable&lt;T&gt;.paginate: Page&lt;T&gt;</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CascadingCallWrapping:FilterComponent.kt:FilterComponent$launchIn(scope)</ID>
+    <ID>UndocumentedPublicFunction:FiltersBar.kt:@Composable fun FiltersBar</ID>
+  </CurrentIssues>
+</SmellBaseline>

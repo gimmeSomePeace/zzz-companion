@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CascadingCallWrapping:CharactersBrowserComponent.kt:CharactersBrowserComponent$stateIn( scope = scope, started = SharingStarted.Lazily, initialValue = CharactersBrowserState(), )</ID>
+    <ID>StringLiteralDuplication:InMemoryCharactersListComponentFactory.kt:InMemoryCharactersListComponentFactory$"https://static.wikia.nocookie.net/"</ID>
+    <ID>UndocumentedPublicFunction:CharactersBrowserComponent.kt:CharactersBrowserComponent$fun onCharactersCatalogIntent</ID>
+    <ID>UndocumentedPublicFunction:CharactersListComponentFactory.kt:CharactersListComponentFactory$fun createComponent: CharactersBrowserComponent</ID>
+    <ID>UndocumentedPublicFunction:CharactersScreen.kt:@Composable fun CharactersScreen</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,5 +1,7 @@
 plugins {
     kotlin("jvm")
+
+    alias(libs.plugins.detekt)
 }
 
 group = "me.gimmesomepeace"

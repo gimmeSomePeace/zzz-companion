@@ -3,6 +3,10 @@ package me.gimmesomepeace.zzzcompanion.core.disk
 import me.gimmesomepeace.zzzcompanion.core.diskset.DriveDiskSetId
 import me.gimmesomepeace.zzzcompanion.core.rarity.Rarity
 
+private const val S_RANK_DRIVE_DISK_MAX_LEVEL = 15
+private const val A_RANK_DRIVE_DISK_MAX_LEVEL = 12
+private const val B_RANK_DRIVE_DISK_MAX_LEVEL = 9
+
 /**
  * Сущность драйв-диска.
  *
@@ -53,7 +57,7 @@ class DriveDisk private constructor(
 
 fun Rarity.toMaxLevelOfMainStat(): Int =
     when (this) {
-        Rarity.S -> 15
-        Rarity.A -> 12
-        Rarity.B -> 9
+        Rarity.S -> S_RANK_DRIVE_DISK_MAX_LEVEL
+        Rarity.A -> A_RANK_DRIVE_DISK_MAX_LEVEL
+        Rarity.B -> B_RANK_DRIVE_DISK_MAX_LEVEL
     }

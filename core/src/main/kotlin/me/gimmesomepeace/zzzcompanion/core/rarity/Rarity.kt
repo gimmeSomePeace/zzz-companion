@@ -3,9 +3,9 @@ package me.gimmesomepeace.zzzcompanion.core.rarity
 import java.net.URI
 
 /**
- * Уровень редкости
+ * Уровень редкости.
  *
- * @property title Название
+ * @property title Название.
  * @property imageUri URI изображения уровня редкости.
  */
 enum class Rarity(

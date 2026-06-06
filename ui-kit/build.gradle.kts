@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
     alias(libs.plugins.composeCompiler)
+
+    alias(libs.plugins.detekt)
 }
 
 group = "me.gimmesomepeace"

@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicFunction:ColorFilterExtensions.kt:fun ColorFilter.Companion.grayscale: ColorFilter</ID>
+    <ID>UndocumentedPublicFunction:LabeledSelect.kt:@Composable fun &lt;T&gt; LabeledSelect</ID>
+    <ID>UndocumentedPublicFunction:SelectBox.kt:@Composable fun &lt;T&gt; SelectBox</ID>
+    <ID>UndocumentedPublicFunction:SelectBoxState.kt:fun &lt;T, V&gt; buildSelectBoxState: SelectBoxState&lt;V&gt;</ID>
+    <ID>UndocumentedPublicFunction:SelectItem.kt:@Composable fun SelectItem</ID>
+    <ID>UndocumentedPublicFunction:SelectOptionExtensions.kt:fun &lt;T&gt; List&lt;SelectOption&lt;T&gt;&gt;.selectedOrAll: SelectOption&lt;T&gt;</ID>
+    <ID>UndocumentedPublicFunction:SelectOptionExtensions.kt:fun &lt;T&gt; SelectOption&lt;T&gt;.matches: Boolean</ID>
+    <ID>UndocumentedPublicFunction:SelectOptionExtensions.kt:fun &lt;T&gt; SelectOption&lt;T&gt;.toValueOrNull: T?</ID>
+  </CurrentIssues>
+</SmellBaseline>

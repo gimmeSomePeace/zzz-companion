@@ -19,6 +19,14 @@ data class Attribute private constructor(
     val imageUri: URI,
 ) {
     companion object {
+        /**
+         * Создаёт атрибут, проверяя инварианты.
+         *
+         * @param id Идентификатор атрибута.
+         * @param name Название.
+         * @param imageUri URI изображения атрибута.
+         * @throws IllegalArgumentException если нарушены инварианты.
+         */
         fun create(
             id: AttributeId,
             name: String,

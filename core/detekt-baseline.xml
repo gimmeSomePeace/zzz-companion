@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassOrdering:CharacterFilters.kt:CharacterFilters$fun toPredicate: (Character) -&gt; Boolean</ID>
+    <ID>ClassOrdering:EquippedDisks.kt:EquippedDisks$Companion</ID>
+    <ID>ClassOrdering:FactionFilters.kt:FactionFilters$fun toPredicate: (Faction) -&gt; Boolean</ID>
+    <ID>DataClassContainsFunctions:CharacterFilters.kt:CharacterFilters$fun withAttributeId: CharacterFilters</ID>
+    <ID>DataClassContainsFunctions:CharacterFilters.kt:CharacterFilters$fun withFactionId: CharacterFilters</ID>
+    <ID>DataClassContainsFunctions:CharacterFilters.kt:CharacterFilters$fun withQuery: CharacterFilters</ID>
+    <ID>DataClassContainsFunctions:CharacterFilters.kt:CharacterFilters$fun withRarity: CharacterFilters</ID>
+    <ID>DataClassContainsFunctions:CharacterFilters.kt:CharacterFilters$fun withSpecialityId: CharacterFilters</ID>
+    <ID>DataClassContainsFunctions:EquippedDisks.kt:EquippedDisks$fun equip: EquippedDisks</ID>
+    <ID>DataClassContainsFunctions:EquippedDisks.kt:EquippedDisks$fun getDisk: DriveDiskId?</ID>
+    <ID>DataClassContainsFunctions:EquippedDisks.kt:EquippedDisks$fun isFree: Boolean</ID>
+    <ID>DataClassContainsFunctions:EquippedDisks.kt:EquippedDisks$fun setFree: EquippedDisks</ID>
+    <ID>EndOfSentenceFormat:DriveDiskSet.kt:DriveDiskSet$* Комплект драйв-дисков * * </ID>
+    <ID>EndOfSentenceFormat:Faction.kt:Faction$* Фракция * * </ID>
+    <ID>OutdatedDocumentation:DriveDisk.kt:DriveDisk</ID>
+    <ID>StringLiteralDuplication:Rarity.kt:Rarity.S$"https://static.wikia.nocookie.net/"</ID>
+    <ID>UndocumentedPublicFunction:Character.kt:Character.Companion$fun create: Character</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters$fun toPredicate: (Character) -&gt; Boolean</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters$fun withAttributeId: CharacterFilters</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters$fun withFactionId: CharacterFilters</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters$fun withQuery: CharacterFilters</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters$fun withRarity: CharacterFilters</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters$fun withSpecialityId: CharacterFilters</ID>
+    <ID>UndocumentedPublicFunction:CharacterFilters.kt:CharacterFilters.Companion$fun create: CharacterFilters</ID>
+    <ID>UndocumentedPublicFunction:CharacterUserData.kt:CharacterUserData.Companion$fun create: CharacterUserData</ID>
+    <ID>UndocumentedPublicFunction:DriveDisk.kt:DriveDisk.Companion$fun create: DriveDisk</ID>
+    <ID>UndocumentedPublicFunction:DriveDisk.kt:fun Rarity.toMaxLevelOfMainStat: Int</ID>
+    <ID>UndocumentedPublicFunction:DriveDiskSet.kt:DriveDiskSet.Companion$fun create: DriveDiskSet</ID>
+    <ID>UndocumentedPublicFunction:EquippedDisks.kt:EquippedDisks$fun equip: EquippedDisks</ID>
+    <ID>UndocumentedPublicFunction:EquippedDisks.kt:EquippedDisks$fun getDisk: DriveDiskId?</ID>
+    <ID>UndocumentedPublicFunction:EquippedDisks.kt:EquippedDisks$fun isFree: Boolean</ID>
+    <ID>UndocumentedPublicFunction:EquippedDisks.kt:EquippedDisks$fun setFree: EquippedDisks</ID>
+    <ID>UndocumentedPublicFunction:EquippedDisks.kt:EquippedDisks.Companion$fun create</ID>
+    <ID>UndocumentedPublicFunction:Faction.kt:Faction.Companion$fun create: Faction</ID>
+    <ID>UndocumentedPublicFunction:FactionFilters.kt:FactionFilters$fun toPredicate: (Faction) -&gt; Boolean</ID>
+    <ID>UndocumentedPublicFunction:FactionFilters.kt:FactionFilters.Companion$fun create: FactionFilters</ID>
+    <ID>UndocumentedPublicFunction:SubStatsSet.kt:SubStatsSet.Companion$fun create: SubStatsSet</ID>
+  </CurrentIssues>
+</SmellBaseline>

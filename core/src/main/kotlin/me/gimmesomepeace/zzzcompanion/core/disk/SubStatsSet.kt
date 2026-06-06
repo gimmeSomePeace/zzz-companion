@@ -1,5 +1,7 @@
 package me.gimmesomepeace.zzzcompanion.core.disk
 
+private const val MAX_STATS_LEVEL_SUM = 5
+
 /**
  * Агрегирует дополнительные характеристики в одну сущность.
  *
@@ -29,7 +31,7 @@ class SubStatsSet private constructor(
                     stat3.level.value +
                     (stat4?.level?.value ?: 0)
 
-            require(statValueSum in 0..5) {
+            require(statValueSum in 0..MAX_STATS_LEVEL_SUM) {
                 "Sub stats values sum must be between 0 and 5 but was $statValueSum"
             }
             return SubStatsSet(stat1, stat2, stat3, stat4)
