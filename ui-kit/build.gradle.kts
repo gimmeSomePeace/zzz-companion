@@ -2,9 +2,11 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
     alias(libs.plugins.composeCompiler)
+
+    alias(libs.plugins.detekt)
 }
 
-group = "org.gimmesomepeace"
+group = "me.gimmesomepeace"
 version = "unspecified"
 
 dependencies {

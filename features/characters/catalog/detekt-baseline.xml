@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>UndocumentedPublicFunction:CharactersGridView.kt:@Composable fun CharactersGridView</ID>
+  </CurrentIssues>
+</SmellBaseline>

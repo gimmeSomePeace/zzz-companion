@@ -1,8 +1,10 @@
 plugins {
     kotlin("jvm")
+
+    alias(libs.plugins.detekt)
 }
 
-group = "org.gimmesomepeace"
+group = "me.gimmesomepeace"
 version = "1.0.0"
 
 dependencies {
